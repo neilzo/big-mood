@@ -8,6 +8,7 @@ import {
   Button,
   FlatList
 } from 'react-native';
+import day from '../services/day';
 import entry from '../services/entry';
 import EntryForm from '../components/EntryForm/EntryForm';
 import EntryList from '../components/EntryList/EntryList';
@@ -21,10 +22,10 @@ interface Item {
 export default class HomeScreen extends Component<Props> {
   constructor(props: any) {
     super(props);
-    const entries = entry.getEntries();
+    const days = day.getDays();
 
     this.state = {
-      entries
+      days
     };
   }
 
@@ -48,13 +49,13 @@ export default class HomeScreen extends Component<Props> {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { entries } = this.state;
+    const { days } = this.state;
 
     return (
       <View style={styles.container}>
         <Text>How are ya feeling?</Text>
         <EntryForm createEntry={this.createEntry} />
-        <EntryList entries={entries} deleteEntry={this.deleteEntry} />
+        <EntryList days={days} deleteEntry={this.deleteEntry} />
         <Button title="Go to Details" onPress={() => navigate('Details')} />
       </View>
     );

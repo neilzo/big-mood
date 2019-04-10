@@ -1,5 +1,6 @@
 import uuid from 'uuidv4';
 import realm from './models/index';
+import dayService from './day';
 
 const getEntry = () => {};
 
@@ -27,7 +28,19 @@ const createEntry = ({
       weather
     };
     realm.create('Entry', params);
+    // dayService.addEntryToDay(params);
   });
+
+  const entries = realm.objects('Entry');
+  const currentDay = dayService.getCurrentDay();
+  const lastEntry = entries[entries.length - 1];
+
+  if (currentDay) {
+    dayService.addEntryToDay({ entry: lastEntry });
+    return;
+  }
+
+  dayService.createDay({ entry: lastEntry });
 };
 
 const deleteEntry = (item: object) => {

@@ -1,16 +1,32 @@
 import React from 'react';
 import { Component } from 'react';
-import { Button, StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  SectionList,
+  Image
+} from 'react-native';
+import moment from 'moment';
 import mood from '../../services/mood';
 
 interface Props {
-  entries: Array<object>;
+  days: Array<object>;
   deleteEntry: (item: object) => void;
 }
 export default class EntryList extends Component<Props> {
   _keyExtractor = item => item.id;
 
-  renderRow = ({ item }) => {
+  renderSectionHeader = ({ section: { createdAt } }) => (
+    <View style={styles.sectionHeader}>
+      <Text style={{ fontWeight: 'bold' }}>
+        {moment(createdAt).format('MMM Do YYYY')}
+      </Text>
+    </View>
+  );
+
+  renderEntryRow = ({ item }) => {
     return (
       <View key={item.id} style={styles.item}>
         <Text style={styles.icon}>{item.mood.icon}</Text>
@@ -29,12 +45,16 @@ export default class EntryList extends Component<Props> {
   };
 
   render() {
-    const { entries } = this.props;
+    const { days } = this.props;
     return (
       <View style={styles.container}>
-        <FlatList
-          data={entries}
-          renderItem={this.renderRow}
+        <SectionList
+          sections={days.map(day => ({
+            title: 'huh...',
+            data: day.entries
+          }))}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderEntryRow}
           keyExtractor={this._keyExtractor}
         />
       </View>
@@ -60,5 +80,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginLeft: 'auto'
+  },
+  sectionHeader: {
+    paddingHorizontal: 20
   }
 });
