@@ -17,6 +17,8 @@ const createEntry = ({
   mood: object;
   weather: object;
 }) => {
+  let entry;
+
   realm.write(() => {
     const now = new Date();
     const params = {
@@ -27,20 +29,19 @@ const createEntry = ({
       modifiedAt: now,
       weather
     };
-    realm.create('Entry', params);
+    entry = realm.create('Entry', params);
     // dayService.addEntryToDay(params);
   });
 
   const entries = realm.objects('Entry');
   const currentDay = dayService.getCurrentDay();
-  const lastEntry = entries[entries.length - 1];
 
   if (currentDay) {
-    dayService.addEntryToDay({ entry: lastEntry });
+    dayService.addEntryToDay({ entry });
     return;
   }
 
-  dayService.createDay({ entry: lastEntry });
+  dayService.createDay({ entry });
 };
 
 const deleteEntry = (item: object) => {

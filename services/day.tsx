@@ -6,6 +6,10 @@ const getDay = day => {
   return realm.objects('Day').filtered('id == $0', day.id)[0];
 };
 
+const getDayById = id => {
+  return realm.objects('Day').filtered('id == $0', id)[0];
+};
+
 const getCurrentDay = () => {
   const yesterday = moment()
     .subtract(1, 'day')
@@ -34,9 +38,13 @@ const createDay = ({ entry }: { entry: object }) => {
   });
 };
 
-const deleteDay = (item: object) => {
+const deleteDay = (id: string) => {
   realm.write(() => {
-    realm.delete(item);
+    const day = getDayById(id);
+    const entries = day.entries;
+
+    realm.delete(entries);
+    realm.delete(day);
   });
 };
 

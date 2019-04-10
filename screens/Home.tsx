@@ -33,7 +33,7 @@ export default class HomeScreen extends Component<Props> {
 
   updateDataSource(props = this.props) {
     this.setState(() => ({
-      entries: entry.getEntries()
+      days: day.getDays()
     }));
   }
 
@@ -47,6 +47,11 @@ export default class HomeScreen extends Component<Props> {
     this.updateDataSource();
   };
 
+  deleteDay = id => {
+    day.deleteDay(id);
+    this.updateDataSource();
+  };
+
   render() {
     const { navigate } = this.props.navigation;
     const { days } = this.state;
@@ -55,7 +60,11 @@ export default class HomeScreen extends Component<Props> {
       <View style={styles.container}>
         <Text>How are ya feeling?</Text>
         <EntryForm createEntry={this.createEntry} />
-        <EntryList days={days} deleteEntry={this.deleteEntry} />
+        <EntryList
+          days={days}
+          deleteEntry={this.deleteEntry}
+          deleteDay={this.deleteDay}
+        />
         <Button title="Go to Details" onPress={() => navigate('Details')} />
       </View>
     );
