@@ -36,11 +36,11 @@ export default class EntryForm extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <WeatherDisplay onWeatherResult={this.handleWeatherChange} />
         <MoodList
           onMoodPress={this.handleMoodSelect}
           selectedMood={this.state.mood}
         />
+        <WeatherDisplay onWeatherResult={this.handleWeatherChange} />
         <Text>Note:</Text>
         <TextInput
           style={styles.note}

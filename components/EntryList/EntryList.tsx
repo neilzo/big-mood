@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+import { Button, StyleSheet, Text, View, FlatList, Image } from 'react-native';
 import mood from '../../services/mood';
 
 interface Props {
@@ -12,10 +12,18 @@ export default class EntryList extends Component<Props> {
 
   renderRow = ({ item }) => {
     return (
-      <View key={item.id}>
+      <View key={item.id} style={styles.item}>
         <Text style={styles.icon}>{item.mood.icon}</Text>
+        <Image
+          style={{ width: 58, height: 58 }}
+          source={{
+            uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
+          }}
+        />
         <Text>{item.note}</Text>
-        <Button title="Delete" onPress={() => this.props.deleteEntry(item)} />
+        <View style={styles.deleteButton}>
+          <Button title="Delete" onPress={() => this.props.deleteEntry(item)} />
+        </View>
       </View>
     );
   };
@@ -38,11 +46,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
     flexDirection: 'row'
   },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20
+  },
   icon: {
     fontSize: 40
+  },
+  deleteButton: {
+    marginLeft: 'auto'
   }
 });

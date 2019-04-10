@@ -35,8 +35,8 @@ export default class WeatherDisplay extends Component<Props> {
             }}
           />
         )}
+        {this.state.weather && <Text>{this.state.weather.temperature}F, </Text>}
         {this.state.weather && <Text>{this.state.weather.description}</Text>}
-        {this.state.weather && <Text>{this.state.weather.temperature}</Text>}
       </View>
     );
   }
@@ -45,6 +45,7 @@ export default class WeatherDisplay extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
