@@ -9,7 +9,7 @@ import {
   Image
 } from 'react-native';
 import moment from 'moment';
-import mood from '../../services/mood';
+import colorVariables from '../colorVariables';
 
 interface Props {
   days: Array<object>;
@@ -24,7 +24,7 @@ export default class EntryList extends Component<Props> {
       <Text style={{ fontWeight: 'bold' }}>
         {moment(createdAt).format('MMM Do YYYY')}
       </Text>
-      <Button title="Delete" onPress={() => this.props.deleteDay(id)} />
+      <Button title="x" onPress={() => this.props.deleteDay(id)} />
     </View>
   );
 
@@ -40,7 +40,7 @@ export default class EntryList extends Component<Props> {
         />
         <Text>{item.note}</Text>
         <View style={styles.deleteButton}>
-          <Button title="Delete" onPress={() => this.props.deleteEntry(item)} />
+          <Button title="x" onPress={() => this.props.deleteEntry(item)} />
         </View>
       </View>
     );
@@ -75,7 +75,17 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20
+    marginHorizontal: 20,
+    padding: 10,
+    marginVertical: 5,
+    shadowColor: '#000',
+    borderWidth: 1,
+    borderColor: colorVariables.borderColor,
+    backgroundColor: '#fff',
+    borderRadius: colorVariables.borderRadius,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5
   },
   icon: {
     fontSize: 40
@@ -84,6 +94,13 @@ const styles = StyleSheet.create({
     marginLeft: 'auto'
   },
   sectionHeader: {
-    paddingHorizontal: 20
+    backgroundColor: '#F5FCFF',
+    marginHorizontal: 20,
+    marginBottom: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: colorVariables.borderColor
   }
 });

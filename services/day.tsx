@@ -43,6 +43,9 @@ const deleteDay = (id: string) => {
     const day = getDayById(id);
     const entries = day.entries;
 
+    entries.forEach(entry => {
+      realm.delete(entry.weather);
+    });
     realm.delete(entries);
     realm.delete(day);
   });

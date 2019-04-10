@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
 import MoodList from '../MoodList/MoodList';
 import WeatherDisplay from '../WeatherDisplay/WeatherDisplay';
+import colorVariables from '../colorVariables';
 
 interface Props {
   createEntry: (data: object) => void;
@@ -61,8 +62,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   note: {
-    borderColor: 'gray',
+    backgroundColor: colorVariables.white,
+    borderColor: colorVariables.borderColor,
     borderWidth: 1,
+    borderRadius: colorVariables.borderRadius,
     flex: 1,
     width: 300
   }
