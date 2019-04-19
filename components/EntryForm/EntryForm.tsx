@@ -7,15 +7,18 @@ import colorVariables from '../colorVariables';
 
 interface Props {
   createEntry: (data: object) => void;
+  editEntry: (data: object) => void;
 }
 export default class EntryForm extends Component<Props> {
   constructor(props: any) {
     super(props);
+    const entry = this.props.entry || {};
 
     this.state = {
-      mood: null,
-      note: '',
-      weather: null
+      mood: entry.mood || null,
+      note: entry.note || '',
+      weather: entry.weather || null,
+      isEditing: Boolean(entry.mood) // todo make this less brittle
     };
   }
 
@@ -34,6 +37,19 @@ export default class EntryForm extends Component<Props> {
     this.setState(() => ({ mood: null, note: '' }));
   };
 
+  editEntry = () => {
+    this.props.editEntry({ id: this.props.entry.id, newEntryData: this.state });
+  };
+
+  renderSubmitButton = () => {
+    const { isEditing } = this.state;
+
+    if (isEditing)
+      return <Button title="Edit a boy" onPress={this.editEntry} />;
+
+    return <Button title="Create a boy" onPress={this.createEntry} />;
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -48,7 +64,7 @@ export default class EntryForm extends Component<Props> {
           onChangeText={this.handleNoteChange}
           value={this.state.note}
         />
-        <Button title="Create a boy" onPress={this.createEntry} />
+        {this.renderSubmitButton()}
       </View>
     );
   }

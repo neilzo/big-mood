@@ -1,13 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  FlatList
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import day from '../services/day';
 import entry from '../services/entry';
 import EntryForm from '../components/EntryForm/EntryForm';
@@ -64,8 +57,8 @@ export default class HomeScreen extends Component<Props> {
           days={days}
           deleteEntry={this.deleteEntry}
           deleteDay={this.deleteDay}
+          navigate={navigate}
         />
-        <Button title="Go to Details" onPress={() => navigate('Details')} />
       </View>
     );
   }

@@ -2,7 +2,9 @@ import uuid from 'uuidv4';
 import realm from './models/index';
 import dayService from './day';
 
-const getEntry = () => {};
+const getEntry = id => {
+  return realm.objects('Entry').filtered('id == $0', id)[0];
+};
 
 const getEntries = () => {
   return realm.objects('Entry').sorted('createdAt');
@@ -44,10 +46,21 @@ const createEntry = ({
   dayService.createDay({ entry });
 };
 
+const editEntry = ({ id, newEntryData }) => {
+  realm.write(() => {
+    const entry = getEntry(id);
+    const now = new Date();
+
+    entry.mood = newEntryData.mood;
+    entry.note = newEntryData.note;
+    entry.modifiedAt = now;
+  });
+};
+
 const deleteEntry = (item: object) => {
   realm.write(() => {
     realm.delete(item);
   });
 };
 
-export default { createEntry, getEntries, deleteEntry };
+export default { createEntry, getEntries, deleteEntry, editEntry };

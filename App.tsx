@@ -3,11 +3,13 @@ import { View, Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './screens/Home';
 import Details from './screens/Details';
+import EditEntry from './screens/EditEntry';
 
 const AppNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
-    Details: { screen: Details }
+    Details: { screen: Details },
+    EditEntry: { screen: EditEntry }
   },
   { initialRouteName: 'Home' }
 );

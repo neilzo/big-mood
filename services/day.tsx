@@ -22,9 +22,10 @@ const getCurrentDay = () => {
     .filtered('createdAt > $0 && createdAt < $1', yesterday, tomorrow)[0];
 };
 
-const getDays = () => {
-  return realm.objects('Day').sorted('createdAt');
+const getDays = (reverseChronological = true) => {
+  return realm.objects('Day').sorted('createdAt', reverseChronological);
 };
+
 const createDay = ({ entry }: { entry: object }) => {
   realm.write(() => {
     const now = new Date();
@@ -59,4 +60,11 @@ const addEntryToDay = ({ entry }) => {
   });
 };
 
-export default { createDay, getDays, deleteDay, addEntryToDay, getCurrentDay };
+export default {
+  createDay,
+  getDays,
+  deleteDay,
+  addEntryToDay,
+  getCurrentDay,
+  getDayById
+};

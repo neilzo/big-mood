@@ -29,5 +29,10 @@ const moodHigest = {
 };
 
 export default {
+  1: moodLowest,
+  2: moodLow,
+  3: moodMedium,
+  4: moodHigh,
+  5: moodHigest,
   all: [moodLowest, moodLow, moodMedium, moodHigh, moodHigest]
 };
