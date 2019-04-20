@@ -8,16 +8,30 @@ import colorVariables from '../colorVariables';
 interface Props {
   createEntry: (data: object) => void;
   editEntry: (data: object) => void;
+  entry: {
+    mood: object;
+    note: string;
+    weather: object;
+    id: string;
+  };
 }
-export default class EntryForm extends Component<Props> {
+interface InitialState {
+  mood?: object;
+  note: string;
+  weather?: object;
+  isEditing: boolean;
+}
+
+export default class EntryForm extends Component<Props, InitialState> {
   constructor(props: any) {
     super(props);
+
     const entry = this.props.entry || {};
 
     this.state = {
-      mood: entry.mood || null,
-      note: entry.note || '',
-      weather: entry.weather || null,
+      mood: entry.mood,
+      note: entry.note,
+      weather: entry.weather,
       isEditing: Boolean(entry.mood) // todo make this less brittle
     };
   }
@@ -26,7 +40,7 @@ export default class EntryForm extends Component<Props> {
     this.setState(() => ({ mood }));
   };
 
-  handleNoteChange = note => {
+  handleNoteChange = (note: string) => {
     this.setState(() => ({ note }));
   };
 
@@ -34,7 +48,7 @@ export default class EntryForm extends Component<Props> {
 
   createEntry = () => {
     this.props.createEntry(this.state);
-    this.setState(() => ({ mood: null, note: '' }));
+    this.setState(() => ({ mood: undefined, note: '' }));
   };
 
   editEntry = () => {
@@ -50,14 +64,31 @@ export default class EntryForm extends Component<Props> {
     return <Button title="Create a boy" onPress={this.createEntry} />;
   };
 
+  renderWeather = () => {
+    const { isEditing } = this.state;
+
+    if (isEditing) return null;
+
+    return <WeatherDisplay onWeatherResult={this.handleWeatherChange} />;
+  };
+
+  renderHeader = () => {
+    const { isEditing } = this.state;
+
+    if (isEditing) return null;
+
+    return <Text>How are ya feeling?</Text>;
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        {this.renderHeader()}
         <MoodList
           onMoodPress={this.handleMoodSelect}
           selectedMood={this.state.mood}
         />
-        <WeatherDisplay onWeatherResult={this.handleWeatherChange} />
+        {this.renderWeather()}
         <Text>Note:</Text>
         <TextInput
           style={styles.note}
@@ -82,7 +113,7 @@ const styles = StyleSheet.create({
     borderColor: colorVariables.borderColor,
     borderWidth: 1,
     borderRadius: colorVariables.borderRadius,
-    flex: 1,
-    width: 300
+    width: 300,
+    height: 150
   }
 });

@@ -7,25 +7,30 @@ import {
   FlatList,
   Button,
   Image,
-  TouchableHighlight
+  Alert
 } from 'react-native';
 import moment from 'moment';
+import dateHelper from '../helpers/date';
 import colorVariables from '../components/colorVariables';
 import moodMap from '../services/models/defaultMoods';
 import dayService from '../services/day';
-import realms from '../services/models/index';
 
 interface Props {
   navigation: any;
 }
 export default class Details extends Component<Props> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     const { navigation } = this.props;
 
     this.state = {
       day: dayService.getDayById(navigation.getParam('day').id)
     };
+  }
+
+  componentDidUpdate() {
+    // Alert.alert('cDU');
+    // this.updateUI();
   }
 
   updateUI() {
@@ -48,33 +53,30 @@ export default class Details extends Component<Props> {
       return acc + entry.mood.rating;
     }, 0);
     const averageMood = Math.round(totalMood / day.entries.length);
+    const mood = moodMap[averageMood];
 
     return (
-      <View>
-        <Text>
-          Today you felt: {moodMap[averageMood].icon}{' '}
-          {moodMap[averageMood].moodName}
-        </Text>
-      </View>
+      <Text style={styles.dateHeader}>
+        Today you overall felt: {mood.icon} {mood.moodName}
+      </Text>
     );
   };
 
   renderRow = ({ item }) => {
     return (
-      <TouchableHighlight onPress={() => this.onEntryPress(item)}>
-        <View key={item.id} style={styles.item}>
-          <Text style={styles.icon}>{item.mood.icon}</Text>
-          <Image
-            style={{ width: 58, height: 58 }}
-            source={{
-              uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
-            }}
-          />
-          <Text>{item.weather.temperature}</Text>
-          <Text>{item.note}</Text>
-          {/* <Button title="Delete" onPress={() => this.props.deleteEntry(item)} /> */}
-        </View>
-      </TouchableHighlight>
+      <View key={item.id} style={styles.item}>
+        <Text>{dateHelper.getPrettyTime(item.createdAt)}</Text>
+        <Text style={styles.icon}>{item.mood.icon}</Text>
+        <Image
+          style={{ width: 58, height: 58 }}
+          source={{
+            uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
+          }}
+        />
+        <Text>{item.weather.temperature}</Text>
+        <Text>{item.note}</Text>
+        <Button title="Edit" onPress={() => this.onEntryPress(item)} />
+      </View>
     );
   };
 
@@ -91,13 +93,12 @@ export default class Details extends Component<Props> {
   };
 
   render() {
-    const { navigation } = this.props;
-    const day = navigation.getParam('day');
-    const date = moment(day.createdAt).format('MMM Do YYYY');
+    const { day } = this.state;
+    const date = day && dateHelper.getPrettyDate(day.createdAt);
 
     return (
       <View style={styles.container}>
-        <Text>{date}</Text>
+        <Text style={styles.dateHeader}>{date}</Text>
         {this.renderAverageMood(day)}
         {this.renderEntryList()}
       </View>
@@ -112,8 +113,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
+  dateHeader: {
+    fontSize: 20,
+    marginVertical: 10
+  },
   item: {
-    flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 20,
     padding: 10,

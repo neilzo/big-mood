@@ -77,21 +77,19 @@ export default class MoodList extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    marginVertical: 10
   },
   list: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   listItem: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     marginLeft: 10,
     marginRight: 10
   },

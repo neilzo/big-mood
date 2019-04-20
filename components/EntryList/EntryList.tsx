@@ -9,7 +9,7 @@ import {
   Image,
   TouchableHighlight
 } from 'react-native';
-import moment from 'moment';
+import dateHelper from '../../helpers/date';
 import colorVariables from '../colorVariables';
 
 interface Props {
@@ -38,7 +38,7 @@ export default class EntryList extends Component<Props> {
     <TouchableHighlight onPress={() => this.onSectionPress(day)}>
       <View style={styles.sectionHeader}>
         <Text style={{ fontWeight: 'bold' }}>
-          {moment(createdAt).format('MMM Do YYYY')}
+          {dateHelper.getPrettyDate(createdAt)}
         </Text>
         <Button title="x" onPress={() => this.props.deleteDay(id)} />
       </View>
@@ -56,7 +56,9 @@ export default class EntryList extends Component<Props> {
               uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
             }}
           />
-          <Text>{item.note}</Text>
+          <Text numberOfLines={1} style={styles.note}>
+            {item.note}
+          </Text>
           <View style={styles.deleteButton}>
             <Button title="x" onPress={() => this.props.deleteEntry(item)} />
           </View>
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
     backgroundColor: '#F5FCFF',
     flexDirection: 'row'
   },
@@ -105,6 +107,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5
+  },
+  note: {
+    flex: 1
   },
   icon: {
     fontSize: 40

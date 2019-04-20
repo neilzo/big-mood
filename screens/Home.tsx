@@ -51,7 +51,6 @@ export default class HomeScreen extends Component<Props> {
 
     return (
       <View style={styles.container}>
-        <Text>How are ya feeling?</Text>
         <EntryForm createEntry={this.createEntry} />
         <EntryList
           days={days}
