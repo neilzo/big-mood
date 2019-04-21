@@ -8,23 +8,64 @@ import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
 import BottomNav from './components/BottomNav/BottomNav';
 
+const getCurrentRoute = navigationState => {
+  if (!navigationState) {
+    return null;
+  } else if (!navigationState.routes) {
+    return navigationState;
+  }
+
+  const route = navigationState.routes[navigationState.index];
+  if (route.routes) {
+    return getCurrentRoute(route);
+  }
+
+  return route;
+};
+
+const Routes = {
+  Home: { key: 'Home', title: 'Home' },
+  Details: { key: 'Details' },
+  EditEntry: {
+    key: 'EditEntry'
+  },
+  Settings: { key: 'Settings', title: 'Settings' }
+};
+
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: { screen: HomeScreen },
-    Details: { screen: Details },
-    EditEntry: {
+    [Routes.Home.key]: { screen: HomeScreen },
+    [Routes.Details.key]: { screen: Details },
+    [Routes.EditEntry.key]: {
       screen: EditEntry
     },
-    Settings: { screen: Settings }
+    [Routes.Settings.key]: { screen: Settings }
   },
   {
-    initialRouteName: 'Home',
-    tabBarPosition: 'bottom',
+    initialRouteName: 'Settings',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );
 
-const AppContainer = createAppContainer(TabNavigator);
+const MainNavigator = createStackNavigator(
+  {
+    main: {
+      screen: TabNavigator,
+      navigationOptions: ({ navigation }) => {
+        const navRoute = getCurrentRoute(navigation.state),
+          route = navRoute && navRoute.routeName && Routes[navRoute.routeName],
+          title = route ? route.title : '';
+
+        return { title };
+      }
+    }
+  },
+  {
+    initialRouteName: 'main'
+  }
+);
+
+const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends React.Component {
   render() {
