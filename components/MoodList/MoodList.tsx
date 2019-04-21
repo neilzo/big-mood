@@ -14,7 +14,7 @@ interface Props {
   selectedMood: object;
 }
 export default class MoodList extends Component<Props> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     const moods = mood.getMoods();
 

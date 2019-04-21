@@ -29,8 +29,11 @@ export default class Details extends Component<Props> {
   }
 
   componentDidUpdate() {
-    // Alert.alert('cDU');
-    // this.updateUI();
+    const { navigation } = this.props;
+    const { day } = this.state;
+    const dayParamId = navigation.getParam('day').id;
+
+    if (dayParamId !== day.id) this.updateUI();
   }
 
   updateUI() {
@@ -57,6 +60,7 @@ export default class Details extends Component<Props> {
 
     return (
       <Text style={styles.dateHeader}>
+        {dateHelper.getPrettyDate(day.createdAt)}
         Today you overall felt: {mood.icon} {mood.moodName}
       </Text>
     );
@@ -118,6 +122,7 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   item: {
+    flex: 1,
     alignItems: 'center',
     marginHorizontal: 20,
     padding: 10,

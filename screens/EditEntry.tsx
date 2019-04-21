@@ -1,8 +1,9 @@
 import React from 'react';
 import { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import EntryForm from '../components/EntryForm/EntryForm';
 import entryService from '../services/entry';
+import dayService from '../services/day';
 import dateHelper from '../helpers/date';
 
 interface Props {
@@ -10,13 +11,19 @@ interface Props {
 }
 export default class EditEntry extends Component<Props> {
   handleEditEntry = entry => {
+    const { navigate } = this.props.navigation;
+    const day = dayService.getDayByEntry(entry.createdAt);
+
     entryService.editEntry(entry);
-    this.props.navigation.navigate('Details', { entry });
+
+    if (!day) return; // todo remove this defensive check. this should always work
+    navigate('Details', { day });
   };
 
   render() {
     const { navigation } = this.props;
     const entry = navigation.getParam('entry');
+
     return (
       <View style={styles.container}>
         <Text style={styles.dateHeader}>
@@ -31,7 +38,7 @@ export default class EditEntry extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },

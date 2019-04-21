@@ -13,9 +13,11 @@ interface Props {
     note: string;
     weather: object;
     id: string;
+    createdAt: Date;
   };
 }
 interface InitialState {
+  id: string;
   mood?: object;
   note: string;
   weather?: object;
@@ -29,11 +31,29 @@ export default class EntryForm extends Component<Props, InitialState> {
     const entry = this.props.entry || {};
 
     this.state = {
+      id: entry.id,
       mood: entry.mood,
       note: entry.note,
       weather: entry.weather,
       isEditing: Boolean(entry.mood) // todo make this less brittle
     };
+  }
+
+  componentDidUpdate() {
+    const { entry: entryProp } = this.props;
+    const { id } = this.state;
+    if (entryProp && entryProp.id !== id) this.updateUI();
+  }
+
+  updateUI() {
+    const { entry } = this.props;
+    this.setState(() => ({
+      id: entry.id,
+      mood: entry.mood,
+      note: entry.note,
+      weather: entry.weather,
+      isEditing: Boolean(entry.mood) // todo make this less brittle
+    }));
   }
 
   handleMoodSelect = mood => {
@@ -52,7 +72,11 @@ export default class EntryForm extends Component<Props, InitialState> {
   };
 
   editEntry = () => {
-    this.props.editEntry({ id: this.props.entry.id, newEntryData: this.state });
+    this.props.editEntry({
+      id: this.props.entry.id,
+      newEntryData: this.state,
+      createdAt: this.props.entry.createdAt
+    });
   };
 
   renderSubmitButton = () => {

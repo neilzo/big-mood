@@ -2,19 +2,30 @@ import uuid from 'uuidv4';
 import moment from 'moment';
 import realm from './models/index';
 
-const getDay = day => {
-  return realm.objects('Day').filtered('id == $0', day.id)[0];
+interface Day {
+  id: string;
+  createdAt: Date;
+  entries: [];
+}
+
+const getDayById = (id: string) => {
+  return realm.objects('Day').filtered('id == $0', id)[0];
 };
 
-const getDayById = id => {
-  return realm.objects('Day').filtered('id == $0', id)[0];
+const getDayByEntry = (entryCreatedAt: string) => {
+  const days = realm.objects('Day');
+  return days.filter(day => {
+    return moment(day.createdAt).isSame(entryCreatedAt, 'day');
+  })[0];
 };
 
 const getCurrentDay = () => {
   const yesterday = moment()
+    .endOf('day')
     .subtract(1, 'day')
     .toString();
   const tomorrow = moment()
+    .startOf('day')
     .add(1, 'day')
     .toString();
   return realm
@@ -66,5 +77,6 @@ export default {
   deleteDay,
   addEntryToDay,
   getCurrentDay,
-  getDayById
+  getDayById,
+  getDayByEntry
 };
