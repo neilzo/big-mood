@@ -6,45 +6,78 @@ import {
   View,
   TextInput,
   Button,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView
 } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
-import colorVariables from '../colorVariables';
+import moodService from '../../services/mood';
+import colorVariables from '../../components/colorVariables';
 
 const RATINGS = [1, 2, 3, 4, 5];
 
-interface Props {}
+interface Props {
+  navigation: any;
+}
 interface State {
-  name: string;
+  id: string;
+  moodName: string;
   icon: string;
   rating: number;
+  isEditing: boolean;
 }
-export default class EditMoods extends Component<Props, State> {
+
+const isDisabled = (state: State) => {
+  return !state.icon || !state.moodName || !state.rating;
+};
+
+export default class MoodForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const { name, icon, rating } = this.props;
+    const mood = this.props.navigation.getParam('mood') || {};
+    const { id, moodName, icon, rating } = mood;
 
     this.state = {
-      name,
+      id,
+      moodName,
       icon,
-      rating
+      rating,
+      isEditing: Boolean(id)
     };
   }
 
-  handleSave = () => {};
+  handleNewMood = () => {
+    const { moodName, icon, rating } = this.state;
+    moodService.createMood({ moodName, icon, rating });
+  };
+
+  handleEditMood = () => {
+    const { navigate } = this.props.navigation;
+    const { id, moodName, icon, rating } = this.state;
+
+    moodService.editMood({ id, moodName, icon, rating });
+
+    navigate('MoodSettings');
+  };
 
   handleIconChange = (icon: string) => this.setState(() => ({ icon }));
 
-  handleNameChange = (name: string) => this.setState(() => ({ name }));
+  handleNameChange = (moodName: string) => this.setState(() => ({ moodName }));
 
   handleRatingChange = (rating: number) => this.setState(() => ({ rating }));
 
-  renderNameInput = () => (
-    <View>
-      <Text>Name:</Text>
-      <TextInput style={styles.input} onChangeText={this.handleNameChange} />
-    </View>
-  );
+  renderNameInput = () => {
+    const { moodName } = this.state;
+    return (
+      <View>
+        <Text>Name:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={this.handleNameChange}
+          value={moodName}
+        />
+      </View>
+    );
+  };
 
   renderIconPicker = () => (
     <View>
@@ -55,6 +88,27 @@ export default class EditMoods extends Component<Props, State> {
       <EmojiSelector onEmojiSelected={this.handleIconChange} />
     </View>
   );
+
+  renderSaveButton = () => {
+    const { isEditing } = this.state;
+
+    if (isEditing)
+      return (
+        <Button
+          title="Edit Save"
+          onPress={this.handleEditMood}
+          disabled={isDisabled(this.state)}
+        />
+      );
+
+    return (
+      <Button
+        title="Save"
+        onPress={this.handleNewMood}
+        disabled={isDisabled(this.state)}
+      />
+    );
+  };
 
   renderRatingInput = () => {
     const { rating } = this.state;
@@ -81,12 +135,12 @@ export default class EditMoods extends Component<Props, State> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         {this.renderNameInput()}
         {this.renderRatingInput()}
+        {this.renderSaveButton()}
         {this.renderIconPicker()}
-        <Button title="Save" onPress={this.handleSave} />
-      </View>
+      </ScrollView>
     );
   }
 }

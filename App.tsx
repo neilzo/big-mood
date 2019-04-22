@@ -6,7 +6,8 @@ import HomeScreen from './screens/Home';
 import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
-import EditSetting from './screens/EditSetting';
+import MoodSettings from './screens/MoodSettings';
+import MoodForm from './screens/modals/MoodForm';
 import BottomNav from './components/BottomNav/BottomNav';
 
 const getCurrentRoute = navigationState => {
@@ -31,7 +32,7 @@ const Routes = {
     key: 'EditEntry'
   },
   Settings: { key: 'Settings', title: 'Settings' },
-  EditSetting: { key: 'EditSetting', title: 'Edit Setting' }
+  MoodSettings: { key: 'MoodSettings', title: 'Edit Setting' }
 };
 
 const TabNavigator = createBottomTabNavigator(
@@ -42,10 +43,10 @@ const TabNavigator = createBottomTabNavigator(
       screen: EditEntry
     },
     [Routes.Settings.key]: { screen: Settings },
-    [Routes.EditSetting.key]: { screen: EditSetting }
+    [Routes.MoodSettings.key]: { screen: MoodSettings }
   },
   {
-    initialRouteName: 'EditSetting',
+    initialRouteName: 'MoodSettings',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );
@@ -61,9 +62,13 @@ const MainNavigator = createStackNavigator(
 
         return { title };
       }
+    },
+    MoodForm: {
+      screen: MoodForm
     }
   },
   {
+    mode: 'modal',
     initialRouteName: 'main'
   }
 );

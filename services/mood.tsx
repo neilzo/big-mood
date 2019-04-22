@@ -2,19 +2,28 @@ import uuid from 'uuidv4';
 import realm from './models/index';
 import defaultMoods from './models/defaultMoods';
 
-const getMood = () => {};
+const getMoodById = (id: string) => {
+  return realm.objects('Mood').filtered('id == $0', id)[0];
+};
 
 const getMoods = () => {
   return realm.objects('Mood').sorted('rating');
 };
 
+const getEnabledMoods = () => {
+  return realm
+    .objects('Mood')
+    .filtered('enabled')
+    .sorted('rating');
+};
+
 const createMood = opts => {
   realm.write(() => {
     const now = new Date();
-    const { name, icon, rating } = opts;
+    const { moodName, icon, rating } = opts;
     const params = {
       id: uuid(),
-      name,
+      moodName,
       icon,
       rating,
       createdAt: now,
@@ -24,6 +33,21 @@ const createMood = opts => {
     };
 
     realm.create('Mood', params);
+  });
+};
+
+const editMood = opts => {
+  realm.write(() => {
+    const now = new Date();
+    const { id, moodName, icon, rating } = opts;
+    const mood = getMoodById(id);
+
+    mood.moodName = moodName;
+    mood.icon = icon;
+    mood.rating = rating;
+    mood.modifiedAt = now;
+
+    return mood;
   });
 };
 
@@ -50,4 +74,4 @@ const deleteMood = (item: object) => {
   });
 };
 
-export default { createMood, getMoods, installDefaultMoods };
+export default { createMood, getMoods, installDefaultMoods, editMood };

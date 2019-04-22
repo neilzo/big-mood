@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomTabBar } from 'react-navigation-tabs';
 import { View, TouchableWithoutFeedback } from 'react-native';
 
-const HIDDEN_TABS = ['EditEntry', 'Details', 'EditSetting'];
+const HIDDEN_TABS = ['EditEntry', 'Details', 'EditSetting', 'MoodSettings'];
 
 const HiddenView = () => <View style={{ display: 'none' }} />;
 const TouchableWithoutFeedbackWrapper = ({

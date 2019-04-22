@@ -9,7 +9,7 @@ interface Props {
 export default class Settings extends Component<Props> {
   handleSettingPress = () => {
     const { navigate } = this.props.navigation;
-    navigate('EditSetting');
+    navigate('MoodSettings');
   };
 
   render() {

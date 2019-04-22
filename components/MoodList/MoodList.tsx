@@ -1,19 +1,24 @@
 import React from 'react';
 import { Component } from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import mood from '../../services/mood';
+
+// TODO move this somewhere central
+interface Mood {
+  moodName: string;
+  icon: string;
+  rating: number;
+}
 
 interface Props {
   onMoodPress: (mood: object) => void;
   selectedMood: object;
 }
-export default class MoodList extends Component<Props> {
+interface State {
+  moods: Array<Mood>;
+  selectedMood: Mood;
+}
+export default class MoodList extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     const moods = mood.getMoods();
@@ -30,13 +35,13 @@ export default class MoodList extends Component<Props> {
     this.updateDataSource();
   };
 
-  updateDataSource = (props = this.props) => {
+  updateDataSource = () => {
     this.setState(() => ({
       moods: mood.getMoods()
     }));
   };
 
-  renderRow = item => {
+  renderRow = (item: Mood) => {
     const selectedStyles =
       this.props.selectedMood &&
       item.moodName === this.props.selectedMood.moodName
@@ -61,6 +66,8 @@ export default class MoodList extends Component<Props> {
       <View style={styles.list}>{this.state.moods.map(this.renderRow)}</View>
     );
   };
+
+  renderGrouped = () => {};
 
   render() {
     return (
