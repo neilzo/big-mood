@@ -8,10 +8,22 @@ const getMoods = () => {
   return realm.objects('Mood').sorted('rating');
 };
 
-const createMood = (note: string) => {
+const createMood = opts => {
   realm.write(() => {
     const now = new Date();
-    // realm.create('Mood', { note, createdAt: now, modifiedAt: now });
+    const { name, icon, rating } = opts;
+    const params = {
+      id: uuid(),
+      name,
+      icon,
+      rating,
+      createdAt: now,
+      modifiedAt: now,
+      system: false,
+      enabled: true
+    };
+
+    realm.create('Mood', params);
   });
 };
 

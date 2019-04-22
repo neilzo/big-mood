@@ -11,7 +11,11 @@ Mood.schema = {
     icon: 'string',
     rating: 'int',
     createdAt: 'date',
-    modifiedAt: 'date'
+    modifiedAt: 'date',
+    enabled: 'bool',
+    system: 'bool',
+    deleted: 'bool?',
+    deletedAt: 'date?'
   }
 };
 

@@ -1756,6 +1756,11 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+emoji-datasource@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/emoji-datasource/-/emoji-datasource-4.1.0.tgz#b44557f78a2dfac2f350393391b170a567ec28ad"
+  integrity sha1-tEVX94ot+sLzUDkzkbFwpWfsKK0=
+
 encodeurl@~1.0.1, encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
@@ -4402,7 +4407,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -4497,6 +4502,15 @@ react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.3, react-is
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-native-emoji-selector@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-emoji-selector/-/react-native-emoji-selector-0.1.7.tgz#3accc2440aa40974fb4058605ed1c1148d19425c"
+  integrity sha512-T5KiJZyXbOfejDAYf7qd3WUkLNbohYdNESMG0sbotzdlgP84fiqKRjT7LNX/8OKVtgOpgD7+ymw9UTjtA4acHg==
+  dependencies:
+    emoji-datasource "^4.1.0"
+    prop-types "^15.7.2"
+    string.fromcodepoint "^0.2.1"
 
 react-native-gesture-handler@^1.1.0:
   version "1.1.0"
@@ -5270,6 +5284,11 @@ string-width@^1.0.1:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
+
+string.fromcodepoint@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/string.fromcodepoint/-/string.fromcodepoint-0.2.1.tgz#8d978333c0bc92538f50f383e4888f3e5619d653"
+  integrity sha1-jZeDM8C8klOPUPOD5IiPPlYZ1lM=
 
 string_decoder@~1.1.1:
   version "1.1.1"

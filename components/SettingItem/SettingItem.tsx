@@ -1,27 +1,32 @@
 import React from 'react';
-import { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import colorVariables from '../colorVariables';
 
 interface Props {
   title: string;
   icon: string;
+  onPress: () => void;
 }
-const SettingItem = ({ title, icon }: Props) => {
+const SettingItem = ({ title, icon, onPress }: Props) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.iconWrap}>
-        <Text>{icon}</Text>
+    <TouchableHighlight onPress={onPress} style={styles.touchWrap}>
+      <View style={styles.container}>
+        <View style={styles.iconWrap}>
+          <Text>{icon}</Text>
+        </View>
+        <Text>{title}</Text>
+        <View style={styles.arrowIcon}>
+          <Text>></Text>
+        </View>
       </View>
-      <Text>{title}</Text>
-      <View style={styles.arrowIcon}>
-        <Text>></Text>
-      </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 
 const styles = StyleSheet.create({
+  touchWrap: {
+    alignSelf: 'stretch'
+  },
   container: {
     //justifyContent: 'center',
     alignSelf: 'stretch',

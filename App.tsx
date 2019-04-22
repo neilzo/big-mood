@@ -6,6 +6,7 @@ import HomeScreen from './screens/Home';
 import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
+import EditSetting from './screens/EditSetting';
 import BottomNav from './components/BottomNav/BottomNav';
 
 const getCurrentRoute = navigationState => {
@@ -29,7 +30,8 @@ const Routes = {
   EditEntry: {
     key: 'EditEntry'
   },
-  Settings: { key: 'Settings', title: 'Settings' }
+  Settings: { key: 'Settings', title: 'Settings' },
+  EditSetting: { key: 'EditSetting', title: 'Edit Setting' }
 };
 
 const TabNavigator = createBottomTabNavigator(
@@ -39,10 +41,11 @@ const TabNavigator = createBottomTabNavigator(
     [Routes.EditEntry.key]: {
       screen: EditEntry
     },
-    [Routes.Settings.key]: { screen: Settings }
+    [Routes.Settings.key]: { screen: Settings },
+    [Routes.EditSetting.key]: { screen: EditSetting }
   },
   {
-    initialRouteName: 'Settings',
+    initialRouteName: 'EditSetting',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );
