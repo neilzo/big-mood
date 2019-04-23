@@ -1,7 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { View, Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+
+import store from './state/store';
+
 import HomeScreen from './screens/Home';
 import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
@@ -77,6 +81,10 @@ const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }

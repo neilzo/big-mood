@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -10,7 +11,9 @@ import {
   ScrollView
 } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
+
 import moodService from '../../services/mood';
+import { editMood } from '../../state/mood';
 import colorVariables from '../../components/colorVariables';
 
 const RATINGS = [1, 2, 3, 4, 5];
@@ -30,7 +33,7 @@ const isDisabled = (state: State) => {
   return !state.icon || !state.moodName || !state.rating;
 };
 
-export default class MoodForm extends Component<Props, State> {
+class MoodForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     const mood = this.props.navigation.getParam('mood') || {};
@@ -54,7 +57,7 @@ export default class MoodForm extends Component<Props, State> {
     const { navigate } = this.props.navigation;
     const { id, moodName, icon, rating } = this.state;
 
-    moodService.editMood({ id, moodName, icon, rating });
+    this.props.handleEditMood({ id, moodName, icon, rating });
 
     navigate('MoodSettings');
   };
@@ -173,3 +176,15 @@ const styles = StyleSheet.create({
     color: colorVariables.selected
   }
 });
+
+const mapDispatchToProps = dispatch => ({
+  handleEditMood: async ({ id, moodName, icon, rating }) => {
+    const mood = await moodService.editMood({ id, moodName, icon, rating });
+    dispatch(editMood({ mood }));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(MoodForm);

@@ -37,17 +37,19 @@ const createMood = opts => {
 };
 
 const editMood = opts => {
-  realm.write(() => {
-    const now = new Date();
-    const { id, moodName, icon, rating } = opts;
-    const mood = getMoodById(id);
+  return new Promise(resolve => {
+    realm.write(() => {
+      const now = new Date();
+      const { id, moodName, icon, rating } = opts;
+      const mood = getMoodById(id);
 
-    mood.moodName = moodName;
-    mood.icon = icon;
-    mood.rating = rating;
-    mood.modifiedAt = now;
+      mood.moodName = moodName;
+      mood.icon = icon;
+      mood.rating = rating;
+      mood.modifiedAt = now;
 
-    return mood;
+      resolve(mood);
+    });
   });
 };
 

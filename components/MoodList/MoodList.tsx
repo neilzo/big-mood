@@ -1,7 +1,9 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import mood from '../../services/mood';
+import moodService from '../../services/mood';
+import { getMoods } from '../../state/mood';
 
 // TODO move this somewhere central
 interface Mood {
@@ -11,34 +13,23 @@ interface Mood {
 }
 
 interface Props {
+  moods: Array<Mood>;
+  getData: () => void;
   onMoodPress: (mood: object) => void;
   selectedMood: object;
 }
 interface State {
-  moods: Array<Mood>;
   selectedMood: Mood;
 }
-export default class MoodList extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    const moods = mood.getMoods();
-
-    this.state = {
-      moods
-    };
+class MoodList extends Component<Props, State> {
+  componentDidMount() {
+    this.props.getData();
   }
 
   _keyExtractor = item => item.id;
 
   installDefaultMoods = () => {
-    mood.installDefaultMoods();
-    this.updateDataSource();
-  };
-
-  updateDataSource = () => {
-    this.setState(() => ({
-      moods: mood.getMoods()
-    }));
+    moodService.installDefaultMoods();
   };
 
   renderRow = (item: Mood) => {
@@ -63,7 +54,7 @@ export default class MoodList extends Component<Props, State> {
 
   renderMoods = () => {
     return (
-      <View style={styles.list}>{this.state.moods.map(this.renderRow)}</View>
+      <View style={styles.list}>{this.props.moods.map(this.renderRow)}</View>
     );
   };
 
@@ -105,3 +96,20 @@ const styles = StyleSheet.create({
   },
   notSelected: {}
 });
+
+const mapStateToProps = state => {
+  const { moods } = state;
+  return { moods: Object.values(moods) };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getData: () => {
+    const moods = moodService.getMoods();
+    dispatch(getMoods({ moods }));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MoodList);
