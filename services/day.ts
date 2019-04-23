@@ -34,7 +34,8 @@ const getCurrentDay = () => {
 };
 
 const getDays = (reverseChronological = true) => {
-  return realm.objects('Day').sorted('createdAt', reverseChronological);
+  const days = realm.objects('Day').sorted('createdAt', reverseChronological);
+  return { ...days };
 };
 
 const createDay = ({ entry }: { entry: object }) => {

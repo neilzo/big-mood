@@ -2,13 +2,16 @@ import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import thunk from 'redux-thunk';
 
 import moodsReducer from './mood';
+import daysReducer from './day';
 
 const reducer = {
-  moods: moodsReducer
+  moods: moodsReducer,
+  days: daysReducer
 };
 
 const preloadedState = {
-  moods: {}
+  moods: {},
+  days: {}
 };
 
 const store = configureStore({

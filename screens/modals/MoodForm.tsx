@@ -13,7 +13,7 @@ import {
 import EmojiSelector from 'react-native-emoji-selector';
 
 import moodService from '../../services/mood';
-import { editMood } from '../../state/mood';
+import { updateMood } from '../../state/mood';
 import colorVariables from '../../components/colorVariables';
 
 const RATINGS = [1, 2, 3, 4, 5];
@@ -178,9 +178,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleEditMood: async ({ id, moodName, icon, rating }) => {
-    const mood = await moodService.editMood({ id, moodName, icon, rating });
-    dispatch(editMood({ mood }));
+  handleEditMood: mood => {
+    dispatch(updateMood(mood));
   }
 });
 
