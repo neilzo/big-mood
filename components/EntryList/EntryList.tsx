@@ -11,41 +11,42 @@ import {
 } from 'react-native';
 import dateHelper from '../../helpers/date';
 import colorVariables from '../colorVariables';
+import EntryInterface from '../../types/entry';
+import DayInterface from '../../types/day';
 
 interface Props {
-  days: Array<object>;
+  days: Array<DayInterface>;
   deleteEntry: (item: object) => void;
   deleteDay: (id: string) => void;
   navigate: any;
 }
 export default class EntryList extends Component<Props> {
-  _keyExtractor = item => item.id;
+  _keyExtractor = (item: EntryInterface) => item.id;
 
-  onSectionPress = day => {
+  onSectionPress = (day: DayInterface) => {
     this.props.navigate('Details', { day });
   };
 
-  onEntryPress = entry => {
+  onEntryPress = (entry: EntryInterface) => {
     this.props.navigate('EditEntry', { entry });
   };
 
   renderSectionHeader = ({
-    section: {
-      day,
-      day: { id, createdAt }
-    }
+    section: { day }
+  }: {
+    section: { day: DayInterface };
   }) => (
     <TouchableHighlight onPress={() => this.onSectionPress(day)}>
       <View style={styles.sectionHeader}>
         <Text style={{ fontWeight: 'bold' }}>
-          {dateHelper.getPrettyDate(createdAt)}
+          {dateHelper.getPrettyDate(day.createdAt)}
         </Text>
-        <Button title="x" onPress={() => this.props.deleteDay(id)} />
+        <Button title="x" onPress={() => this.props.deleteDay(day.id)} />
       </View>
     </TouchableHighlight>
   );
 
-  renderEntryRow = ({ item }) => {
+  renderEntryRow = ({ item }: { item: EntryInterface }) => {
     return (
       <TouchableHighlight onPress={() => this.onEntryPress(item)}>
         <View key={item.id} style={styles.item}>

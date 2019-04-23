@@ -1,20 +1,17 @@
 import React from 'react';
 import { Component } from 'react';
 import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
+
 import MoodList from '../MoodList/MoodList';
 import WeatherDisplay from '../WeatherDisplay/WeatherDisplay';
 import colorVariables from '../colorVariables';
+import EntryInterface from '../../types/entry';
+import MoodInterface from '../../types/mood';
 
 interface Props {
   createEntry: (data: object) => void;
   editEntry: (data: object) => void;
-  entry: {
-    mood: object;
-    note: string;
-    weather: object;
-    id: string;
-    createdAt: Date;
-  };
+  entry: EntryInterface;
 }
 interface InitialState {
   id: string;
@@ -25,6 +22,12 @@ interface InitialState {
 }
 
 export default class EntryForm extends Component<Props, InitialState> {
+  static defaultProps = {
+    createEntry: () => {},
+    editEntry: () => {},
+    entry: {}
+  };
+
   constructor(props: any) {
     super(props);
 
@@ -56,7 +59,7 @@ export default class EntryForm extends Component<Props, InitialState> {
     }));
   }
 
-  handleMoodSelect = mood => {
+  handleMoodSelect = (mood: MoodInterface) => {
     this.setState(() => ({ mood }));
   };
 

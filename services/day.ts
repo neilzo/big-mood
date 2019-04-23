@@ -3,12 +3,8 @@ import moment from 'moment';
 import realm from './models/index';
 import store from '../redux/store';
 import * as reduxDays from '../redux/day';
-
-interface Day {
-  id: string;
-  createdAt: Date;
-  entries: [];
-}
+import DayInterface from '../types/day';
+import EntryInterface from '../types/entry';
 
 const getDayById = (id: string) => {
   return realm.objectForPrimaryKey('Day', id);
@@ -16,7 +12,7 @@ const getDayById = (id: string) => {
 
 const getDayByEntry = (entryCreatedAt: string) => {
   const days = realm.objects('Day');
-  return days.filter(day => {
+  return days.filter((day: DayInterface) => {
     return moment(day.createdAt).isSame(entryCreatedAt, 'day');
   })[0];
 };
@@ -54,8 +50,8 @@ const createDay = ({ entry }: { entry: object }) => {
 
 const deleteDay = (id: string) => {
   realm.write(() => {
-    const day = getDayById(id);
-    const entries = day.entries;
+    const day: DayInterface = getDayById(id);
+    const entries: Array<EntryInterface> = day.entries;
 
     entries.forEach(entry => {
       realm.delete(entry.weather);
@@ -65,9 +61,9 @@ const deleteDay = (id: string) => {
   });
 };
 
-const addEntryToDay = ({ entry }) => {
+const addEntryToDay = ({ entry }: { entry: EntryInterface }) => {
   realm.write(() => {
-    const day = getCurrentDay();
+    const day: DayInterface = getCurrentDay();
 
     day.entries.push(entry);
 

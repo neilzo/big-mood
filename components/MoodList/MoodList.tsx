@@ -4,35 +4,27 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import moodService from '../../services/mood';
 import { getMoods } from '../../redux/mood';
-
-// TODO move this somewhere central
-interface Mood {
-  moodName: string;
-  icon: string;
-  rating: number;
-}
+import MoodInterface from '../../types/mood';
 
 interface Props {
-  moods: Array<Mood>;
+  moods: Array<MoodInterface>;
   getData: () => void;
   onMoodPress: (mood: object) => void;
-  selectedMood: object;
+  selectedMood: MoodInterface;
 }
 interface State {
-  selectedMood: Mood;
+  selectedMood: MoodInterface;
 }
 class MoodList extends Component<Props, State> {
   componentDidMount() {
     this.props.getData();
   }
 
-  _keyExtractor = item => item.id;
-
   installDefaultMoods = () => {
     moodService.installDefaultMoods();
   };
 
-  renderRow = (item: Mood) => {
+  renderRow = (item: MoodInterface) => {
     const selectedStyles =
       this.props.selectedMood &&
       item.moodName === this.props.selectedMood.moodName

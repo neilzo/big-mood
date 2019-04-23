@@ -11,6 +11,11 @@ const TouchableWithoutFeedbackWrapper = ({
   testID,
   accessibilityLabel,
   ...props
+}: {
+  onPress: () => {};
+  onLongPress: () => {};
+  testID: string;
+  accessibilityLabel: string;
 }) => (
   <TouchableWithoutFeedback
     onPress={onPress}
@@ -27,10 +32,10 @@ const TouchableWithoutFeedbackWrapper = ({
     <View {...props} />
   </TouchableWithoutFeedback>
 );
-const TabBarComponent = props => (
+const TabBarComponent = (props: any) => (
   <BottomTabBar
     {...props}
-    getButtonComponent={({ route }) => {
+    getButtonComponent={({ route }: { route: object }) => {
       if (HIDDEN_TABS.includes(route.routeName)) {
         return HiddenView;
       }
