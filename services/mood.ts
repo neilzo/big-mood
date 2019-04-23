@@ -5,7 +5,7 @@ import store from '../redux/store';
 import * as reduxMoods from '../redux/mood';
 
 const getMoodById = (id: string) => {
-  return realm.objects('Mood').filtered('id == $0', id)[0];
+  return realm.objectForPrimaryKey('Mood', id);
 };
 
 const getMoods = () => {

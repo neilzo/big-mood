@@ -11,7 +11,7 @@ interface Day {
 }
 
 const getDayById = (id: string) => {
-  return realm.objects('Day').filtered('id == $0', id)[0];
+  return realm.objectForPrimaryKey('Day', id);
 };
 
 const getDayByEntry = (entryCreatedAt: string) => {

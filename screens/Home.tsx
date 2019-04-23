@@ -14,6 +14,7 @@ import EntryList from '../components/EntryList/EntryList';
 interface Props {
   navigation: any;
   getData: () => void;
+  createEntry: (entry) => void;
 }
 interface Item {
   id: string;
