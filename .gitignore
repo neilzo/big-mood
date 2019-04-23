@@ -61,3 +61,6 @@ buck-out/
 
 # Config
 config.js
+
+# tests
+.jest

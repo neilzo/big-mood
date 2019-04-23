@@ -1,9 +1,0 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const kelvinToFarenheit = (kelvin) => {
-    return Math.round(kelvin * (9 / 5) - 459.76);
-};
-exports.kelvinToFarenheit = kelvinToFarenheit;
-const computeOverallWeather = () => { };
-exports.computeOverallWeather = computeOverallWeather;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL05laWxEYWZ0YXJ5L1JOVHlwZXNjcmlwdC9oZWxwZXJzL3dlYXRoZXIudHN4IiwibWFwcGluZ3MiOiI7O0FBQUEsTUFBTSxpQkFBaUIsR0FBRyxDQUFDLE1BQWMsRUFBRSxFQUFFO0lBQzNDLE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxDQUFDLEdBQUcsTUFBTSxDQUFDLENBQUM7QUFDL0MsQ0FBQyxDQUFDO0FBSU8sOENBQWlCO0FBRjFCLE1BQU0scUJBQXFCLEdBQUcsR0FBRyxFQUFFLEdBQUUsQ0FBQyxDQUFDO0FBRVgsc0RBQXFCIiwibmFtZXMiOltdLCJzb3VyY2VzIjpbIi9Vc2Vycy9OZWlsRGFmdGFyeS9STlR5cGVzY3JpcHQvaGVscGVycy93ZWF0aGVyLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBrZWx2aW5Ub0ZhcmVuaGVpdCA9IChrZWx2aW46IG51bWJlcikgPT4ge1xuICByZXR1cm4gTWF0aC5yb3VuZChrZWx2aW4gKiAoOSAvIDUpIC0gNDU5Ljc2KTtcbn07XG5cbmNvbnN0IGNvbXB1dGVPdmVyYWxsV2VhdGhlciA9ICgpID0+IHt9O1xuXG5leHBvcnQgeyBrZWx2aW5Ub0ZhcmVuaGVpdCwgY29tcHV0ZU92ZXJhbGxXZWF0aGVyIH07XG4iXSwidmVyc2lvbiI6M30=

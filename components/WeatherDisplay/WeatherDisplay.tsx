@@ -2,12 +2,16 @@ import React from 'react';
 import { Component } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { getCurrentWeather } from '../../services/weather';
+import WeatherInterface from '../../types/weather';
 
 interface Props {
   onWeatherResult: (weather: object) => void;
 }
-export default class WeatherDisplay extends Component<Props> {
-  constructor(props: any) {
+interface State {
+  weather: WeatherInterface;
+}
+export default class WeatherDisplay extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 
 import dayService from '../services/day';
 import entryService from '../services/entry';
 import * as reduxDays from '../redux/day';
 import * as reduxEntries from '../redux/entry';
+import DayInterface from '../types/day';
+import EntryInterface from '../types/entry';
 
 import EntryForm from '../components/EntryForm/EntryForm';
 import EntryList from '../components/EntryList/EntryList';
@@ -14,7 +16,8 @@ import EntryList from '../components/EntryList/EntryList';
 interface Props {
   navigation: any;
   getData: () => void;
-  createEntry: (entry) => void;
+  createEntry: (entry: EntryInterface) => void;
+  days: Array<DayInterface>;
 }
 interface Item {
   id: string;
@@ -26,7 +29,7 @@ class HomeScreen extends Component<Props> {
 
   _keyExtractor = (item: Item) => item.id;
 
-  createEntry = (data: object) => {
+  createEntry = (data: EntryInterface) => {
     this.props.createEntry(data);
   };
 
@@ -73,11 +76,12 @@ const mapStateToProp = state => ({
   })
 });
 
-const mapDispatchToProp = dispatch => ({
+const mapDispatchToProp = (dispatch: DispatchProp) => ({
   getData: () => {
     dispatch(reduxDays.getDaysThunk());
   },
-  createEntry: entry => dispatch(reduxEntries.newEntryThunk(entry))
+  createEntry: (entry: EntryInterface) =>
+    dispatch(reduxEntries.newEntryThunk(entry))
 });
 
 export default connect(
