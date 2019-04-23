@@ -1,6 +1,8 @@
 import uuid from 'uuidv4';
 import realm from './models/index';
 import defaultMoods from './models/defaultMoods';
+import store from '../redux/store';
+import * as reduxMoods from '../redux/mood';
 
 const getMoodById = (id: string) => {
   return realm.objects('Mood').filtered('id == $0', id)[0];
@@ -32,24 +34,23 @@ const createMood = opts => {
       enabled: true
     };
 
-    realm.create('Mood', params);
+    const mood = realm.create('Mood', params);
+    store.dispatch(reduxMoods.newMood({ mood }));
   });
 };
 
 const editMood = opts => {
-  return new Promise(resolve => {
-    realm.write(() => {
-      const now = new Date();
-      const { id, moodName, icon, rating } = opts;
-      const mood = getMoodById(id);
+  realm.write(() => {
+    const now = new Date();
+    const { id, moodName, icon, rating } = opts;
+    const mood = getMoodById(id);
 
-      mood.moodName = moodName;
-      mood.icon = icon;
-      mood.rating = rating;
-      mood.modifiedAt = now;
+    mood.moodName = moodName;
+    mood.icon = icon;
+    mood.rating = rating;
+    mood.modifiedAt = now;
 
-      resolve(mood);
-    });
+    store.dispatch(reduxMoods.editMood({ mood }));
   });
 };
 

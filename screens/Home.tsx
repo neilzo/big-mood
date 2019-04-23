@@ -5,7 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import dayService from '../services/day';
 import entryService from '../services/entry';
-import { getDays } from '../state/day';
+import * as reduxDays from '../redux/day';
+import * as reduxEntries from '../redux/entry';
 
 import EntryForm from '../components/EntryForm/EntryForm';
 import EntryList from '../components/EntryList/EntryList';
@@ -25,7 +26,7 @@ class HomeScreen extends Component<Props> {
   _keyExtractor = (item: Item) => item.id;
 
   createEntry = (data: object) => {
-    entryService.createEntry(data);
+    this.props.createEntry(data);
   };
 
   deleteEntry = (item: Item) => {
@@ -64,15 +65,18 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProp = state => ({
-  days: Object.values(state.days)
+  days: Object.values(state.days).sort((a, b) => {
+    if (a.createdAt > b.createdAt) return -1;
+    if (b.createdAt > a.createdAt) return 1;
+    return 0;
+  })
 });
 
 const mapDispatchToProp = dispatch => ({
   getData: () => {
-    const days = dayService.getDays();
-    console.log(days);
-    dispatch(getDays(days));
-  }
+    dispatch(reduxDays.getDaysThunk());
+  },
+  createEntry: entry => dispatch(reduxEntries.newEntryThunk(entry))
 });
 
 export default connect(

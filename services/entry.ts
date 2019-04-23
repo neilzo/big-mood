@@ -1,6 +1,7 @@
 import uuid from 'uuidv4';
 import realm from './models/index';
 import dayService from './day';
+import store from '../redux/store';
 
 const getEntry = id => {
   return realm.objects('Entry').filtered('id == $0', id)[0];

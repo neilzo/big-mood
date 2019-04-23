@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import store from './state/store';
+import store from './redux/store';
 
 import HomeScreen from './screens/Home';
 import Details from './screens/Details';

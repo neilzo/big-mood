@@ -13,7 +13,7 @@ import {
 import EmojiSelector from 'react-native-emoji-selector';
 
 import moodService from '../../services/mood';
-import { updateMood } from '../../state/mood';
+import * as reduxMoods from '../../redux/mood';
 import colorVariables from '../../components/colorVariables';
 
 const RATINGS = [1, 2, 3, 4, 5];
@@ -49,8 +49,12 @@ class MoodForm extends Component<Props, State> {
   }
 
   handleNewMood = () => {
+    const { navigate } = this.props.navigation;
     const { moodName, icon, rating } = this.state;
-    moodService.createMood({ moodName, icon, rating });
+
+    this.props.handleNewMood({ moodName, icon, rating });
+
+    navigate('MoodSettings');
   };
 
   handleEditMood = () => {
@@ -179,7 +183,10 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => ({
   handleEditMood: mood => {
-    dispatch(updateMood(mood));
+    dispatch(reduxMoods.updateMood(mood));
+  },
+  handleNewMood: mood => {
+    dispatch(reduxMoods.newMoodThunk(mood));
   }
 });
 

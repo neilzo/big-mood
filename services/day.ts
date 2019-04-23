@@ -1,6 +1,8 @@
 import uuid from 'uuidv4';
 import moment from 'moment';
 import realm from './models/index';
+import store from '../redux/store';
+import * as reduxDays from '../redux/day';
 
 interface Day {
   id: string;
@@ -33,9 +35,8 @@ const getCurrentDay = () => {
     .filtered('createdAt > $0 && createdAt < $1', yesterday, tomorrow)[0];
 };
 
-const getDays = (reverseChronological = true) => {
-  const days = realm.objects('Day').sorted('createdAt', reverseChronological);
-  return { ...days };
+const getDays = () => {
+  return realm.objects('Day');
 };
 
 const createDay = ({ entry }: { entry: object }) => {
@@ -69,6 +70,8 @@ const addEntryToDay = ({ entry }) => {
     const day = getCurrentDay();
 
     day.entries.push(entry);
+
+    store.dispatch(reduxDays.editDay({ day }));
   });
 };
 

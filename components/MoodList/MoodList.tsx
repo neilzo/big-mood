@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import moodService from '../../services/mood';
-import { getMoods } from '../../state/mood';
+import { getMoods } from '../../redux/mood';
 
 // TODO move this somewhere central
 interface Mood {
