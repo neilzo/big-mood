@@ -20,8 +20,8 @@ export default class EditMoods extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Edit moods... show grouped list</Text>
-        <MoodList onMoodPress={this.onEditPress} />
+        <Text>Edit moods</Text>
+        <MoodList onMoodPress={this.onEditPress} grouped={true} />
         <Button title="Add New..." onPress={this.onAddNewPress} />
       </View>
     );

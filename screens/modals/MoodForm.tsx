@@ -20,6 +20,7 @@ const RATINGS = [1, 2, 3, 4, 5];
 
 interface Props {
   navigation: any;
+  handleDeleteMood: (mood) => void;
 }
 interface State {
   id: string;
@@ -66,6 +67,15 @@ class MoodForm extends Component<Props, State> {
     navigate('MoodSettings');
   };
 
+  handleDeleteMood = () => {
+    const { deleteMood, navigation } = this.props;
+    const { navigate } = navigation;
+    const mood = navigation.getParam('mood');
+
+    deleteMood(mood);
+    navigate('MoodSettings');
+  };
+
   handleIconChange = (icon: string) => this.setState(() => ({ icon }));
 
   handleNameChange = (moodName: string) => this.setState(() => ({ moodName }));
@@ -102,7 +112,7 @@ class MoodForm extends Component<Props, State> {
     if (isEditing)
       return (
         <Button
-          title="Edit Save"
+          title="Save"
           onPress={this.handleEditMood}
           disabled={isDisabled(this.state)}
         />
@@ -112,6 +122,21 @@ class MoodForm extends Component<Props, State> {
       <Button
         title="Save"
         onPress={this.handleNewMood}
+        disabled={isDisabled(this.state)}
+      />
+    );
+  };
+
+  renderDelete = () => {
+    const { isEditing } = this.state;
+    const mood = this.props.navigation.getParam('mood');
+
+    if (!isEditing) return null;
+
+    return (
+      <Button
+        title="Delete"
+        onPress={this.handleDeleteMood}
         disabled={isDisabled(this.state)}
       />
     );
@@ -146,6 +171,7 @@ class MoodForm extends Component<Props, State> {
         {this.renderNameInput()}
         {this.renderRatingInput()}
         {this.renderSaveButton()}
+        {this.renderDelete()}
         {this.renderIconPicker()}
       </ScrollView>
     );
@@ -187,7 +213,8 @@ const mapDispatchToProps = dispatch => ({
   },
   handleNewMood: mood => {
     dispatch(reduxMoods.newMoodThunk(mood));
-  }
+  },
+  deleteMood: mood => dispatch(reduxMoods.deleteMoodThunk(mood))
 });
 
 export default connect(

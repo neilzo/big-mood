@@ -13,7 +13,7 @@ interface Props {
   editEntry: (data: object) => void;
   entry: EntryInterface;
 }
-interface InitialState {
+interface State {
   id: string;
   mood?: object;
   note: string;
@@ -21,7 +21,11 @@ interface InitialState {
   isEditing: boolean;
 }
 
-export default class EntryForm extends Component<Props, InitialState> {
+const isDisabled = (state: State) => {
+  return !state.mood || !state.note;
+};
+
+export default class EntryForm extends Component<Props, State> {
   static defaultProps = {
     createEntry: () => {},
     editEntry: () => {},
@@ -86,9 +90,21 @@ export default class EntryForm extends Component<Props, InitialState> {
     const { isEditing } = this.state;
 
     if (isEditing)
-      return <Button title="Edit a boy" onPress={this.editEntry} />;
+      return (
+        <Button
+          title="Edit a boy"
+          onPress={this.editEntry}
+          disabled={isDisabled(this.state)}
+        />
+      );
 
-    return <Button title="Create a boy" onPress={this.createEntry} />;
+    return (
+      <Button
+        title="Create a boy"
+        onPress={this.createEntry}
+        disabled={isDisabled(this.state)}
+      />
+    );
   };
 
   renderWeather = () => {

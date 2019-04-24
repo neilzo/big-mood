@@ -2,20 +2,29 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import groupedBy from 'lodash/groupBy';
+
 import moodService from '../../services/mood';
 import { getMoods } from '../../redux/mood';
 import MoodInterface from '../../types/mood';
+import colorVariables from '../colorVariables';
 
 interface Props {
   moods: Array<MoodInterface>;
   getData: () => void;
   onMoodPress: (mood: object) => void;
   selectedMood: MoodInterface;
+  grouped: boolean;
 }
 interface State {
   selectedMood: MoodInterface;
 }
 class MoodList extends Component<Props, State> {
+  static defaultProps = {
+    grouped: false,
+    moods: []
+  };
+
   componentDidMount() {
     this.props.getData();
   }
@@ -44,13 +53,38 @@ class MoodList extends Component<Props, State> {
     );
   };
 
-  renderMoods = () => {
-    return (
-      <View style={styles.list}>{this.props.moods.map(this.renderRow)}</View>
-    );
+  renderGrouped = () => {
+    const { moods } = this.props;
+    const ratingsGrouped = groupedBy(moods, mood => mood.rating);
+
+    // todo: make this more performant
+    return Object.keys(ratingsGrouped)
+      .map(ratingKey => (
+        <View key={`rating-${ratingKey}`} style={styles.groupedWrap}>
+          {ratingsGrouped[ratingKey].map(mood => (
+            <TouchableHighlight
+              key={mood.id}
+              onPress={() => this.props.onMoodPress(mood)}
+              style={styles.groupedTouchWrap}
+            >
+              <View key={mood.id} style={styles.groupedItem}>
+                <Text>{mood.icon}</Text>
+                <Text>{mood.moodName}</Text>
+              </View>
+            </TouchableHighlight>
+          ))}
+        </View>
+      ))
+      .reverse();
   };
 
-  renderGrouped = () => {};
+  renderMoods = () => {
+    const { grouped, moods } = this.props;
+
+    if (grouped) return this.renderGrouped();
+
+    return <View style={styles.list}>{moods.map(this.renderRow)}</View>;
+  };
 
   render() {
     return (
@@ -69,8 +103,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    marginVertical: 10
+    marginVertical: 10,
+    alignSelf: 'stretch'
   },
   list: {
     flexDirection: 'row',
@@ -84,9 +118,28 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   selected: {
-    color: 'red'
+    color: colorVariables.selected,
+    fontWeight: 'bold'
   },
-  notSelected: {}
+  notSelected: {},
+  groupedTouchWrap: {
+    alignSelf: 'stretch'
+  },
+  groupedWrap: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    marginTop: 15,
+    borderTopWidth: 1,
+    borderColor: colorVariables.borderColor
+  },
+  groupedItem: {
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    borderBottomWidth: 1,
+    borderColor: colorVariables.borderColor,
+    backgroundColor: colorVariables.white,
+    padding: 10
+  }
 });
 
 const mapStateToProps = state => {

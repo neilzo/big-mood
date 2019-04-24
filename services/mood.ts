@@ -2,6 +2,7 @@ import uuid from 'uuidv4';
 import realm from './models/index';
 import defaultMoods from './models/defaultMoods';
 import store from '../redux/store';
+import MoodInterface from '../types/mood';
 import * as reduxMoods from '../redux/mood';
 
 const getMoodById = (id: string) => {
@@ -43,7 +44,7 @@ const editMood = opts => {
   realm.write(() => {
     const now = new Date();
     const { id, moodName, icon, rating } = opts;
-    const mood = getMoodById(id);
+    const mood: MoodInterface = getMoodById(id);
 
     mood.moodName = moodName;
     mood.icon = icon;
@@ -71,10 +72,18 @@ const installDefaultMoods = () => {
   });
 };
 
-const deleteMood = (item: object) => {
+const deleteMood = (mood: MoodInterface) => {
   realm.write(() => {
-    realm.delete(item);
+    const id = mood.id;
+    realm.delete(mood);
+    store.dispatch(reduxMoods.deleteMood({ id }));
   });
 };
 
-export default { createMood, getMoods, installDefaultMoods, editMood };
+export default {
+  createMood,
+  getMoods,
+  installDefaultMoods,
+  editMood,
+  deleteMood
+};
