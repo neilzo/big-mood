@@ -10,6 +10,7 @@ import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
 import MoodSettings from './screens/MoodSettings';
 import MoodForm from './screens/modals/MoodForm';
+import HabitSettings from './screens/HabitSettings';
 import BottomNav from './components/BottomNav/BottomNav';
 
 const getCurrentRoute = navigationState => {
@@ -27,14 +28,15 @@ const getCurrentRoute = navigationState => {
   return route;
 };
 
-const Routes = {
+export const Routes = {
   Home: { key: 'Home', title: 'Home' },
   Details: { key: 'Details' },
   EditEntry: {
     key: 'EditEntry'
   },
   Settings: { key: 'Settings', title: 'Settings' },
-  MoodSettings: { key: 'MoodSettings', title: 'Edit Setting' }
+  MoodSettings: { key: 'MoodSettings', title: 'Edit Moods' },
+  HabitSettings: { key: 'HabitSettings', title: 'Edit Habits' }
 };
 
 const TabNavigator = createBottomTabNavigator(
@@ -45,10 +47,11 @@ const TabNavigator = createBottomTabNavigator(
       screen: EditEntry
     },
     [Routes.Settings.key]: { screen: Settings },
-    [Routes.MoodSettings.key]: { screen: MoodSettings }
+    [Routes.MoodSettings.key]: { screen: MoodSettings },
+    [Routes.HabitSettings.key]: { screen: HabitSettings }
   },
   {
-    initialRouteName: 'MoodSettings',
+    initialRouteName: 'Settings',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );

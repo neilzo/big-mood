@@ -1,47 +1,47 @@
 const sleep = {
-  behaviorName: 'Sleep',
+  name: 'Sleep',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '😴',
   polarity: 1
 };
 
 const exercise = {
-  behaviorName: 'Exercise',
+  name: 'Exercise',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '💪',
   polarity: 1
 };
 
 const diet = {
-  behaviorName: 'Diet',
+  name: 'Diet',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '🥗',
   polarity: 1
 };
 
 const friends = {
-  behaviorName: 'Friends',
+  name: 'Friends',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '👥',
   polarity: 1
 };
 
 const drugs = {
-  behaviorName: 'Drugs',
+  name: 'Drugs',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '💊',
   polarity: -1
 };
 
 const drinking = {
-  behaviorName: 'Drinking',
+  name: 'Drinking',
   enabled: true,
-  editable: false,
+  system: false,
   icon: '🍷',
   polarity: -1
 };

@@ -113,6 +113,7 @@ export default class Details extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
+    alignSelf: 'stretch',
     alignItems: 'center',
     marginHorizontal: 20,
     padding: 10,

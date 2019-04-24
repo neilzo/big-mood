@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
 
-import moodService from '../../services/mood';
+import MoodInterface from '../../types/mood';
 import * as reduxMoods from '../../redux/mood';
 import colorVariables from '../../components/colorVariables';
 
@@ -129,9 +129,10 @@ class MoodForm extends Component<Props, State> {
 
   renderDelete = () => {
     const { isEditing } = this.state;
-    const mood = this.props.navigation.getParam('mood');
+    const mood: MoodInterface = this.props.navigation.getParam('mood');
+    const isSystem: boolean = mood.system;
 
-    if (!isEditing) return null;
+    if (!isEditing || isSystem) return null;
 
     return (
       <Button

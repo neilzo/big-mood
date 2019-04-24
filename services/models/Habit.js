@@ -6,10 +6,11 @@ Behavior.schema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    behaviorName: 'string',
+    name: 'string',
     description: 'string?',
+    completed: 'bool?',
     enabled: 'bool',
-    editable: 'bool',
+    system: 'bool',
     icon: 'string',
     polarity: 'int',
     createdAt: 'date',
