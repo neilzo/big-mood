@@ -1,14 +1,13 @@
 import Realm from 'realm';
 
-class Behavior extends Realm.Object {}
-Behavior.schema = {
-  name: 'Behavior',
+class Habit extends Realm.Object {}
+Habit.schema = {
+  name: 'Habit',
   primaryKey: 'id',
   properties: {
     id: 'string',
     name: 'string',
     description: 'string?',
-    completed: 'bool?',
     enabled: 'bool',
     system: 'bool',
     icon: 'string',
@@ -22,4 +21,4 @@ Behavior.schema = {
   }
 };
 
-export default Behavior;
+export default Habit;

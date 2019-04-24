@@ -2,15 +2,17 @@ import uuid from 'uuidv4';
 import moment from 'moment';
 import realm from './models/index';
 import store from '../redux/store';
+
 import * as reduxDays from '../redux/day';
 import DayInterface from '../types/day';
 import EntryInterface from '../types/entry';
+import HabitInterface from '../types/habit';
 
 const getDayById = (id: string) => {
   return realm.objectForPrimaryKey('Day', id);
 };
 
-const getDayByEntry = (entryCreatedAt: string) => {
+const getDayByEntry = (entryCreatedAt: Date) => {
   const days = realm.objects('Day');
   return days.filter((day: DayInterface) => {
     return moment(day.createdAt).isSame(entryCreatedAt, 'day');
@@ -44,7 +46,10 @@ const createDay = ({ entry }: { entry: object }) => {
       createdAt: now,
       modifiedAt: now
     };
-    realm.create('Day', params);
+
+    const day = realm.create('Day', params);
+
+    store.dispatch(reduxDays.newDay({ day }));
   });
 };
 
@@ -71,11 +76,22 @@ const addEntryToDay = ({ entry }: { entry: EntryInterface }) => {
   });
 };
 
+const addHabitToDay = ({ habit }: { habit: HabitInterface }) => {
+  realm.write(() => {
+    const day: DayInterface = getCurrentDay();
+
+    day.habits.push(habit);
+
+    // store.dispatch(reduxDays.editDay({ day }));
+  });
+};
+
 export default {
   createDay,
   getDays,
   deleteDay,
   addEntryToDay,
+  addHabitToDay,
   getCurrentDay,
   getDayById,
   getDayByEntry

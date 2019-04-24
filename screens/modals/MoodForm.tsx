@@ -15,6 +15,7 @@ import EmojiSelector from 'react-native-emoji-selector';
 import MoodInterface from '../../types/mood';
 import * as reduxMoods from '../../redux/mood';
 import colorVariables from '../../components/colorVariables';
+import Input from '../../components/form/Input/Input';
 
 const RATINGS = [1, 2, 3, 4, 5];
 
@@ -85,14 +86,7 @@ class MoodForm extends Component<Props, State> {
   renderNameInput = () => {
     const { moodName } = this.state;
     return (
-      <View>
-        <Text>Name:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={this.handleNameChange}
-          value={moodName}
-        />
-      </View>
+      <Input label="Name" onChange={this.handleNameChange} value={moodName} />
     );
   };
 

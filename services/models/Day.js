@@ -7,6 +7,7 @@ Day.schema = {
   properties: {
     id: 'string',
     entries: 'Entry[]',
+    habits: 'Habit[]',
     averageMoodRating: 'float?',
     averageWeatherDescription: 'string?',
     averageWeatherTemperature: 'int?',

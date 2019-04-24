@@ -51,7 +51,7 @@ const TabNavigator = createBottomTabNavigator(
     [Routes.HabitSettings.key]: { screen: HabitSettings }
   },
   {
-    initialRouteName: 'Settings',
+    initialRouteName: 'HabitSettings',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );

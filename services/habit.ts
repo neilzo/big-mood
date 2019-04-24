@@ -10,25 +10,25 @@ const getHabitById = (id: string) => {
 };
 
 const getHabits = () => {
-  return realm.objects('Habit').sorted('rating');
+  const habits = realm.objects('Habit');
+  store.dispatch(reduxHabits.getHabits({ habits }));
+
+  return habits;
 };
 
 const getEnabledHabits = () => {
-  return realm
-    .objects('Habit')
-    .filtered('enabled')
-    .sorted('rating');
+  return realm.objects('Habit').filtered('enabled');
 };
 
-const createHabit = opts => {
+const createHabit = (opts: HabitInterface) => {
   realm.write(() => {
     const now = new Date();
-    const { name, icon, rating } = opts;
+    const { name, icon, polarity } = opts;
     const params = {
       id: uuid(),
       name,
       icon,
-      rating,
+      polarity,
       createdAt: now,
       modifiedAt: now,
       system: false,
@@ -40,15 +40,15 @@ const createHabit = opts => {
   });
 };
 
-const editHabit = opts => {
+const editHabit = (opts: HabitInterface) => {
   realm.write(() => {
     const now = new Date();
-    const { id, habitName, icon, rating } = opts;
+    const { id, name, icon, polarity } = opts;
     const habit: HabitInterface = getHabitById(id);
 
-    habit.habitName = habitName;
+    habit.name = name;
     habit.icon = icon;
-    habit.rating = rating;
+    habit.polarity = polarity;
     habit.modifiedAt = now;
 
     store.dispatch(reduxHabits.editHabit({ habit }));
@@ -59,14 +59,16 @@ const installDefaultHabits = () => {
   realm.write(() => {
     const now = Date();
     defaultHabits.all.forEach(habit => {
-      const { habitName, icon, rating } = habit;
+      const { name, icon, polarity, system } = habit;
       realm.create('Habit', {
         id: uuid(),
-        habitName,
+        name,
         icon,
-        rating,
+        polarity,
         createdAt: now,
-        modifiedAt: now
+        modifiedAt: now,
+        system,
+        enabled: true
       });
     });
   });

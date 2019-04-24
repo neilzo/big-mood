@@ -3,10 +3,12 @@ import thunk from 'redux-thunk';
 
 import moodsReducer from './mood';
 import daysReducer from './day';
+import habitsReducer from './habit';
 
 const reducer = {
   moods: moodsReducer,
-  days: daysReducer
+  days: daysReducer,
+  habits: habitsReducer
 };
 
 const preloadedState = {

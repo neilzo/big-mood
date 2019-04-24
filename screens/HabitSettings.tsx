@@ -1,16 +1,25 @@
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import MoodList from '../components/MoodList/MoodList';
+import habitService from '../services/habit';
 
 interface Props {
   navigation: any;
 }
-export default class HabitSettings extends Component<Props> {
-  // onAddNewPress = () => {
-  //   const { navigate } = this.props.navigation;
-  //   navigate('MoodForm');
-  // };
+class HabitSettings extends Component<Props> {
+  componentDidMount() {
+    this.props.getData();
+  }
+
+  onAddNewPress = () => {
+    const { navigate } = this.props.navigation;
+    navigate('HabitForm');
+  };
+
+  handleInstallDefaults = () => {
+    habitService.installDefaultHabits();
+  };
 
   // onEditPress = mood => {
   //   const { navigate } = this.props.navigation;
@@ -18,14 +27,34 @@ export default class HabitSettings extends Component<Props> {
   // };
 
   render() {
+    const { habits } = this.props;
     return (
       <View style={styles.container}>
-        <Text>Edit habits</Text>
-        {/* <Button title="Add New..." onPress={this.onAddNewPress} /> */}
+        {habits.map(habit => (
+          <View key={habit.id}>
+            <Text>{habit.icon}</Text>
+            <Text>{habit.name}</Text>
+          </View>
+        ))}
+        {/* <Button
+          title="Install Default Habits"
+          onPress={this.handleInstallDefaults}
+        /> */}
+        <Button title="Add New..." onPress={this.onAddNewPress} />
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  habits: Object.values(state.habits)
+});
+
+const mapDispatchToProps = dispatch => ({
+  getData: () => {
+    habitService.getHabits();
+  }
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -33,3 +62,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HabitSettings);

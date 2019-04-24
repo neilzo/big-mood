@@ -1,7 +1,7 @@
 const sleep = {
   name: 'Sleep',
   enabled: true,
-  system: false,
+  system: true,
   icon: '😴',
   polarity: 1
 };
@@ -9,7 +9,7 @@ const sleep = {
 const exercise = {
   name: 'Exercise',
   enabled: true,
-  system: false,
+  system: true,
   icon: '💪',
   polarity: 1
 };
@@ -17,7 +17,7 @@ const exercise = {
 const diet = {
   name: 'Diet',
   enabled: true,
-  system: false,
+  system: true,
   icon: '🥗',
   polarity: 1
 };
@@ -25,7 +25,7 @@ const diet = {
 const friends = {
   name: 'Friends',
   enabled: true,
-  system: false,
+  system: true,
   icon: '👥',
   polarity: 1
 };
@@ -33,7 +33,7 @@ const friends = {
 const drugs = {
   name: 'Drugs',
   enabled: true,
-  system: false,
+  system: true,
   icon: '💊',
   polarity: -1
 };
@@ -41,7 +41,7 @@ const drugs = {
 const drinking = {
   name: 'Drinking',
   enabled: true,
-  system: false,
+  system: true,
   icon: '🍷',
   polarity: -1
 };
