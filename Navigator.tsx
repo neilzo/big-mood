@@ -2,8 +2,6 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import store from './redux/store';
-
 import Entries from './screens/Entries';
 import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
@@ -13,6 +11,8 @@ import MoodForm from './screens/modals/MoodForm';
 import HabitSettings from './screens/HabitSettings';
 import NewEntry from './screens/NewEntry';
 import BottomNav from './components/BottomNav/BottomNav';
+
+import Icon from './components/Icon/Icon';
 
 const getCurrentRoute = navigationState => {
   if (!navigationState) {
@@ -41,6 +41,23 @@ export const Routes = {
   NewEntry: { key: 'New Entry', title: 'Add Entry' }
 };
 
+const getRouteIcon = (routeName: string) => {
+  switch (routeName) {
+    case `${Routes.Entries.key}`: {
+      return 'book-open';
+    }
+    case `${Routes.Settings.key}`: {
+      return 'settings-outline';
+    }
+    case `${Routes.NewEntry.key}`: {
+      return 'plus-circle';
+    }
+    default: {
+      return 'road';
+    }
+  }
+};
+
 const TabNavigator = createBottomTabNavigator(
   {
     [Routes.Entries.key]: { screen: Entries },
@@ -55,6 +72,23 @@ const TabNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: 'New Entry',
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        // let IconComponent = Ionicons;
+        const iconName = getRouteIcon(routeName);
+        // if (routeName === 'Home') {
+        //   iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        //   // Sometimes we want to add badges to some icons.
+        //   // You can check the implementation below.
+        //   IconComponent = HomeIconWithBadge;
+        // } else if (routeName === 'Settings') {
+        //   iconName = `ios-options`;
+        // }
+
+        return <Icon name={iconName} size={25} color="#ccc" />;
+      }
+    }),
     tabBarComponent: props => <BottomNav {...props} />
   }
 );
