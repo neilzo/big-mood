@@ -4,13 +4,14 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import store from './redux/store';
 
-import HomeScreen from './screens/Home';
+import Entries from './screens/Entries';
 import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
 import MoodSettings from './screens/MoodSettings';
 import MoodForm from './screens/modals/MoodForm';
 import HabitSettings from './screens/HabitSettings';
+import NewEntry from './screens/NewEntry';
 import BottomNav from './components/BottomNav/BottomNav';
 
 const getCurrentRoute = navigationState => {
@@ -29,19 +30,21 @@ const getCurrentRoute = navigationState => {
 };
 
 export const Routes = {
-  Home: { key: 'Home', title: 'Home' },
+  Entries: { key: 'Entries', title: 'Entries' },
   Details: { key: 'Details' },
   EditEntry: {
     key: 'EditEntry'
   },
   Settings: { key: 'Settings', title: 'Settings' },
   MoodSettings: { key: 'MoodSettings', title: 'Edit Moods' },
-  HabitSettings: { key: 'HabitSettings', title: 'Edit Habits' }
+  HabitSettings: { key: 'HabitSettings', title: 'Edit Habits' },
+  NewEntry: { key: 'New Entry', title: 'Add Entry' }
 };
 
 const TabNavigator = createBottomTabNavigator(
   {
-    [Routes.Home.key]: { screen: HomeScreen },
+    [Routes.Entries.key]: { screen: Entries },
+    [Routes.NewEntry.key]: { screen: NewEntry },
     [Routes.Details.key]: { screen: Details },
     [Routes.EditEntry.key]: {
       screen: EditEntry
@@ -51,7 +54,7 @@ const TabNavigator = createBottomTabNavigator(
     [Routes.HabitSettings.key]: { screen: HabitSettings }
   },
   {
-    initialRouteName: 'HabitSettings',
+    initialRouteName: 'New Entry',
     tabBarComponent: props => <BottomNav {...props} />
   }
 );

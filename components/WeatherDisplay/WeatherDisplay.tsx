@@ -39,7 +39,9 @@ export default class WeatherDisplay extends Component<Props, State> {
             }}
           />
         )}
-        {this.state.weather && <Text>{this.state.weather.temperature}F, </Text>}
+        {this.state.weather && (
+          <Text>{this.state.weather.temperature}°F, </Text>
+        )}
         {this.state.weather && <Text>{this.state.weather.description}</Text>}
       </View>
     );

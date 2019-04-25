@@ -1,6 +1,4 @@
 {
-  "baseUrl": "types",
-  "typeRoots": ["types"],
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
