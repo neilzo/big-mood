@@ -75,7 +75,6 @@ const TabNavigator = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
-        // let IconComponent = Ionicons;
         const iconName = getRouteIcon(routeName);
         // if (routeName === 'Home') {
         //   iconName = `ios-information-circle${focused ? '' : '-outline'}`;

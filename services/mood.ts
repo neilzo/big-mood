@@ -1,4 +1,4 @@
-import uuid from 'uuidv4';
+import uuid from 'uuid/v4';
 import realm from './models/index';
 import defaultMoods from './models/defaultMoods';
 import store from '../redux/store';
@@ -20,7 +20,7 @@ const getEnabledMoods = () => {
     .sorted('rating');
 };
 
-const createMood = opts => {
+const createMood = (opts: MoodInterface) => {
   realm.write(() => {
     const now = new Date();
     const { moodName, icon, rating } = opts;
@@ -40,10 +40,12 @@ const createMood = opts => {
   });
 };
 
-const editMood = opts => {
+const editMood = (opts: MoodInterface) => {
   realm.write(() => {
     const now = new Date();
     const { id, moodName, icon, rating } = opts;
+    // todo fix this warning
+    // @ts-ignore
     const mood: MoodInterface = getMoodById(id);
 
     mood.moodName = moodName;
