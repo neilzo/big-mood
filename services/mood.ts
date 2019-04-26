@@ -1,4 +1,4 @@
-import uuid from 'uuidv4';
+import uuid from 'uuid/v4';
 import realm from './models/index';
 import defaultMoods from './models/defaultMoods';
 import store from '../redux/store';
