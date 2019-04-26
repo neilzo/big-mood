@@ -1,4 +1,4 @@
-import uuid from 'uuidv4';
+import uuid from 'uuid/v4';
 import realm from './models/index';
 import defaultHabits from './models/defaultHabits';
 import store from '../redux/store';
