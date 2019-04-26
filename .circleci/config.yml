@@ -25,30 +25,10 @@ jobs:
           paths:
             - node_modules
 
-      # - restore_cache:
-      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-      # - run:
-      #     command: bundle install
-      #     working_directory: ios
-      # - save_cache:
-      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-      #     paths:
-      #       - vendor/bundle
-      # - run:
-      #     command: bundle exec fastlane test
-      #     working_directory: ios
-      # - run:
-      #     name: set up test results
-      #     working_directory: ios
-      #     when: always
-      #     command: |
-      #       mkdir -p test-results/fastlane test-results/xcode
-      #       mv fastlane/report.xml test-results/fastlane
-      #       mv fastlane/test_output/report.junit test-results/xcode/junit.xml
-      # - store_test_results:
-      #     path: test-results
-      # - store_artifacts:
-      #     path: test-results
+      - persist_to_workspace:
+          root: ~/big-mood
+          paths:
+            - node_modules
 
   android:
     working_directory: ~/big-mood/android
@@ -61,27 +41,7 @@ jobs:
       - attach_workspace:
           at: ~/big-mood
 
-      - restore_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
-
-      - run: bundle install
-
-      - save_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
-      - run:
-          name: fastlane tests
-          command: |
-            mkdir -p test-results/fastlane
-            bundle exec fastlane test
-            mv fastlane/report.xml test-results/fastlane
-      - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
+      - run: cd android && ./gradlew assembleRelease
 
   ios:
     macos:
@@ -118,27 +78,16 @@ jobs:
           paths:
             - node_modules
 
-      # - restore_cache:
-      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-
       - run: xcodebuild -project ios/RNTypescript.xcodeproj -scheme "RNTypescript" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.4,name=iPhone X'
-
-      # - run:
-      #     command: npm test
-      #     working_directory: ios
-      # - store_test_results:
-      #     path: ios/test-results
-      # - store_artifacts:
-      #     path: ios/test-results
 
 workflows:
   version: 2
   node-android-ios:
     jobs:
       - node
-      # - android:
-      #     requires:
-      #       - node
+      - android:
+          requires:
+            - node
       - ios:
           requires:
             - node
