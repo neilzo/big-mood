@@ -3,7 +3,7 @@ jobs:
   node:
     working_directory: ~/big-mood
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:9
     steps:
       - checkout
 
