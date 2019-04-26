@@ -25,22 +25,18 @@ jobs:
           paths:
             - node_modules
 
-      - restore_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-
-      - run:
-          command: bundle install
-          working_directory: ios
-
-      - save_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
+      # - restore_cache:
+      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      # - run:
+      #     command: bundle install
+      #     working_directory: ios
+      # - save_cache:
+      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      #     paths:
+      #       - vendor/bundle
       # - run:
       #     command: bundle exec fastlane test
       #     working_directory: ios
-
       # - run:
       #     name: set up test results
       #     working_directory: ios
@@ -49,12 +45,10 @@ jobs:
       #       mkdir -p test-results/fastlane test-results/xcode
       #       mv fastlane/report.xml test-results/fastlane
       #       mv fastlane/test_output/report.junit test-results/xcode/junit.xml
-
-      - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
+      # - store_test_results:
+      #     path: test-results
+      # - store_artifacts:
+      #     path: test-results
 
   android:
     working_directory: ~/big-mood/android
@@ -91,7 +85,7 @@ jobs:
 
   ios:
     macos:
-      xcode: '9.0'
+      xcode: '10.2.0'
     working_directory: ~/big-mood
 
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
@@ -124,27 +118,18 @@ jobs:
           paths:
             - node_modules
 
-      - restore_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      # - restore_cache:
+      #     key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
-      - run:
-          command: bundle install
-          working_directory: ios
+      - run: xcodebuild -project ios/RNTypescript.xcodeproj -scheme "RNTypescript" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.4,name=iPhone X'
 
-      - save_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
-      - run:
-          command: npm test
-          working_directory: ios
-
-      - store_test_results:
-          path: ios/test-results
-
-      - store_artifacts:
-          path: ios/test-results
+      # - run:
+      #     command: npm test
+      #     working_directory: ios
+      # - store_test_results:
+      #     path: ios/test-results
+      # - store_artifacts:
+      #     path: ios/test-results
 
 workflows:
   version: 2
