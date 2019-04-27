@@ -17,7 +17,8 @@ Habit.schema = {
     modifiedAt: 'date',
     modifiedBy: 'string?',
     deleted: 'bool?',
-    deletedAt: 'date?'
+    deletedAt: 'date?',
+    habitProgress: 'HabitProgress[]'
   }
 };
 

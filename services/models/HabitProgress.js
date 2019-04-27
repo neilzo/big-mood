@@ -8,7 +8,9 @@ HabitProgress.schema = {
     id: 'string',
     completed: 'bool?',
     habit: 'string',
-    day: 'string'
+    day: 'string',
+    createdAt: 'date',
+    modifiedAt: 'date'
   }
 };
 

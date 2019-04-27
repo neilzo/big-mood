@@ -11,6 +11,7 @@ import MoodInterface from '../../types/mood';
 interface Props {
   createEntry: (data: object) => void;
   editEntry: (data: object) => void;
+  handleEntryChange: () => void;
   entry: EntryInterface;
 }
 interface State {
@@ -65,13 +66,18 @@ export default class EntryForm extends Component<Props, State> {
 
   handleMoodSelect = (mood: MoodInterface) => {
     this.setState(() => ({ mood }));
+    this.props.handleEntryChange({ mood });
   };
 
   handleNoteChange = (note: string) => {
     this.setState(() => ({ note }));
+    this.props.handleEntryChange({ note });
   };
 
-  handleWeatherChange = weather => this.setState(() => ({ weather }));
+  handleWeatherChange = weather => {
+    this.setState(() => ({ weather }));
+    this.props.handleEntryChange({ weather });
+  };
 
   createEntry = () => {
     this.props.createEntry(this.state);
@@ -89,19 +95,12 @@ export default class EntryForm extends Component<Props, State> {
   renderSubmitButton = () => {
     const { isEditing } = this.state;
 
-    if (isEditing)
-      return (
-        <Button
-          title="Edit a boy"
-          onPress={this.editEntry}
-          disabled={isDisabled(this.state)}
-        />
-      );
+    if (!isEditing) return null;
 
     return (
       <Button
-        title="Create a boy"
-        onPress={this.createEntry}
+        title="Edit a boy"
+        onPress={this.editEntry}
         disabled={isDisabled(this.state)}
       />
     );
@@ -115,18 +114,9 @@ export default class EntryForm extends Component<Props, State> {
     return <WeatherDisplay onWeatherResult={this.handleWeatherChange} />;
   };
 
-  renderHeader = () => {
-    const { isEditing } = this.state;
-
-    if (isEditing) return null;
-
-    return <Text>How are ya feeling?</Text>;
-  };
-
   render() {
     return (
       <View style={styles.container}>
-        {this.renderHeader()}
         <MoodList
           onMoodPress={this.handleMoodSelect}
           selectedMood={this.state.mood}
@@ -146,9 +136,7 @@ export default class EntryForm extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'center'
   },
   note: {
     backgroundColor: colorVariables.white,

@@ -76,6 +76,8 @@ const addEntryToDay = ({ entry }: { entry: EntryInterface }) => {
   });
 };
 
+const addHabitProgressToDay = () => {};
+
 const addHabitToDay = ({ habit }: { habit: HabitInterface }) => {
   realm.write(() => {
     const day: DayInterface = getCurrentDay();
