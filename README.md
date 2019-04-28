@@ -1,3 +1,3 @@
 Eat, Sleep, Track, Repeat
 
-CI: https://circleci.com/gh/neilzo/big-mood
+Build: [![CircleCI](https://circleci.com/gh/neilzo/big-mood.svg?style=svg)](https://circleci.com/gh/neilzo/big-mood)
