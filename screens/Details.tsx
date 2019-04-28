@@ -11,10 +11,13 @@ import EntryInterface from '../types/entry';
 import habitProgress from '../services/habitProgress';
 import habit from '../services/habit';
 
+import ButtonIcon from '../components/ButtonIcon/ButtonIcon';
+
 interface Props {
   navigation: any;
   habitProgress: object;
   day: DayInterface;
+  getData: () => void;
 }
 class Details extends Component<Props> {
   componentDidMount() {
@@ -34,7 +37,7 @@ class Details extends Component<Props> {
     if (!habits) return null;
 
     return habits.map(progress => (
-      <View key={progress.id}>
+      <View key={progress.id} style={styles.progressItem}>
         <Text>Habit: {progress.habitIcon}</Text>
         <Text>{progress.habitName}</Text>
         <Text>Completed: {progress.completed.toString()}</Text>
@@ -42,11 +45,24 @@ class Details extends Component<Props> {
     ));
   };
 
-  renderAverageWeather = () => {};
+  renderWeather = weather => {
+    return (
+      <View style={styles.weatherWrap}>
+        <Image
+          style={{ width: 58, height: 58 }}
+          source={{
+            uri: `http://openweathermap.org/img/w/${weather.icon}.png`
+          }}
+        />
+        <Text>{weather.description} and </Text>
+        <Text>{weather.temperature} degrees</Text>
+      </View>
+    );
+  };
 
   renderAverageMood = () => {
     const { day } = this.props;
-    const totalMood = day.entries.reduce((acc, entry) => {
+    const totalMood = day.entries.reduce((acc: number, entry) => {
       return acc + entry.mood.rating;
     }, 0);
     const averageMood = Math.round(totalMood / day.entries.length);
@@ -69,15 +85,14 @@ class Details extends Component<Props> {
       <View key={item.id} style={styles.item}>
         <Text>{dateHelper.getPrettyTime(item.createdAt)}</Text>
         <Text style={styles.icon}>{item.mood.icon}</Text>
-        <Image
-          style={{ width: 58, height: 58 }}
-          source={{
-            uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
-          }}
-        />
-        <Text>{item.weather.temperature}</Text>
+        {this.renderWeather(item.weather)}
         <Text>{item.note}</Text>
-        <Button title="Edit" onPress={() => this.onEntryPress(item)} />
+        <ButtonIcon
+          icon="pencil"
+          onPress={() => this.onEntryPress(item)}
+          size={25}
+        />
+        <ButtonIcon icon="trash-can-outline" onPress={() => {}} size={25} />
       </View>
     );
   };
@@ -144,6 +159,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 40
+  },
+  weatherWrap: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  progressItem: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 });
 
