@@ -4,13 +4,13 @@ import { createComponent } from '../helpers/renderer';
 
 jest.mock('react-redux', () => {
   return {
-    Provider: 'Provider'
+    Provider: 'Provider',
   };
 });
 
 jest.mock('react-navigation', () => {
   return {
-    createAppContainer: jest.fn(() => 'AppContainer')
+    createAppContainer: jest.fn(() => 'AppContainer'),
   };
 });
 

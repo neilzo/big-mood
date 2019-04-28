@@ -43,7 +43,7 @@ const habitsReducer = createReducer(initialState, {
     delete newState[id];
 
     return { ...newState };
-  }
+  },
 });
 
 export default habitsReducer;

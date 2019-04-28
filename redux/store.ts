@@ -10,21 +10,21 @@ const reducer = {
   moods: moodsReducer,
   days: daysReducer,
   habits: habitsReducer,
-  habitProgress: habitProgressReducer
+  habitProgress: habitProgressReducer,
 };
 
 const preloadedState = {
   moods: {},
   days: {},
   habits: {},
-  habitProgress: {}
+  habitProgress: {},
 };
 
 const store = configureStore({
   reducer,
   middleware: [thunk],
   devTools: process.env.NODE_ENV !== 'production',
-  preloadedState
+  preloadedState,
 });
 
 export default store;

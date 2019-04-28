@@ -12,7 +12,7 @@ const kelvinToFarenheit = (kelvin: number) => {
 const computeOverallWeather = (weatherResults: WeatherResults) => ({
   icon: weatherResults.weather[0].icon,
   description: weatherResults.weather[0].main,
-  temperature: kelvinToFarenheit(weatherResults.main.temp)
+  temperature: kelvinToFarenheit(weatherResults.main.temp),
 });
 
 export { kelvinToFarenheit, computeOverallWeather };

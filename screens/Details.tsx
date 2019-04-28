@@ -51,7 +51,7 @@ class Details extends Component<Props> {
         <Image
           style={{ width: 58, height: 58 }}
           source={{
-            uri: `http://openweathermap.org/img/w/${weather.icon}.png`
+            uri: `http://openweathermap.org/img/w/${weather.icon}.png`,
           }}
         />
         <Text>{weather.description} and </Text>
@@ -143,21 +143,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: colorVariables.defaultBGColor,
   },
   header: {
-    flex: 0
+    flex: 0,
   },
   dateHeader: {
-    marginVertical: 20
+    marginVertical: 20,
   },
   dateHeaderText: {
-    fontSize: 20
+    fontSize: 20,
   },
   listWrap: {
     flex: 1,
     alignSelf: 'stretch',
-    marginTop: 20
+    marginTop: 20,
   },
   item: {
     flex: 1,
@@ -165,52 +165,52 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     padding: 10,
     marginVertical: 5,
-    shadowColor: '#000',
+    shadowColor: colorVariables.shadowColor,
     borderWidth: 1,
     borderColor: colorVariables.borderColor,
-    backgroundColor: '#fff',
+    backgroundColor: colorVariables.white,
     borderRadius: colorVariables.borderRadius,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 1.5
+    shadowRadius: 1.5,
   },
   itemInner: {
     flex: 1,
     flexDirection: 'row',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   itemHeader: {
     alignSelf: 'stretch',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   actionIcons: {
     marginLeft: 'auto',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon: {
     flex: 0,
-    fontSize: 40
+    fontSize: 40,
   },
   itemContent: {
-    flex: 1
+    flex: 1,
   },
   weatherWrap: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   progressItem: {
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 const mapStateToProps = (state, props) => {
   const id = props.navigation.getParam('day').id;
   return {
     day: state.days[id],
-    habitProgress: state.habitProgress
+    habitProgress: state.habitProgress,
   };
 };
 
@@ -219,7 +219,7 @@ const mapDispatchToProps = dispatch => ({
     // get day, habits, habitProgress...
     habit.getHabits();
     habitProgress.getHabitProgress();
-  }
+  },
 });
 
 export default connect(

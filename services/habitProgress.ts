@@ -34,7 +34,7 @@ export const createHabitProgresses = async (newObjects = []) => {
           entry,
           completed,
           createdAt: now,
-          modifiedAt: now
+          modifiedAt: now,
         };
 
         const habitProgress: HabitProgressInterface = realm.create(
@@ -79,7 +79,7 @@ export const createHabitProgresses = async (newObjects = []) => {
 
 export default {
   createHabitProgresses,
-  getHabitProgress
+  getHabitProgress,
   // editHabitProgress,
   // deleteHabitProgress
 };

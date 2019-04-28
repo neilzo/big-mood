@@ -32,7 +32,7 @@ const createMood = opts => {
       createdAt: now,
       modifiedAt: now,
       system: false,
-      enabled: true
+      enabled: true,
     };
 
     const mood = realm.create('Mood', params);
@@ -66,7 +66,7 @@ const installDefaultMoods = () => {
         icon,
         rating,
         createdAt: now,
-        modifiedAt: now
+        modifiedAt: now,
       });
     });
   });
@@ -85,5 +85,5 @@ export default {
   getMoods,
   installDefaultMoods,
   editMood,
-  deleteMood
+  deleteMood,
 };

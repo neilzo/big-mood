@@ -16,7 +16,7 @@ const getEntries = () => {
 
 const createEntry = ({
   entry: entryData,
-  habitProgress
+  habitProgress,
 }: {
   entry: EntryInterface;
   habitProgress: Array<HabitProgressInterface>;
@@ -32,7 +32,7 @@ const createEntry = ({
       note,
       createdAt: now,
       modifiedAt: now,
-      weather
+      weather,
     };
 
     entry = realm.create('Entry', params);
@@ -50,7 +50,7 @@ const createEntry = ({
 
 const editEntry = ({
   id,
-  newEntryData
+  newEntryData,
 }: {
   id: string;
   newEntryData: EntryInterface;

@@ -31,7 +31,7 @@ const daysReducer = createReducer(initialState, {
   },
   [newDay]: (state, { payload: { day } }) => {
     return { ...state, [day.id]: day };
-  }
+  },
 });
 
 export default daysReducer;

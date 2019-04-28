@@ -27,7 +27,7 @@ class NewEntry extends Component<Props, State> {
     this.state = {
       step: 0,
       entry: {},
-      habitProgress: props.habitProgress
+      habitProgress: props.habitProgress,
     };
   }
 
@@ -51,8 +51,8 @@ class NewEntry extends Component<Props, State> {
     this.setState((prevState: State) => ({
       entry: {
         ...prevState.entry,
-        ...newData
-      }
+        ...newData,
+      },
     }));
   };
 
@@ -60,8 +60,8 @@ class NewEntry extends Component<Props, State> {
     this.setState((prevState: State) => ({
       habitProgress: {
         ...prevState.habitProgress,
-        [habitProgress.habit]: habitProgress
-      }
+        [habitProgress.habit]: habitProgress,
+      },
     }));
   };
 
@@ -131,16 +131,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   entryWrap: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 const mapDispatchToProp = (dispatch: DispatchProp) => ({
   createEntry: ({ entry, habitProgress }: { entry: EntryInterface }) =>
-    dispatch(reduxEntries.newEntryThunk({ entry, habitProgress }))
+    dispatch(reduxEntries.newEntryThunk({ entry, habitProgress })),
 });
 
 export default connect(

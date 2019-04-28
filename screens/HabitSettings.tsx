@@ -47,20 +47,20 @@ class HabitSettings extends Component<Props> {
 }
 
 const mapStateToProps = state => ({
-  habits: Object.values(state.habits)
+  habits: Object.values(state.habits),
 });
 
 const mapDispatchToProps = dispatch => ({
   getData: () => {
     habitService.getHabits();
-  }
+  },
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default connect(

@@ -33,7 +33,7 @@ const createHabit = (opts: HabitInterface) => {
       createdAt: now,
       modifiedAt: now,
       system: false,
-      enabled: true
+      enabled: true,
     };
 
     const habit = realm.create('Habit', params);
@@ -69,7 +69,7 @@ const installDefaultHabits = () => {
         createdAt: now,
         modifiedAt: now,
         system,
-        enabled: true
+        enabled: true,
       });
     });
   });
@@ -88,5 +88,5 @@ export default {
   getHabits,
   installDefaultHabits,
   editHabit,
-  deleteHabit
+  deleteHabit,
 };

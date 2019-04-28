@@ -43,7 +43,7 @@ const moodsReducer = createReducer(initialState, {
     delete newState[id];
 
     return { ...newState };
-  }
+  },
 });
 
 export default moodsReducer;

@@ -44,7 +44,7 @@ const habitProgressReducer = createReducer(initialState, {
       const enhancedHabitProgress = {
         ...habitProgress,
         habitName: habit.name,
-        habitIcon: habit.icon
+        habitIcon: habit.icon,
       };
 
       if (!day) {
@@ -59,7 +59,7 @@ const habitProgressReducer = createReducer(initialState, {
   [editHabitProgress]: (state, action) => {
     return {
       ...state,
-      [action.payload.habitProgress.id]: action.payload.habitProgress
+      [action.payload.habitProgress.id]: action.payload.habitProgress,
     };
   },
   [newHabitProgress]: (state, { payload: { habitProgress } }) => {
@@ -72,7 +72,7 @@ const habitProgressReducer = createReducer(initialState, {
     delete newState[id];
 
     return { ...newState };
-  }
+  },
 });
 
 export default habitProgressReducer;

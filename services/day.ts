@@ -47,7 +47,7 @@ const createDayWithEntry = ({ entry }: { entry: object }) => {
         entries: [entry],
         habitProgress: [],
         createdAt: now,
-        modifiedAt: now
+        modifiedAt: now,
       };
 
       const day = realm.create('Day', params);
@@ -85,7 +85,7 @@ const deleteDay = (id: string) => {
 
 const updateDay = async ({
   entry,
-  habitProgress
+  habitProgress,
 }: {
   entry: EntryInterface;
   habitProgress: Array<HabitProgressInterface>;
@@ -128,5 +128,5 @@ export default {
   getCurrentDay,
   getDayById,
   getDayByEntry,
-  updateDay
+  updateDay,
 };

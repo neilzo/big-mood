@@ -29,7 +29,7 @@ const entrysReducer = createReducer(initialState, {
   },
   [newEntry]: (state, { payload: { entry } }) => {
     return { ...state, [entry.id]: entry };
-  }
+  },
 });
 
 export default entrysReducer;

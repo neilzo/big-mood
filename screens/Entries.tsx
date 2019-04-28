@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  }
+    backgroundColor: '#F5FCFF',
+  },
 });
 
 const mapStateToProp = state => ({
@@ -62,13 +62,13 @@ const mapStateToProp = state => ({
     if (a.createdAt > b.createdAt) return -1;
     if (b.createdAt > a.createdAt) return 1;
     return 0;
-  })
+  }),
 });
 
 const mapDispatchToProp = (dispatch: DispatchProp) => ({
   getData: () => {
     dispatch(reduxDays.getDaysThunk());
-  }
+  },
 });
 
 export default connect(
