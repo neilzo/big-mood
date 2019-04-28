@@ -3,6 +3,7 @@ export default interface HabitProgress {
   completed?: boolean;
   habit: string;
   day: string;
+  entry: string;
   createdAt: Date;
   modifiedAt: Date;
 }

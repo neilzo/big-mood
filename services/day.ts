@@ -1,12 +1,13 @@
 import uuid from 'uuid/v4';
 import moment from 'moment';
 import realm from './models/index';
+import { createHabitProgresses } from './habitProgress';
 import store from '../redux/store';
 
 import * as reduxDays from '../redux/day';
 import DayInterface from '../types/day';
 import EntryInterface from '../types/entry';
-import HabitInterface from '../types/habit';
+import HabitProgressInterface from '../types/habitProgress';
 
 const getDayById = (id: string) => {
   return realm.objectForPrimaryKey('Day', id);
@@ -37,19 +38,34 @@ const getDays = () => {
   return realm.objects('Day');
 };
 
-const createDay = ({ entry }: { entry: object }) => {
+const createDayWithEntry = ({ entry }: { entry: object }) => {
+  return new Promise(resolve => {
+    realm.write(() => {
+      const now = new Date();
+      const params = {
+        id: uuid(),
+        entries: [entry],
+        habitProgress: [],
+        createdAt: now,
+        modifiedAt: now
+      };
+
+      const day = realm.create('Day', params);
+
+      resolve(day);
+    });
+  });
+};
+
+const addHabitProgressToDay = async ({ habitProgress, day, entry }) => {
+  const habitsWithDay = habitProgress.map(habit => {
+    return { ...habit, day: day.id, entry: entry.id };
+  });
+
+  const habitProgressObj = await createHabitProgresses(habitsWithDay);
+
   realm.write(() => {
-    const now = new Date();
-    const params = {
-      id: uuid(),
-      entries: [entry],
-      createdAt: now,
-      modifiedAt: now
-    };
-
-    const day = realm.create('Day', params);
-
-    store.dispatch(reduxDays.newDay({ day }));
+    habitProgressObj.forEach(progress => day.habitProgress.push(progress));
   });
 };
 
@@ -62,39 +78,55 @@ const deleteDay = (id: string) => {
       realm.delete(entry.weather);
     });
     realm.delete(entries);
+    realm.delete(day.habitProgress);
     realm.delete(day);
   });
 };
 
-const addEntryToDay = ({ entry }: { entry: EntryInterface }) => {
-  realm.write(() => {
-    const day: DayInterface = getCurrentDay();
+const updateDay = async ({
+  entry,
+  habitProgress
+}: {
+  entry: EntryInterface;
+  habitProgress: Array<HabitProgressInterface>;
+}) => {
+  const day: DayInterface = getCurrentDay();
+  const habitsWithDay = habitProgress.map(habit => {
+    return { ...habit, day: day.id, entry: entry.id };
+  });
+  const habitProgressObjs = await createHabitProgresses(habitsWithDay);
 
+  realm.write(() => {
     day.entries.push(entry);
+
+    habitProgressObjs.forEach(progress => {
+      const habitExits = day.habitProgress.find(
+        existingProgress => existingProgress.habit === progress.habit
+      );
+
+      if (!habitExits) day.habitProgress.push(progress);
+    });
 
     store.dispatch(reduxDays.editDay({ day }));
   });
 };
 
-const addHabitProgressToDay = () => {};
+const createDay = async ({ entry, habitProgress }) => {
+  const day = await createDayWithEntry({ entry });
+  await addHabitProgressToDay({ habitProgress, day, entry });
 
-const addHabitToDay = ({ habit }: { habit: HabitInterface }) => {
-  realm.write(() => {
-    const day: DayInterface = getCurrentDay();
+  store.dispatch(reduxDays.newDay({ day }));
 
-    day.habits.push(habit);
-
-    // store.dispatch(reduxDays.editDay({ day }));
-  });
+  return day;
 };
 
 export default {
   createDay,
+  createDayWithEntry,
   getDays,
   deleteDay,
-  addEntryToDay,
-  addHabitToDay,
   getCurrentDay,
   getDayById,
-  getDayByEntry
+  getDayByEntry,
+  updateDay
 };

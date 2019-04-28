@@ -3,6 +3,9 @@ import realm from './models/index';
 import dayService from './day';
 import store from '../redux/store';
 
+import EntryInterface from '../types/entry';
+import HabitProgressInterface from '../types/habitProgress';
+
 const getEntry = (id: string) => {
   return realm.objectForPrimaryKey('Entry', id);
 };
@@ -12,15 +15,14 @@ const getEntries = () => {
 };
 
 const createEntry = ({
-  note,
-  mood,
-  weather
+  entry: entryData,
+  habitProgress
 }: {
-  note: string;
-  mood: object;
-  weather: object;
+  entry: EntryInterface;
+  habitProgress: Array<HabitProgressInterface>;
 }) => {
   let entry;
+  const { mood, note, weather } = entryData;
 
   realm.write(() => {
     const now = new Date();
@@ -32,29 +34,36 @@ const createEntry = ({
       modifiedAt: now,
       weather
     };
+
     entry = realm.create('Entry', params);
-    // dayService.addEntryToDay(params);
   });
 
-  const entries = realm.objects('Entry');
   const currentDay = dayService.getCurrentDay();
 
   if (currentDay) {
-    dayService.addEntryToDay({ entry });
+    dayService.updateDay({ entry, habitProgress });
     return;
   }
 
-  dayService.createDay({ entry });
+  dayService.createDay({ entry, habitProgress });
 };
 
-const editEntry = ({ id, newEntryData }) => {
+const editEntry = ({
+  id,
+  newEntryData
+}: {
+  id: string;
+  newEntryData: EntryInterface;
+}) => {
   realm.write(() => {
-    const entry = getEntry(id);
+    const entry: EntryInterface = getEntry(id);
     const now = new Date();
 
     entry.mood = newEntryData.mood;
     entry.note = newEntryData.note;
     entry.modifiedAt = now;
+
+    return entry;
   });
 };
 

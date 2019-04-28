@@ -1,9 +1,11 @@
+import MoodInterface from './mood';
+import WeatherInterface from './weather';
+
 export default interface Entry {
-  mood: {
-    icon: string;
-  };
+  mood: MoodInterface;
   note: string;
-  weather: object;
+  weather: WeatherInterface;
   id: string;
   createdAt: Date;
+  modifiedAt: Date;
 }

@@ -7,8 +7,8 @@ export const getEntrys = createAction('GET_DAYS');
 export const editEntry = createAction('EDIT_DAY');
 export const newEntry = createAction('NEW_DAY');
 
-export const newEntryThunk = entry => dispatch => {
-  entryService.createEntry(entry);
+export const newEntryThunk = ({ entry, habitProgress }) => () => {
+  entryService.createEntry({ entry, habitProgress });
 };
 
 const initialState = {};

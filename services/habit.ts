@@ -11,6 +11,7 @@ const getHabitById = (id: string) => {
 
 const getHabits = () => {
   const habits = realm.objects('Habit');
+
   store.dispatch(reduxHabits.getHabits({ habits }));
 
   return habits;

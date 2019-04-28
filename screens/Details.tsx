@@ -1,57 +1,51 @@
 import React from 'react';
 import { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Button,
-  Image,
-  Alert
-} from 'react-native';
-import moment from 'moment';
+import { connect } from 'react-redux';
+import { StyleSheet, Text, View, FlatList, Button, Image } from 'react-native';
+
 import dateHelper from '../helpers/date';
 import colorVariables from '../components/colorVariables';
 import moodMap from '../services/models/defaultMoods';
-import dayService from '../services/day';
+import DayInterface from '../types/day';
+import EntryInterface from '../types/entry';
+import habitProgress from '../services/habitProgress';
+import habit from '../services/habit';
 
 interface Props {
   navigation: any;
+  habitProgress: object;
+  day: DayInterface;
 }
-export default class Details extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    const { navigation } = this.props;
-
-    this.state = {
-      day: dayService.getDayById(navigation.getParam('day').id)
-    };
+class Details extends Component<Props> {
+  componentDidMount() {
+    this.props.getData();
   }
 
-  componentDidUpdate() {
-    const { navigation } = this.props;
-    const { day } = this.state;
-    const dayParamId = navigation.getParam('day').id;
+  _keyExtractor = (item: DayInterface) => item.id;
 
-    if (dayParamId !== day.id) this.updateUI();
-  }
-
-  updateUI() {
-    const { navigation } = this.props;
-    this.setState(() => ({
-      day: dayService.getDayById(navigation.getParam('day').id)
-    }));
-  }
-
-  _keyExtractor = item => item.id;
-
-  onEntryPress = entry => {
+  onEntryPress = (entry: EntryInterface) => {
     this.props.navigation.navigate('EditEntry', { entry });
+  };
+
+  renderHabitProgress = () => {
+    const { day, habitProgress } = this.props;
+    const habits = habitProgress[day.id];
+
+    if (!habits) return null;
+
+    return habits.map(progress => (
+      <View key={progress.id}>
+        <Text>Habit: {progress.habitIcon}</Text>
+        <Text>{progress.habitName}</Text>
+        <Text>Completed: {progress.completed.toString()}</Text>
+      </View>
+    ));
   };
 
   renderAverageWeather = () => {};
 
-  renderAverageMood = day => {
+  renderAverageMood = () => {
+    const { day } = this.props;
     const totalMood = day.entries.reduce((acc, entry) => {
       return acc + entry.mood.rating;
     }, 0);
@@ -59,14 +53,18 @@ export default class Details extends Component<Props> {
     const mood = moodMap[averageMood];
 
     return (
-      <Text style={styles.dateHeader}>
-        {dateHelper.getPrettyDate(day.createdAt)}
-        Today you overall felt: {mood.icon} {mood.moodName}
-      </Text>
+      <View style={styles.dateHeader}>
+        <Text style={styles.dateHeaderText}>
+          {dateHelper.getPrettyDate(day.createdAt)}
+        </Text>
+        <Text>
+          Today you overall felt: {mood.icon} {mood.moodName}
+        </Text>
+      </View>
     );
   };
 
-  renderRow = ({ item }) => {
+  renderRow = ({ item }: { item: EntryInterface }) => {
     return (
       <View key={item.id} style={styles.item}>
         <Text>{dateHelper.getPrettyTime(item.createdAt)}</Text>
@@ -85,25 +83,28 @@ export default class Details extends Component<Props> {
   };
 
   renderEntryList = () => {
-    const { day } = this.state;
+    const { day } = this.props;
 
     return (
-      <FlatList
-        data={day.entries}
-        renderItem={this.renderRow}
-        keyExtractor={this._keyExtractor}
-      />
+      <View style={styles.listWrap}>
+        <FlatList
+          data={day.entries}
+          renderItem={this.renderRow}
+          keyExtractor={this._keyExtractor}
+        />
+      </View>
     );
   };
 
   render() {
-    const { day } = this.state;
+    const { day } = this.props;
     const date = day && dateHelper.getPrettyDate(day.createdAt);
 
     return (
       <View style={styles.container}>
         <Text style={styles.dateHeader}>{date}</Text>
-        {this.renderAverageMood(day)}
+        {this.renderAverageMood()}
+        {this.renderHabitProgress()}
         {this.renderEntryList()}
       </View>
     );
@@ -113,19 +114,22 @@ export default class Details extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
   dateHeader: {
-    fontSize: 20,
-    marginVertical: 10
+    marginVertical: 20
+  },
+  dateHeaderText: {
+    fontSize: 20
+  },
+  listWrap: {
+    alignSelf: 'stretch'
   },
   item: {
     flex: 1,
     alignSelf: 'stretch',
-    alignItems: 'center',
     marginHorizontal: 20,
     padding: 10,
     marginVertical: 5,
@@ -142,3 +146,24 @@ const styles = StyleSheet.create({
     fontSize: 40
   }
 });
+
+const mapStateToProps = (state, props) => {
+  const id = props.navigation.getParam('day').id;
+  return {
+    day: state.days[id],
+    habitProgress: state.habitProgress
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getData: () => {
+    // get day, habits, habitProgress...
+    habit.getHabits();
+    habitProgress.getHabitProgress();
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Details);

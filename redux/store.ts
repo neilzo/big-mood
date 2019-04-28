@@ -1,19 +1,23 @@
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { configureStore } from 'redux-starter-kit';
 import thunk from 'redux-thunk';
 
 import moodsReducer from './mood';
 import daysReducer from './day';
 import habitsReducer from './habit';
+import habitProgressReducer from './habitProgress';
 
 const reducer = {
   moods: moodsReducer,
   days: daysReducer,
-  habits: habitsReducer
+  habits: habitsReducer,
+  habitProgress: habitProgressReducer
 };
 
 const preloadedState = {
   moods: {},
-  days: {}
+  days: {},
+  habits: {},
+  habitProgress: {}
 };
 
 const store = configureStore({

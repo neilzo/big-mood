@@ -1,9 +1,9 @@
 import EntryInterface from './entry';
-import HabitInterface from './habit';
+import HabitProgressInterface from './habitProgress';
 
 export default interface Day {
   id: string;
   entries: Array<EntryInterface>;
-  habits: Array<HabitInterface>;
+  habitProgress: Array<HabitProgressInterface>;
   createdAt: Date;
 }

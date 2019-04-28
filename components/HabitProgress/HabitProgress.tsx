@@ -17,12 +17,6 @@ class HabitProgress extends Component<Props> {
     habitProgress: {}
   };
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {};
-  }
-
   componentDidMount() {
     this.props.getData();
   }

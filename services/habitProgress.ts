@@ -1,35 +1,56 @@
 import uuid from 'uuid/v4';
 import realm from './models/index';
 import store from '../redux/store';
-import HabitProgressInterface from '../types/habit';
-import * as reduxHabitProgressProgress from '../redux/habit';
+import HabitProgressInterface from '../types/habitProgress';
+import * as reduxHabitProgress from '../redux/habitProgress';
 
 const getHabitProgressById = (id: string) => {
   return realm.objectForPrimaryKey('HabitProgress', id);
 };
 
 const getHabitProgress = () => {
-  const habits = realm.objects('HabitProgress');
-  store.dispatch(reduxHabitProgressProgress.getHabitProgress({ habits }));
+  const habitProgresses = realm.objects('HabitProgress');
 
-  return habits;
+  store.dispatch(
+    reduxHabitProgress.populateHabitProgressesThunk({ habitProgresses })
+  );
+
+  return habitProgresses;
 };
 
-const createHabitProgress = opts => {
-  realm.write(() => {
-    const now = new Date();
-    const { completed } = opts;
+export const createHabitProgresses = async (newObjects = []) => {
+  return new Promise(resolve => {
+    realm.write(() => {
+      const now = new Date();
+      const habitProgresses: Array<HabitProgressInterface> = [];
 
-    // need day/habit parents
-    const params = {
-      id: uuid(),
-      completed,
-      createdAt: now,
-      modifiedAt: now
-    };
+      newObjects.forEach(progress => {
+        const { completed, habit, day, entry } = progress;
 
-    const habit = realm.create('HabitProgress', params);
-    store.dispatch(reduxHabitProgressProgress.newHabitProgress({ habit }));
+        const params = {
+          id: uuid(),
+          habit,
+          day,
+          entry,
+          completed,
+          createdAt: now,
+          modifiedAt: now
+        };
+
+        const habitProgress: HabitProgressInterface = realm.create(
+          'HabitProgress',
+          params
+        );
+        habitProgresses.push(habitProgress);
+      });
+
+      store.dispatch(
+        reduxHabitProgress.populateHabitProgressesThunk({ habitProgresses })
+      );
+
+      resolve(habitProgresses);
+    });
+    // store.dispatch(reduxHabitProgressnewHabitProgress({ habitProgresses }));
   });
 };
 
@@ -44,7 +65,7 @@ const createHabitProgress = opts => {
 //     habit.polarity = polarity;
 //     habit.modifiedAt = now;
 
-//     store.dispatch(reduxHabitProgressProgress.editHabitProgress({ habit }));
+//     store.dispatch(reduxHabitProgress.editHabitProgress({ habit }));
 //   });
 // };
 
@@ -52,12 +73,13 @@ const createHabitProgress = opts => {
 //   realm.write(() => {
 //     const id = habit.id;
 //     realm.delete(habit);
-//     store.dispatch(reduxHabitProgressProgress.deleteHabitProgress({ id }));
+//     store.dispatch(reduxHabitProgress.deleteHabitProgress({ id }));
 //   });
 // };
 
 export default {
-  createHabitProgress
+  createHabitProgresses,
+  getHabitProgress
   // editHabitProgress,
   // deleteHabitProgress
 };

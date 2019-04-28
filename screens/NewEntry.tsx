@@ -9,7 +9,6 @@ import HabitProgressInterface from '../types/habitProgress';
 
 import EntryForm from '../components/EntryForm/EntryForm';
 import HabitProgress from '../components/HabitProgress/HabitProgress';
-import habitProgressService from '../services/habitProgress';
 
 interface Props {
   navigation: any;
@@ -32,8 +31,14 @@ class NewEntry extends Component<Props, State> {
     };
   }
 
-  createEntry = (data: EntryInterface) => {
-    this.props.createEntry(data);
+  handleSave = () => {
+    const { navigate } = this.props.navigation;
+    const { entry, habitProgress: habitProgressObj } = this.state;
+    const habitProgress = Object.values(habitProgressObj);
+
+    this.props.createEntry({ entry, habitProgress });
+
+    navigate('Entries');
   };
 
   handleNextPress = () =>
@@ -52,8 +57,6 @@ class NewEntry extends Component<Props, State> {
   };
 
   handleHabitProgress = habitProgress => {
-    console.log(habitProgress.habit, habitProgress);
-
     this.setState((prevState: State) => ({
       habitProgress: {
         ...prevState.habitProgress,
@@ -109,7 +112,7 @@ class NewEntry extends Component<Props, State> {
 
     if (step !== 1) return null;
 
-    return <Button title="Create Entry" onPress={() => {}} />;
+    return <Button title="Create Entry" onPress={this.handleSave} />;
   };
 
   render() {
@@ -136,8 +139,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProp = (dispatch: DispatchProp) => ({
-  createEntry: (entry: EntryInterface) =>
-    dispatch(reduxEntries.newEntryThunk(entry))
+  createEntry: ({ entry, habitProgress }: { entry: EntryInterface }) =>
+    dispatch(reduxEntries.newEntryThunk({ entry, habitProgress }))
 });
 
 export default connect(
