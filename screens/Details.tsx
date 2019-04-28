@@ -60,6 +60,17 @@ class Details extends Component<Props> {
     );
   };
 
+  renderActionIcons = (item: EntryInterface) => (
+    <View style={styles.actionIcons}>
+      <ButtonIcon
+        icon="pencil"
+        onPress={() => this.onEntryPress(item)}
+        size={25}
+      />
+      <ButtonIcon icon="trash-can-outline" onPress={() => {}} size={25} />
+    </View>
+  );
+
   renderAverageMood = () => {
     const { day } = this.props;
     const totalMood = day.entries.reduce((acc: number, entry) => {
@@ -83,16 +94,17 @@ class Details extends Component<Props> {
   renderRow = ({ item }: { item: EntryInterface }) => {
     return (
       <View key={item.id} style={styles.item}>
-        <Text>{dateHelper.getPrettyTime(item.createdAt)}</Text>
-        <Text style={styles.icon}>{item.mood.icon}</Text>
-        {this.renderWeather(item.weather)}
-        <Text>{item.note}</Text>
-        <ButtonIcon
-          icon="pencil"
-          onPress={() => this.onEntryPress(item)}
-          size={25}
-        />
-        <ButtonIcon icon="trash-can-outline" onPress={() => {}} size={25} />
+        <View style={styles.itemInner}>
+          <Text style={styles.icon}>{item.mood.icon}</Text>
+          <View style={styles.itemContent}>
+            <View style={styles.itemHeader}>
+              <Text>{dateHelper.getPrettyTime(item.createdAt)}</Text>
+              {this.renderActionIcons(item)}
+            </View>
+            {this.renderWeather(item.weather)}
+            <Text>{item.note}</Text>
+          </View>
+        </View>
       </View>
     );
   };
@@ -117,9 +129,10 @@ class Details extends Component<Props> {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.dateHeader}>{date}</Text>
-        {this.renderAverageMood()}
-        {this.renderHabitProgress()}
+        <View style={styles.header}>
+          {this.renderAverageMood()}
+          {this.renderHabitProgress()}
+        </View>
         {this.renderEntryList()}
       </View>
     );
@@ -129,9 +142,11 @@ class Details extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
+  },
+  header: {
+    flex: 0
   },
   dateHeader: {
     marginVertical: 20
@@ -140,7 +155,9 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   listWrap: {
-    alignSelf: 'stretch'
+    flex: 1,
+    alignSelf: 'stretch',
+    marginTop: 20
   },
   item: {
     flex: 1,
@@ -157,8 +174,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1.5
   },
+  itemInner: {
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'stretch'
+  },
+  itemHeader: {
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  actionIcons: {
+    marginLeft: 'auto',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   icon: {
+    flex: 0,
     fontSize: 40
+  },
+  itemContent: {
+    flex: 1
   },
   weatherWrap: {
     flexDirection: 'row',
