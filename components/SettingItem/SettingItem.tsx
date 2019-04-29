@@ -29,7 +29,7 @@ const SettingItem = ({ title, icon, onPress, settingRoute }: Props) => {
 
 const styles = StyleSheet.create({
   touchWrap: {
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   container: {
     //justifyContent: 'center',
@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
     borderColor: colorVariables.borderColor,
     backgroundColor: colorVariables.white,
     padding: 10,
-    marginTop: 15
+    marginTop: 15,
   },
   iconWrap: {
-    marginRight: 10
+    marginRight: 10,
   },
   arrowIcon: {
-    marginLeft: 'auto'
-  }
+    marginLeft: 'auto',
+  },
 });
 
 export default SettingItem;

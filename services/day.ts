@@ -111,7 +111,7 @@ const updateDay = async ({
   });
 };
 
-const createDay = async ({ entry, habitProgress }) => {
+const createDay = async ({ entry, habitProgress = [] }) => {
   const day = await createDayWithEntry({ entry });
   await addHabitProgressToDay({ habitProgress, day, entry });
 

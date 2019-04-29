@@ -11,7 +11,7 @@ import MoodInterface from '../../types/mood';
 interface Props {
   createEntry: (data: object) => void;
   editEntry: (data: object) => void;
-  handleEntryChange: () => void;
+  handleEntryChange: (entry: EntryInterface) => void;
   entry: EntryInterface;
 }
 interface State {
@@ -30,7 +30,7 @@ export default class EntryForm extends Component<Props, State> {
   static defaultProps = {
     createEntry: () => {},
     editEntry: () => {},
-    entry: {}
+    entry: {},
   };
 
   constructor(props: any) {
@@ -43,7 +43,7 @@ export default class EntryForm extends Component<Props, State> {
       mood: entry.mood,
       note: entry.note,
       weather: entry.weather,
-      isEditing: Boolean(entry.mood) // todo make this less brittle
+      isEditing: Boolean(entry.mood), // todo make this less brittle
     };
   }
 
@@ -60,7 +60,7 @@ export default class EntryForm extends Component<Props, State> {
       mood: entry.mood,
       note: entry.note,
       weather: entry.weather,
-      isEditing: Boolean(entry.mood) // todo make this less brittle
+      isEditing: Boolean(entry.mood), // todo make this less brittle
     }));
   }
 
@@ -88,7 +88,7 @@ export default class EntryForm extends Component<Props, State> {
     this.props.editEntry({
       id: this.props.entry.id,
       newEntryData: this.state,
-      createdAt: this.props.entry.createdAt
+      createdAt: this.props.entry.createdAt,
     });
   };
 
@@ -136,7 +136,7 @@ export default class EntryForm extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   note: {
     backgroundColor: colorVariables.white,
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: colorVariables.borderRadius,
     width: 300,
-    height: 150
-  }
+    height: 150,
+  },
 });

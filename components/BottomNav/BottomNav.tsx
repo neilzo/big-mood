@@ -8,7 +8,7 @@ const HIDDEN_TABS = [
   'Details',
   'EditSetting',
   'MoodSettings',
-  'HabitSettings'
+  'HabitSettings',
 ];
 
 const HiddenView = () => <View style={{ display: 'none' }} />;
@@ -32,7 +32,7 @@ const TouchableWithoutFeedbackWrapper = ({
       left: 15,
       right: 15,
       top: 5,
-      bottom: 5
+      bottom: 5,
     }}
     accessibilityLabel={accessibilityLabel}
   >

@@ -12,7 +12,7 @@ const ButtonComponent = ({ title, onPress }: Props) => (
 );
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
 
 export default ButtonComponent;

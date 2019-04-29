@@ -1,5 +1,5 @@
-import { createReducer } from 'redux-starter-kit';
-import { createAction } from 'redux-starter-kit';
+import { createReducer, createAction } from 'redux-starter-kit';
+import uniqBy from 'lodash/uniqBy';
 
 import habitProgressService from '../services/habitProgress';
 import HabitProgressInterface from '../types/habitProgress';
@@ -50,7 +50,12 @@ const habitProgressReducer = createReducer(initialState, {
       if (!day) {
         newState[habitProgress.day] = [enhancedHabitProgress];
       } else {
-        newState[habitProgress.day] = day.concat(enhancedHabitProgress);
+        newState[habitProgress.day] = uniqBy(
+          day.concat([enhancedHabitProgress]),
+          progress => {
+            return progress.id;
+          }
+        );
       }
     });
 

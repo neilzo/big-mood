@@ -33,12 +33,12 @@ export const Routes = {
   Entries: { key: 'Entries', title: 'Entries' },
   Details: { key: 'Details' },
   EditEntry: {
-    key: 'EditEntry'
+    key: 'EditEntry',
   },
   Settings: { key: 'Settings', title: 'Settings' },
   MoodSettings: { key: 'MoodSettings', title: 'Edit Moods' },
   HabitSettings: { key: 'HabitSettings', title: 'Edit Habits' },
-  NewEntry: { key: 'New Entry', title: 'Add Entry' }
+  NewEntry: { key: 'New Entry', title: 'Add Entry' },
 };
 
 const getRouteIcon = (routeName: string) => {
@@ -64,14 +64,14 @@ const TabNavigator = createBottomTabNavigator(
     [Routes.NewEntry.key]: { screen: NewEntry },
     [Routes.Details.key]: { screen: Details },
     [Routes.EditEntry.key]: {
-      screen: EditEntry
+      screen: EditEntry,
     },
     [Routes.Settings.key]: { screen: Settings },
     [Routes.MoodSettings.key]: { screen: MoodSettings },
-    [Routes.HabitSettings.key]: { screen: HabitSettings }
+    [Routes.HabitSettings.key]: { screen: HabitSettings },
   },
   {
-    initialRouteName: 'Entries',
+    initialRouteName: 'New Entry',
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
@@ -87,9 +87,9 @@ const TabNavigator = createBottomTabNavigator(
         // }
 
         return <Icon name={iconName} size={25} color="#ccc" />;
-      }
+      },
     }),
-    tabBarComponent: props => <BottomNav {...props} />
+    tabBarComponent: props => <BottomNav {...props} />,
   }
 );
 
@@ -103,15 +103,15 @@ const MainNavigator = createStackNavigator(
           title = route ? route.title : '';
 
         return { title };
-      }
+      },
     },
     MoodForm: {
-      screen: MoodForm
-    }
+      screen: MoodForm,
+    },
   },
   {
     mode: 'modal',
-    initialRouteName: 'main'
+    initialRouteName: 'main',
   }
 );
 

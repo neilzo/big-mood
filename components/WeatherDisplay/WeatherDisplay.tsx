@@ -15,7 +15,7 @@ export default class WeatherDisplay extends Component<Props, State> {
     super(props);
 
     this.state = {
-      weather: null
+      weather: null,
     };
   }
 
@@ -35,7 +35,7 @@ export default class WeatherDisplay extends Component<Props, State> {
             source={{
               uri: `http://openweathermap.org/img/w/${
                 this.state.weather.icon
-              }.png`
+              }.png`,
             }}
           />
         )}
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    height: 45
-  }
+    height: 45,
+  },
 });

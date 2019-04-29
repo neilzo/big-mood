@@ -7,7 +7,7 @@ import {
   View,
   SectionList,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 import dateHelper from '../../helpers/date';
 import colorVariables from '../colorVariables';
@@ -32,7 +32,7 @@ export default class EntryList extends Component<Props> {
   };
 
   renderSectionHeader = ({
-    section: { day }
+    section: { day },
   }: {
     section: { day: DayInterface };
   }) => (
@@ -54,7 +54,7 @@ export default class EntryList extends Component<Props> {
           <Image
             style={{ width: 58, height: 58 }}
             source={{
-              uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`
+              uri: `http://openweathermap.org/img/w/${item.weather.icon}.png`,
             }}
           />
           <Text numberOfLines={1} style={styles.note}>
@@ -75,7 +75,7 @@ export default class EntryList extends Component<Props> {
         <SectionList
           sections={days.map(day => ({
             day,
-            data: day.entries
+            data: day.entries,
           }))}
           renderSectionHeader={this.renderSectionHeader}
           renderItem={this.renderEntryRow}
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   item: {
     flexDirection: 'row',
@@ -107,16 +107,16 @@ const styles = StyleSheet.create({
     borderRadius: colorVariables.borderRadius,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 1.5
+    shadowRadius: 1.5,
   },
   note: {
-    flex: 1
+    flex: 1,
   },
   icon: {
-    fontSize: 40
+    fontSize: 40,
   },
   deleteButton: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
   },
   sectionHeader: {
     backgroundColor: '#F5FCFF',
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: colorVariables.borderColor
-  }
+    borderColor: colorVariables.borderColor,
+  },
 });

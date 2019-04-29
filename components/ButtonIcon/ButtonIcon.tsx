@@ -17,7 +17,7 @@ const ButtonIconComponent = ({ icon, onPress, size = 25 }: Props) => (
 );
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
 
 export default ButtonIconComponent;

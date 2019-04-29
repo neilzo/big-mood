@@ -17,7 +17,7 @@ const Icon = ({ name, color = '#ccc', size = 30 }: Props) => (
 );
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
 
 export default Icon;

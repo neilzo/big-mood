@@ -22,7 +22,7 @@ interface State {
 class MoodList extends Component<Props, State> {
   static defaultProps = {
     grouped: false,
-    moods: []
+    moods: [],
   };
 
   componentDidMount() {
@@ -104,33 +104,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   list: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   listItem: {
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   selected: {
     color: colorVariables.selected,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   notSelected: {},
   groupedTouchWrap: {
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   groupedWrap: {
     alignSelf: 'stretch',
     alignItems: 'center',
     marginTop: 15,
     borderTopWidth: 1,
-    borderColor: colorVariables.borderColor
+    borderColor: colorVariables.borderColor,
   },
   groupedItem: {
     flexDirection: 'row',
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colorVariables.borderColor,
     backgroundColor: colorVariables.white,
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 const mapStateToProps = state => {
@@ -151,7 +151,7 @@ const mapDispatchToProps = dispatch => ({
   getData: () => {
     const moods = moodService.getMoods();
     dispatch(getMoods({ moods }));
-  }
+  },
 });
 
 export default connect(

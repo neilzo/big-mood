@@ -1,23 +1,26 @@
 import React from 'react';
 import { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import * as reduxEntries from '../redux/entry';
+import * as reduxCurrentDay from '../redux/currentDay';
 import EntryInterface from '../types/entry';
 import HabitProgressInterface from '../types/habitProgress';
 
 import EntryForm from '../components/EntryForm/EntryForm';
 import HabitProgress from '../components/HabitProgress/HabitProgress';
+import day from '../services/day';
 
 interface Props {
   navigation: any;
-  createEntry: (entry: EntryInterface) => void;
+  createEntry: ({ entry, habitProgress }) => void;
+  init: () => void;
   habitProgress: object;
 }
 interface State {
   step: number;
-  entry?: EntryInterface;
+  entry?: object;
   habitProgress?: object;
 }
 class NewEntry extends Component<Props, State> {
@@ -25,18 +28,28 @@ class NewEntry extends Component<Props, State> {
     super(props);
 
     this.state = {
-      step: 0,
+      step: 1,
       entry: {},
       habitProgress: props.habitProgress,
     };
   }
 
+  componentDidMount() {
+    this.props.init();
+  }
+
   handleSave = () => {
     const { navigate } = this.props.navigation;
     const { entry, habitProgress: habitProgressObj } = this.state;
-    const habitProgress = Object.values(habitProgressObj);
+    const habitProgress = habitProgressObj && Object.values(habitProgressObj);
 
     this.props.createEntry({ entry, habitProgress });
+
+    this.setState(() => ({
+      step: 0,
+      entry,
+      habitProgress: this.props.habitProgress,
+    }));
 
     navigate('Entries');
   };
@@ -47,7 +60,7 @@ class NewEntry extends Component<Props, State> {
   handleBackPress = () =>
     this.setState((prevState: State) => ({ step: prevState.step - 1 }));
 
-  handleEntryChange = newData => {
+  handleEntryChange = (newData: EntryInterface) => {
     this.setState((prevState: State) => ({
       entry: {
         ...prevState.entry,
@@ -56,7 +69,7 @@ class NewEntry extends Component<Props, State> {
     }));
   };
 
-  handleHabitProgress = habitProgress => {
+  handleHabitProgress = (habitProgress: HabitProgressInterface) => {
     this.setState((prevState: State) => ({
       habitProgress: {
         ...prevState.habitProgress,
@@ -139,8 +152,19 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProp = (dispatch: DispatchProp) => ({
-  createEntry: ({ entry, habitProgress }: { entry: EntryInterface }) =>
-    dispatch(reduxEntries.newEntryThunk({ entry, habitProgress })),
+  createEntry: ({
+    entry,
+    habitProgress,
+  }: {
+    entry: EntryInterface;
+    habitProgress: Array<HabitProgressInterface>;
+  }) => dispatch(reduxEntries.newEntryThunk({ entry, habitProgress })),
+  init: (date: Date) => {
+    // for now use the current day, todo use date from date select
+    const currentDay = day.getCurrentDay();
+    if (currentDay)
+      dispatch(reduxCurrentDay.setEntryDay({ dayId: currentDay.id }));
+  },
 });
 
 export default connect(
