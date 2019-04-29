@@ -12,6 +12,7 @@ import habitProgress from '../services/habitProgress';
 import habit from '../services/habit';
 
 import ButtonIcon from '../components/ButtonIcon/ButtonIcon';
+import Icon from '../components/Icon/Icon';
 
 interface Props {
   navigation: any;
@@ -38,9 +39,13 @@ class Details extends Component<Props> {
 
     return habits.map(progress => (
       <View key={progress.id} style={styles.progressItem}>
-        <Text>Habit: {progress.habitIcon}</Text>
+        <Icon
+          size={20}
+          name="check-outline"
+          color={colorVariables.colorSuccess}
+        />
+        <Text>{progress.habitIcon}</Text>
         <Text>{progress.habitName}</Text>
-        <Text>Completed: {progress.completed.toString()}</Text>
       </View>
     ));
   };
@@ -125,7 +130,6 @@ class Details extends Component<Props> {
 
   render() {
     const { day } = this.props;
-    const date = day && dateHelper.getPrettyDate(day.createdAt);
 
     return (
       <View style={styles.container}>
