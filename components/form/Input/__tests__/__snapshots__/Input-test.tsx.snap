@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignSelf": "stretch",
+      "marginTop": 15,
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#fff",
+        "borderColor": "#ccc",
+        "borderRadius": 3,
+        "borderWidth": 1,
+        "height": 50,
+        "padding": 15,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value="someVal"
+  />
+</View>
+`;
+
+exports[`Input renders with a label 1`] = `
+<View
+  style={
+    Object {
+      "alignSelf": "stretch",
+      "marginTop": 15,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "marginBottom": 10,
+      }
+    }
+  >
+    Suh Dude
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#fff",
+        "borderColor": "#ccc",
+        "borderRadius": 3,
+        "borderWidth": 1,
+        "height": 50,
+        "padding": 15,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value="someVal"
+  />
+</View>
+`;

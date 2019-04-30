@@ -7,9 +7,12 @@ import Details from './screens/Details';
 import EditEntry from './screens/EditEntry';
 import Settings from './screens/Settings';
 import MoodSettings from './screens/MoodSettings';
-import MoodForm from './screens/modals/MoodForm';
 import HabitSettings from './screens/HabitSettings';
 import NewEntry from './screens/NewEntry';
+
+import MoodForm from './screens/modals/MoodForm';
+import HabitForm from './screens/modals/HabitForm';
+
 import BottomNav from './components/BottomNav/BottomNav';
 
 import Icon from './components/Icon/Icon';
@@ -107,6 +110,9 @@ const MainNavigator = createStackNavigator(
     },
     MoodForm: {
       screen: MoodForm,
+    },
+    HabitForm: {
+      screen: HabitForm,
     },
   },
   {

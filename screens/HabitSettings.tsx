@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, Button, Switch } from 'react-native';
 import habitService from '../services/habit';
 import colorVariables from '../components/colorVariables';
 import * as reduxHabits from '../redux/habit';
+import ButtonIcon from '../components/ButtonIcon/ButtonIcon';
 
 interface Props {
   navigation: any;
@@ -24,10 +25,10 @@ class HabitSettings extends Component<Props> {
     habitService.installDefaultHabits();
   };
 
-  // onEditPress = mood => {
-  //   const { navigate } = this.props.navigation;
-  //   navigate('MoodForm', { mood });
-  // };
+  onEditPress = habit => {
+    const { navigate } = this.props.navigation;
+    navigate('HabitForm', { habitId: habit.id });
+  };
 
   handleHabitToggle = habit => {
     this.props.toggleHabit(habit);
@@ -42,6 +43,12 @@ class HabitSettings extends Component<Props> {
             <Text>{habit.icon}</Text>
             <Text>{habit.name}</Text>
             <View style={styles.switchWrap}>
+              <ButtonIcon
+                icon="pencil"
+                size={25}
+                onPress={() => this.onEditPress(habit)}
+                containerStyle={styles.editIcon}
+              />
               <Switch
                 value={habit.enabled}
                 onValueChange={() => this.handleHabitToggle(habit)}
@@ -87,7 +94,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   switchWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: 'auto',
+  },
+  editIcon: {
+    marginRight: 15,
   },
 });
 

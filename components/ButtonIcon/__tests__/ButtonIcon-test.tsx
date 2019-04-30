@@ -6,7 +6,7 @@ jest.mock('../../Icon/Icon', () => 'Icon');
 
 const mockProps = {
   onPress: () => {},
-  icon: 'rocket'
+  icon: 'rocket',
 };
 
 describe('ButtonIcon', () => {
@@ -19,6 +19,14 @@ describe('ButtonIcon', () => {
   it('renders correctly with size', () => {
     expect(
       createComponent(<ButtonIcon {...mockProps} size={50} />).toJSON()
+    ).toMatchSnapshot();
+  });
+
+  it('respects containerStyle prop', () => {
+    expect(
+      createComponent(
+        <ButtonIcon {...mockProps} size={50} containerStyle={{ margin: 20 }} />
+      ).toJSON()
     ).toMatchSnapshot();
   });
 });

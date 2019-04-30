@@ -9,7 +9,12 @@ exports[`ButtonIcon renders correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={Object {}}
+  style={
+    Array [
+      Object {},
+      Object {},
+    ]
+  }
 >
   <Icon
     name="rocket"
@@ -27,7 +32,37 @@ exports[`ButtonIcon renders correctly with size 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={Object {}}
+  style={
+    Array [
+      Object {},
+      Object {},
+    ]
+  }
+>
+  <Icon
+    name="rocket"
+    size={50}
+  />
+</View>
+`;
+
+exports[`ButtonIcon respects containerStyle prop 1`] = `
+<View
+  accessible={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {},
+      Object {
+        "margin": 20,
+      },
+    ]
+  }
 >
   <Icon
     name="rocket"

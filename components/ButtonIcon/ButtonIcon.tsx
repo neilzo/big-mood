@@ -7,10 +7,16 @@ interface Props {
   onPress: () => void;
   icon: string;
   size?: number;
+  containerStyle?: object;
 }
-const ButtonIconComponent = ({ icon, onPress, size = 25 }: Props) => (
+const ButtonIconComponent = ({
+  icon,
+  onPress,
+  size = 25,
+  containerStyle = {},
+}: Props) => (
   <TouchableWithoutFeedback onPress={onPress}>
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <Icon name={icon} size={size} />
     </View>
   </TouchableWithoutFeedback>

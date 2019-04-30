@@ -12,7 +12,7 @@ interface Props {
 const Checkbox = ({
   containerStyle,
   onChange = () => {},
-  checked = false
+  checked = false,
 }: Props) => {
   const [selected, setSelected] = useState(checked);
   return (

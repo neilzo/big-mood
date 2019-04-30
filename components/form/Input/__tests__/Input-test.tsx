@@ -1,23 +1,22 @@
 import React from 'react';
-import Checkbox from '../Checkbox';
+import Input from '../Input';
 import { createComponent } from '../../../../helpers/renderer'; // todo resolve imports to avid that ugly thang
-
-jest.mock('../../../Icon/Icon', () => 'Icon');
 
 const mockProps = {
   onChange: () => {},
+  value: 'someVal',
 };
 
-describe('Checkbox', () => {
+describe('Input', () => {
   it('renders correctly', () => {
     expect(
-      createComponent(<Checkbox {...mockProps} />).toJSON()
+      createComponent(<Input {...mockProps} />).toJSON()
     ).toMatchSnapshot();
   });
 
-  it('renders with checked', () => {
+  it('renders with a label', () => {
     expect(
-      createComponent(<Checkbox {...mockProps} checked />).toJSON()
+      createComponent(<Input {...mockProps} label="Suh Dude" />).toJSON()
     ).toMatchSnapshot();
   });
 });

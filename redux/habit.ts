@@ -53,4 +53,11 @@ export const getSortedHabits = createSelector(
   }
 );
 
+export const getSortedEnabled = createSelector(
+  [getSortedHabits],
+  enabledHabits => {
+    return enabledHabits.filter(habit => habit.enabled);
+  }
+);
+
 export default habitsReducer;
