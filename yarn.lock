@@ -4890,10 +4890,10 @@ redux-immutable-state-invariant@^2.1.0:
     invariant "^2.1.0"
     json-stringify-safe "^5.0.1"
 
-redux-starter-kit@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/redux-starter-kit/-/redux-starter-kit-0.5.0.tgz#c3f4ac0e3a2337ed2f378a6af18caee78f3d1559"
-  integrity sha512-Df2mE2yokpkzTdWKzZwY3GKJ0vOXRAoBXTT1IYfgKzVpVj+rTgpKOrGgktQGVNhWTqp5luCNTFLk83YokQtWPw==
+redux-starter-kit@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/redux-starter-kit/-/redux-starter-kit-0.5.1.tgz#8b11ef234624a20c9cd384892033f7772331e9e3"
+  integrity sha512-CWnjwPGdPhzqDnYYTNG5I0VjK8x3f21Nuf5xpPlOrHOhstagwxvwCZFoydOQ8TIV78ah1/WeoIQdlbks49KyIQ==
   dependencies:
     immer "^2.1.5"
     redux "^4.0.0"

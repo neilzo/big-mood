@@ -1,11 +1,14 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Switch } from 'react-native';
 import habitService from '../services/habit';
+import colorVariables from '../components/colorVariables';
+import * as reduxHabits from '../redux/habit';
 
 interface Props {
   navigation: any;
+  toggleHabit: (habit) => void;
 }
 class HabitSettings extends Component<Props> {
   componentDidMount() {
@@ -26,14 +29,24 @@ class HabitSettings extends Component<Props> {
   //   navigate('MoodForm', { mood });
   // };
 
+  handleHabitToggle = habit => {
+    this.props.toggleHabit(habit);
+  };
+
   render() {
     const { habits } = this.props;
     return (
       <View style={styles.container}>
         {habits.map(habit => (
-          <View key={habit.id}>
+          <View key={habit.id} style={styles.item}>
             <Text>{habit.icon}</Text>
             <Text>{habit.name}</Text>
+            <View style={styles.switchWrap}>
+              <Switch
+                value={habit.enabled}
+                onValueChange={() => this.handleHabitToggle(habit)}
+              />
+            </View>
           </View>
         ))}
         {/* <Button
@@ -47,12 +60,15 @@ class HabitSettings extends Component<Props> {
 }
 
 const mapStateToProps = state => ({
-  habits: Object.values(state.habits),
+  habits: reduxHabits.getSortedHabits(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   getData: () => {
     habitService.getHabits();
+  },
+  toggleHabit: habit => {
+    habitService.toggleHabit(habit);
   },
 });
 
@@ -60,6 +76,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  item: {
+    borderWidth: 1,
+    borderColor: colorVariables.borderColor,
+    borderRadius: colorVariables.borderRadius,
+    padding: 15,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    alignItems: 'center',
+  },
+  switchWrap: {
+    marginLeft: 'auto',
   },
 });
 

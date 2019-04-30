@@ -83,10 +83,21 @@ const deleteHabit = (habit: HabitInterface) => {
   });
 };
 
+const toggleHabit = (habit: HabitInterface) => {
+  realm.write(() => {
+    const habitObj = getHabitById(habit.id);
+
+    habitObj.enabled = !habit.enabled;
+
+    store.dispatch(reduxHabits.editHabit({ habit: habitObj }));
+  });
+};
+
 export default {
   createHabit,
   getHabits,
   installDefaultHabits,
   editHabit,
   deleteHabit,
+  toggleHabit,
 };

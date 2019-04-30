@@ -1,5 +1,5 @@
-import { createReducer } from 'redux-starter-kit';
-import { createAction } from 'redux-starter-kit';
+import { createReducer, createAction, createSelector } from 'redux-starter-kit';
+import sortBy from 'lodash/sortBy';
 
 import habitService from '../services/habit';
 import HabitInterface from '../types/habit';
@@ -45,5 +45,12 @@ const habitsReducer = createReducer(initialState, {
     return { ...newState };
   },
 });
+
+export const getSortedHabits = createSelector(
+  ['habits'],
+  habits => {
+    return sortBy(Object.values(habits), habit => habit.name.toLowerCase());
+  }
+);
 
 export default habitsReducer;

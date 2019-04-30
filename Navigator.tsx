@@ -71,7 +71,7 @@ const TabNavigator = createBottomTabNavigator(
     [Routes.HabitSettings.key]: { screen: HabitSettings },
   },
   {
-    initialRouteName: 'New Entry',
+    initialRouteName: 'HabitSettings',
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
