@@ -2,9 +2,13 @@ import React from 'react';
 import { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
+const isLastStep = (step: number, steps: Array<Element>) =>
+  step === steps.length - 1;
+
 interface Props {
-  steps: Array<object>;
-  saveButton: object;
+  steps: Array<Element>;
+  saveButton: Element;
+  deleteButton?: Element;
 }
 interface State {
   step: number;
@@ -42,9 +46,9 @@ export default class FormWizard extends Component<Props, State> {
   renderNextButton = () => {
     const { steps } = this.props;
     const { step } = this.state;
-    const isLastStep = step === steps.length - 1;
+    const isEnd: boolean = isLastStep(step, steps);
 
-    if (isLastStep) return null;
+    if (isEnd) return null;
 
     return <Button title="Next" onPress={this.handleNextPress} />;
   };
@@ -52,11 +56,17 @@ export default class FormWizard extends Component<Props, State> {
   renderSaveButton = () => {
     const { saveButton, steps } = this.props;
     const { step } = this.state;
-    const isLastStep = step === steps.length - 1;
+    const isEnd: boolean = isLastStep(step, steps);
 
-    if (!isLastStep) return null;
+    if (!isEnd) return null;
 
     return saveButton;
+  };
+
+  renderDeleteButton = () => {
+    const { deleteButton } = this.props;
+
+    return deleteButton;
   };
 
   render() {
@@ -66,6 +76,7 @@ export default class FormWizard extends Component<Props, State> {
         {this.renderNextButton()}
         {this.renderStep()}
         {this.renderSaveButton()}
+        {this.renderDeleteButton()}
       </View>
     );
   }
@@ -75,9 +86,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    alignItems: 'center',
-  },
-  entryWrap: {
     alignItems: 'center',
   },
 });

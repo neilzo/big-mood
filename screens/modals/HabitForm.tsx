@@ -103,8 +103,6 @@ class HabitForm extends Component<Props, State> {
   handlePolarityChange = (polarity: number) =>
     this.setState(() => ({ polarity }));
 
-  handleStepChange = (step: number) => this.setState(() => ({ step }));
-
   renderNameInput = () => {
     const { name } = this.state;
     return <Input label="Name" onChange={this.handleNameChange} value={name} />;
@@ -187,8 +185,6 @@ class HabitForm extends Component<Props, State> {
       <View>
         {this.renderNameInput()}
         {this.renderPolarityInput()}
-        {this.renderSaveButton()}
-        {this.renderDelete()}
         {this.renderIconPicker()}
       </View>
     );
@@ -206,6 +202,7 @@ class HabitForm extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <FormWizard
+          deleteButton={this.renderDelete()}
           saveButton={this.renderSaveButton()}
           steps={[this.renderInitialStep(), this.renderMetricsStep()]}
         />
