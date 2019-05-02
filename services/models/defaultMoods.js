@@ -1,31 +1,36 @@
 const moodLowest = {
   moodName: 'Awful',
   rating: 1,
-  icon: '😖'
+  icon: '😖',
+  system: true,
 };
 
 const moodLow = {
   moodName: 'Bad',
   rating: 2,
-  icon: '🙁'
+  icon: '🙁',
+  system: true,
 };
 
 const moodMedium = {
   moodName: 'Meh',
   rating: 3,
-  icon: '😑'
+  icon: '😑',
+  system: true,
 };
 
 const moodHigh = {
   moodName: 'Good',
   rating: 4,
-  icon: '😃'
+  icon: '😃',
+  system: true,
 };
 
 const moodHigest = {
   moodName: 'Rad',
   rating: 5,
-  icon: '😁'
+  icon: '😁',
+  system: true,
 };
 
 export default {
@@ -34,5 +39,5 @@ export default {
   3: moodMedium,
   4: moodHigh,
   5: moodHigest,
-  all: [moodLowest, moodLow, moodMedium, moodHigh, moodHigest]
+  all: [moodLowest, moodLow, moodMedium, moodHigh, moodHigest],
 };

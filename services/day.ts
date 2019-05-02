@@ -85,7 +85,7 @@ const deleteDay = (id: string) => {
 
 const updateDay = async ({
   entry,
-  habitProgress,
+  habitProgress = [],
 }: {
   entry: EntryInterface;
   habitProgress: Array<HabitProgressInterface>;

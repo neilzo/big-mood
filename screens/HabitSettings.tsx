@@ -2,6 +2,8 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button, Switch } from 'react-native';
+import size from 'lodash/size';
+
 import habitService from '../services/habit';
 import colorVariables from '../components/colorVariables';
 import * as reduxHabits from '../redux/habit';
@@ -56,10 +58,12 @@ class HabitSettings extends Component<Props> {
             </View>
           </View>
         ))}
-        {/* <Button
-          title="Install Default Habits"
-          onPress={this.handleInstallDefaults}
-        /> */}
+        {!size(habits) && (
+          <Button
+            title="Install Default Habits"
+            onPress={this.handleInstallDefaults}
+          />
+        )}
         <Button title="Add New..." onPress={this.onAddNewPress} />
       </View>
     );

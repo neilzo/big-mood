@@ -11,8 +11,8 @@ HabitProgress.schema = {
     entry: 'string',
     day: 'string',
     createdAt: 'date',
-    modifiedAt: 'date'
-  }
+    modifiedAt: 'date',
+  },
 };
 
 export default HabitProgress;

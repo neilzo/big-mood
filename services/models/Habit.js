@@ -18,8 +18,9 @@ Habit.schema = {
     modifiedBy: 'string?',
     deleted: 'bool?',
     deletedAt: 'date?',
-    habitProgress: 'HabitProgress[]'
-  }
+    habitProgress: 'HabitProgress[]',
+    metrics: 'data?',
+  },
 };
 
 export default Habit;

@@ -12,8 +12,8 @@ Day.schema = {
     averageWeatherDescription: 'string?',
     averageWeatherTemperature: 'int?',
     createdAt: 'date',
-    modifiedAt: 'date'
-  }
+    modifiedAt: 'date',
+  },
 };
 
 export default Day;

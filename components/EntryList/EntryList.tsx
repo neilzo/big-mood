@@ -9,6 +9,8 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
+import size from 'lodash/size';
+
 import dateHelper from '../../helpers/date';
 import colorVariables from '../colorVariables';
 import EntryInterface from '../../types/entry';
@@ -29,6 +31,29 @@ export default class EntryList extends Component<Props> {
 
   onEntryPress = (entry: EntryInterface) => {
     this.props.navigate('EditEntry', { entry });
+  };
+
+  renderEmptyOrList = () => {
+    const { days } = this.props;
+
+    if (!size(days))
+      return (
+        <View style={styles.emptyWrap}>
+          <Text>You haven't added any entries yet!</Text>
+        </View>
+      );
+
+    return (
+      <SectionList
+        sections={days.map(day => ({
+          day,
+          data: day.entries,
+        }))}
+        renderSectionHeader={this.renderSectionHeader}
+        renderItem={this.renderEntryRow}
+        keyExtractor={this._keyExtractor}
+      />
+    );
   };
 
   renderSectionHeader = ({
@@ -69,20 +94,7 @@ export default class EntryList extends Component<Props> {
   };
 
   render() {
-    const { days } = this.props;
-    return (
-      <View style={styles.container}>
-        <SectionList
-          sections={days.map(day => ({
-            day,
-            data: day.entries,
-          }))}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderEntryRow}
-          keyExtractor={this._keyExtractor}
-        />
-      </View>
-    );
+    return <View style={styles.container}>{this.renderEmptyOrList()}</View>;
   }
 }
 
@@ -117,6 +129,12 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginLeft: 'auto',
+  },
+  emptyWrap: {
+    flex: 1,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
   },
   sectionHeader: {
     backgroundColor: '#F5FCFF',

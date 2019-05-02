@@ -58,17 +58,25 @@ const editMood = opts => {
 const installDefaultMoods = () => {
   realm.write(() => {
     const now = Date();
+    const moods = [];
+
     defaultMoods.all.forEach(mood => {
-      const { moodName, icon, rating } = mood;
-      realm.create('Mood', {
+      const { moodName, icon, rating, system } = mood;
+      const moodObj = realm.create('Mood', {
         id: uuid(),
         moodName,
         icon,
         rating,
         createdAt: now,
         modifiedAt: now,
+        enabled: true,
+        system,
       });
+
+      moods.push(moodObj);
     });
+
+    store.dispatch(reduxMoods.getMoods({ moods }));
   });
 };
 

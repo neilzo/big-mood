@@ -9,8 +9,8 @@ User.schema = {
     userName: 'string',
     location: 'string?',
     createdAt: 'date',
-    modifiedAt: 'date'
-  }
+    modifiedAt: 'date',
+  },
 };
 
 export default User;

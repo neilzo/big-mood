@@ -13,6 +13,7 @@ import EmojiSelector from 'react-native-emoji-selector';
 import HabitInterface from '../../types/habit';
 import * as reduxHabits from '../../redux/habit';
 import colorVariables from '../../components/colorVariables';
+import FormWizard from '../../components/form/FormWizard/FormWizard';
 import Input from '../../components/form/Input/Input';
 
 const POLARITIES = [-1, 0, 1];
@@ -20,15 +21,28 @@ const POLARITIES = [-1, 0, 1];
 interface Props {
   navigation: any;
   habit?: HabitInterface;
+  handleNewHabit: ({
+    name,
+    icon,
+    polarity,
+    metrics,
+  }: {
+    name: string;
+    icon: string;
+    polarity: number;
+    metrics: object;
+  }) => void;
   handleDeleteHabit: (habit) => void;
 }
 interface State {
+  step: number;
   id: string;
   name: string;
   icon: string;
   polarity: number;
   system: boolean;
   isEditing: boolean;
+  metrics?: object;
 }
 
 const isDisabled = (state: State) => {
@@ -42,23 +56,25 @@ class HabitForm extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { id, name, icon, polarity, system } = props.habit;
+    const { id, name, icon, polarity, system, metrics } = props.habit;
 
     this.state = {
+      step: 0,
       id,
       name,
       icon,
       polarity,
       system,
       isEditing: Boolean(id),
+      metrics,
     };
   }
 
   handleNewHabit = () => {
     const { navigate } = this.props.navigation;
-    const { name, icon, polarity } = this.state;
+    const { name, icon, polarity, metrics } = this.state;
 
-    this.props.handleNewHabit({ name, icon, polarity });
+    this.props.handleNewHabit({ name, icon, polarity, metrics });
 
     navigate('HabitSettings');
   };
@@ -86,6 +102,8 @@ class HabitForm extends Component<Props, State> {
 
   handlePolarityChange = (polarity: number) =>
     this.setState(() => ({ polarity }));
+
+  handleStepChange = (step: number) => this.setState(() => ({ step }));
 
   renderNameInput = () => {
     const { name } = this.state;
@@ -164,14 +182,33 @@ class HabitForm extends Component<Props, State> {
     );
   };
 
-  render() {
+  renderInitialStep = () => {
     return (
-      <View style={styles.container}>
+      <View>
         {this.renderNameInput()}
         {this.renderPolarityInput()}
         {this.renderSaveButton()}
         {this.renderDelete()}
         {this.renderIconPicker()}
+      </View>
+    );
+  };
+
+  renderMetricsStep = () => {
+    return (
+      <View>
+        <Text>step 2 for metric config</Text>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <FormWizard
+          saveButton={this.renderSaveButton()}
+          steps={[this.renderInitialStep(), this.renderMetricsStep()]}
+        />
       </View>
     );
   }

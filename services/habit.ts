@@ -59,9 +59,11 @@ const editHabit = (opts: HabitInterface) => {
 const installDefaultHabits = () => {
   realm.write(() => {
     const now = Date();
+    const habits: Array<HabitInterface> = [];
+
     defaultHabits.all.forEach(habit => {
-      const { name, icon, polarity, system } = habit;
-      realm.create('Habit', {
+      const { name, icon, polarity, system, metrics } = habit;
+      const habitObj = realm.create('Habit', {
         id: uuid(),
         name,
         icon,
@@ -70,8 +72,13 @@ const installDefaultHabits = () => {
         modifiedAt: now,
         system,
         enabled: true,
+        metrics,
       });
+
+      habits.push(habitObj);
     });
+
+    store.dispatch(reduxHabits.getHabits({ habits }));
   });
 };
 
@@ -85,7 +92,7 @@ const deleteHabit = (habit: HabitInterface) => {
 
 const toggleHabit = (habit: HabitInterface) => {
   realm.write(() => {
-    const habitObj = getHabitById(habit.id);
+    const habitObj: HabitInterface = getHabitById(habit.id);
 
     habitObj.enabled = !habit.enabled;
 

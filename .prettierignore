@@ -1,0 +1,7 @@
+# .prettierignore
+ios/
+android/
+.jest/
+node_modules/
+package.json
+*.snap

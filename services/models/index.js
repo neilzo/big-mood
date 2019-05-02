@@ -8,13 +8,13 @@ import HabitProgress from './HabitProgress';
 
 export default new Realm({
   schema: [Weather, Habit, HabitProgress, Day, Entry, Mood],
-  schemaVersion: 5,
+  schemaVersion: 6,
   migration: (oldRealm, newRealm) => {
-    const oldHabits = oldRealm.objects('HabitProgress');
-    const newHabits = newRealm.objects('HabitProgress');
+    const oldHabits = oldRealm.objects('Habit');
+    const newHabits = newRealm.objects('Habit');
 
     for (let i = 0; i < oldHabits.length; i++) {
-      newHabits[i].entry = '';
+      newHabits[i].metrics = {};
     }
-  }
+  },
 });

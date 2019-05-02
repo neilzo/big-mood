@@ -6,8 +6,8 @@ Weather.schema = {
   properties: {
     description: 'string?',
     icon: 'string?',
-    temperature: 'int?'
-  }
+    temperature: 'int?',
+  },
 };
 
 class Entry extends Realm.Object {}
@@ -20,8 +20,8 @@ Entry.schema = {
     note: 'string',
     weather: { type: 'Weather' },
     createdAt: 'date',
-    modifiedAt: 'date'
-  }
+    modifiedAt: 'date',
+  },
 };
 
 export default Entry;

@@ -8,7 +8,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
 
@@ -46,7 +46,7 @@ class MoodForm extends Component<Props, State> {
       moodName,
       icon,
       rating,
-      isEditing: Boolean(id)
+      isEditing: Boolean(id),
     };
   }
 
@@ -176,7 +176,7 @@ class MoodForm extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   input: {
     backgroundColor: colorVariables.white,
@@ -185,21 +185,21 @@ const styles = StyleSheet.create({
     borderRadius: colorVariables.borderRadius,
     width: 300,
     height: 50,
-    padding: 15
+    padding: 15,
   },
   ratingWrap: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   ratingInput: {
     height: 50,
     width: 50,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   selectedRating: {
     fontWeight: 'bold',
-    color: colorVariables.selected
-  }
+    color: colorVariables.selected,
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -209,7 +209,7 @@ const mapDispatchToProps = dispatch => ({
   handleNewMood: mood => {
     dispatch(reduxMoods.newMoodThunk(mood));
   },
-  deleteMood: mood => dispatch(reduxMoods.deleteMoodThunk(mood))
+  deleteMood: mood => dispatch(reduxMoods.deleteMoodThunk(mood)),
 });
 
 export default connect(

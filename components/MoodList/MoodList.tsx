@@ -1,8 +1,15 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+  Button,
+} from 'react-native';
 import groupedBy from 'lodash/groupBy';
+import size from 'lodash/size';
 
 import moodService from '../../services/mood';
 import { getMoods } from '../../redux/mood';
@@ -81,18 +88,23 @@ class MoodList extends Component<Props, State> {
   renderMoods = () => {
     const { grouped, moods } = this.props;
 
+    if (!size(moods)) return null;
+
     if (grouped) return this.renderGrouped();
 
     return <View style={styles.list}>{moods.map(this.renderRow)}</View>;
   };
 
   render() {
+    const { moods } = this.props;
     return (
       <View style={styles.container}>
-        {/* <Button
-          title="Install Default Moods"
-          onPress={this.installDefaultMoods}
-        /> */}
+        {!size(moods) && (
+          <Button
+            title="Install Default Moods"
+            onPress={this.installDefaultMoods}
+          />
+        )}
         {this.renderMoods()}
       </View>
     );

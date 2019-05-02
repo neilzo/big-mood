@@ -3,21 +3,21 @@ import { computeOverallWeather, kelvinToFarenheit } from '../weather';
 const sampleResponse = {
   coord: {
     lon: -73.99,
-    lat: 40.73
+    lat: 40.73,
   },
   weather: [
     {
       id: 500,
       main: 'Rain',
       description: 'light rain',
-      icon: '10d'
+      icon: '10d',
     },
     {
       id: 701,
       main: 'Mist',
       description: 'mist',
-      icon: '50d'
-    }
+      icon: '50d',
+    },
   ],
   base: 'stations',
   main: {
@@ -25,18 +25,18 @@ const sampleResponse = {
     pressure: 1003,
     humidity: 87,
     temp_min: 280.15,
-    temp_max: 284.82
+    temp_max: 284.82,
   },
   visibility: 11265,
   wind: {
     speed: 3.6,
-    deg: 160
+    deg: 160,
   },
   rain: {
-    '1h': 0.25
+    '1h': 0.25,
   },
   clouds: {
-    all: 90
+    all: 90,
   },
   dt: 1554839356,
   sys: {
@@ -45,11 +45,11 @@ const sampleResponse = {
     message: 0.0088,
     country: 'US',
     sunrise: 1554805602,
-    sunset: 1554852482
+    sunset: 1554852482,
   },
   id: 5128581,
   name: 'New York',
-  cod: 200
+  cod: 200,
 };
 
 describe('Weather Helpers', () => {
@@ -63,7 +63,7 @@ describe('Weather Helpers', () => {
     expect(computeOverallWeather(sampleResponse)).toEqual({
       description: 'Rain',
       icon: '10d',
-      temperature: 49
+      temperature: 49,
     });
   });
 });

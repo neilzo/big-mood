@@ -28,7 +28,7 @@ class NewEntry extends Component<Props, State> {
     super(props);
 
     this.state = {
-      step: 1,
+      step: 0,
       entry: {},
       habitProgress: props.habitProgress,
     };

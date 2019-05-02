@@ -15,8 +15,8 @@ Mood.schema = {
     enabled: 'bool',
     system: 'bool',
     deleted: 'bool?',
-    deletedAt: 'date?'
-  }
+    deletedAt: 'date?',
+  },
 };
 
 export default Mood;

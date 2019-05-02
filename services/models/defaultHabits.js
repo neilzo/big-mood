@@ -3,7 +3,12 @@ const sleep = {
   enabled: true,
   system: true,
   icon: '😴',
-  polarity: 1
+  polarity: 1,
+  metrics: {
+    duration: undefined,
+    temperature: undefined,
+    sleepAt: undefined,
+  },
 };
 
 const exercise = {
@@ -11,7 +16,8 @@ const exercise = {
   enabled: true,
   system: true,
   icon: '💪',
-  polarity: 1
+  polarity: 1,
+  metrics: {},
 };
 
 const diet = {
@@ -19,7 +25,10 @@ const diet = {
   enabled: true,
   system: true,
   icon: '🥗',
-  polarity: 1
+  polarity: 1,
+  metrics: {
+    calories: undefined,
+  },
 };
 
 const friends = {
@@ -27,15 +36,17 @@ const friends = {
   enabled: true,
   system: true,
   icon: '👥',
-  polarity: 1
+  polarity: 1,
+  metrics: {},
 };
 
-const drugs = {
-  name: 'Drugs',
+const cannabis = {
+  name: 'Cannabis',
   enabled: true,
   system: true,
-  icon: '💊',
-  polarity: -1
+  icon: '🌲',
+  polarity: -1,
+  metrics: {},
 };
 
 const drinking = {
@@ -43,12 +54,15 @@ const drinking = {
   enabled: true,
   system: true,
   icon: '🍷',
-  polarity: -1
+  polarity: -1,
+  metrics: {
+    amount: undefined,
+  },
 };
 
 export default {
   good: [sleep, exercise, diet, friends],
   neutral: [],
-  bad: [drinking, drugs],
-  all: [sleep, exercise, diet, friends, drinking]
+  bad: [drinking, cannabis],
+  all: [sleep, exercise, diet, friends, drinking],
 };
