@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingItem renders correctly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignSelf": "stretch",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "stretch",
+        "backgroundColor": "#fff",
+        "borderBottomWidth": 1,
+        "borderColor": "#ccc",
+        "borderTopWidth": 1,
+        "flexDirection": "row",
+        "marginTop": 15,
+        "padding": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginRight": 10,
+        }
+      }
+    >
+      <Text>
+        chess-king
+      </Text>
+    </View>
+    <Text>
+      Terrace House
+    </Text>
+    <View
+      style={
+        Object {
+          "marginLeft": "auto",
+        }
+      }
+    >
+      <Icon
+        name="chevron-right"
+        size={20}
+      />
+    </View>
+  </View>
+</View>
+`;

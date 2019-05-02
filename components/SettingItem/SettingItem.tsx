@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+
 import colorVariables from '../colorVariables';
+import Icon from '../Icon/Icon';
 
 interface Props {
   title: string;
@@ -20,7 +22,7 @@ const SettingItem = ({ title, icon, onPress, settingRoute }: Props) => {
         </View>
         <Text>{title}</Text>
         <View style={styles.arrowIcon}>
-          <Text>></Text>
+          <Icon name="chevron-right" size={20} />
         </View>
       </View>
     </TouchableHighlight>
@@ -32,7 +34,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   container: {
-    //justifyContent: 'center',
     alignSelf: 'stretch',
     alignItems: 'center',
     flexDirection: 'row',

@@ -3,5 +3,6 @@ ios/
 android/
 .jest/
 node_modules/
+coverage/
 package.json
 *.snap

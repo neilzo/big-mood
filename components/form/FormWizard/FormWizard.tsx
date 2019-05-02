@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-const isLastStep = (step: number, steps: Array<Element>) =>
+export const isLastStep = (step: number, steps: Array<Element>) =>
   step === steps.length - 1;
 
 interface Props {
@@ -75,6 +75,8 @@ export default class FormWizard extends Component<Props, State> {
         {this.renderBackButton()}
         {this.renderNextButton()}
         {this.renderStep()}
+        {this.renderBackButton()}
+        {this.renderNextButton()}
         {this.renderSaveButton()}
         {this.renderDeleteButton()}
       </View>

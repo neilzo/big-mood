@@ -1,10 +1,12 @@
 import React from 'react';
 import { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
+
+import MoodInterface from '../types/mood';
 import MoodList from '../components/MoodList/MoodList';
 
 interface Props {
-  navigation: any;
+  navigation: any; // todo figure out the type for this
 }
 export default class EditMoods extends Component<Props> {
   onAddNewPress = () => {
@@ -12,7 +14,7 @@ export default class EditMoods extends Component<Props> {
     navigate('MoodForm');
   };
 
-  onEditPress = mood => {
+  onEditPress = (mood: MoodInterface) => {
     const { navigate } = this.props.navigation;
     navigate('MoodForm', { mood });
   };
@@ -20,7 +22,6 @@ export default class EditMoods extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Edit moods</Text>
         <MoodList onMoodPress={this.onEditPress} grouped={true} />
         <Button title="Add New..." onPress={this.onAddNewPress} />
       </View>
@@ -31,7 +32,6 @@ export default class EditMoods extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
     alignItems: 'center',
   },
 });
