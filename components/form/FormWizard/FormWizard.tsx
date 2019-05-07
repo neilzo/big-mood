@@ -6,19 +6,24 @@ export const isLastStep = (step: number, steps: Array<Element>) =>
   step === steps.length - 1;
 
 interface Props {
+  step: number;
   steps: Array<Element>;
   saveButton: Element;
-  deleteButton?: Element;
+  deleteButton?: Element | null;
 }
 interface State {
   step: number;
 }
 export default class FormWizard extends Component<Props, State> {
+  static defaultProps = {
+    step: 0,
+  };
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      step: 0,
+      step: props.step,
     };
   }
 

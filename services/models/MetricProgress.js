@@ -1,19 +1,20 @@
 import Realm from 'realm';
 
-class HabitProgress extends Realm.Object {}
-HabitProgress.schema = {
-  name: 'HabitProgress',
+class MetricProgress extends Realm.Object {}
+MetricProgress.schema = {
+  name: 'MetricProgress',
   primaryKey: 'id',
   properties: {
     id: 'string',
-    completed: 'bool?',
+    type: 'string',
+    value: 'string?',
+    metric: 'string',
     habit: 'string',
     entry: 'string',
     day: 'string',
     createdAt: 'date',
     modifiedAt: 'date',
-    metricProgress: 'MetricProgress[]',
   },
 };
 
-export default HabitProgress;
+export default MetricProgress;

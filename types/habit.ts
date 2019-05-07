@@ -13,5 +13,5 @@ export default interface HabitInterface {
   modifiedBy?: string;
   deleted?: boolean;
   deletedAt: boolean;
-  metrics?: object;
+  metrics?: [];
 }

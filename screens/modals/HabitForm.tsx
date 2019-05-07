@@ -7,17 +7,32 @@ import {
   View,
   Button,
   TouchableHighlight,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
+import uuid from 'uuid/v4';
+import get from 'lodash/get';
 
 import HabitInterface from '../../types/habit';
+import { METRIC_TYPES } from '../../types/metric';
 import * as reduxHabits from '../../redux/habit';
 import colorVariables from '../../components/colorVariables';
 import FormWizard from '../../components/form/FormWizard/FormWizard';
 import Input from '../../components/form/Input/Input';
+import Icon from '../../components/Icon/Icon';
+import Select from '../../components/form/Select/Select';
 
 const POLARITIES = [-1, 0, 1];
+const TYPE_OPTIONS = METRIC_TYPES.map(type => ({
+  label: type,
+  value: type,
+}));
 
+interface Metric {
+  id: string;
+  name: string;
+  type: string;
+}
 interface Props {
   navigation: any;
   habit?: HabitInterface;
@@ -32,17 +47,24 @@ interface Props {
     polarity: number;
     metrics: object;
   }) => void;
-  handleDeleteHabit: (habit) => void;
+  handleEditHabit: (habit: {
+    id: string;
+    icon: string;
+    name: string;
+    polarity: number;
+  }) => void;
+  handleDeleteHabit: (habit: HabitInterface) => void;
 }
 interface State {
-  step: number;
   id: string;
   name: string;
   icon: string;
   polarity: number;
   system: boolean;
   isEditing: boolean;
-  metrics?: object;
+  metrics: {
+    [id: string]: Metric;
+  };
 }
 
 const isDisabled = (state: State) => {
@@ -59,14 +81,13 @@ class HabitForm extends Component<Props, State> {
     const { id, name, icon, polarity, system, metrics } = props.habit;
 
     this.state = {
-      step: 0,
       id,
       name,
       icon,
       polarity,
       system,
       isEditing: Boolean(id),
-      metrics,
+      metrics: {},
     };
   }
 
@@ -89,11 +110,21 @@ class HabitForm extends Component<Props, State> {
   };
 
   handleDeleteHabit = () => {
-    const { deleteHabit, navigation, habit } = this.props;
+    const { handleDeleteHabit, navigation, habit } = this.props;
     const { navigate } = navigation;
 
-    deleteHabit(habit);
+    handleDeleteHabit(habit);
     navigate('HabitSettings');
+  };
+
+  handleNewMetric = () => {
+    const id: string = uuid();
+    this.setState(prevState => ({
+      metrics: {
+        ...prevState.metrics,
+        [id]: { id, name: '', type: '' },
+      },
+    }));
   };
 
   handleIconChange = (icon: string) => this.setState(() => ({ icon }));
@@ -102,6 +133,28 @@ class HabitForm extends Component<Props, State> {
 
   handlePolarityChange = (polarity: number) =>
     this.setState(() => ({ polarity }));
+
+  handleMetricTypeChange = (id: string, type: string) =>
+    this.setState(prevState => ({
+      metrics: {
+        ...prevState.metrics,
+        [id]: {
+          ...prevState.metrics[id],
+          type,
+        },
+      },
+    }));
+
+  handleMetricNameChange = (id: string, name: string) =>
+    this.setState(prevState => ({
+      metrics: {
+        ...prevState.metrics,
+        [id]: {
+          ...prevState.metrics[id],
+          name,
+        },
+      },
+    }));
 
   renderNameInput = () => {
     const { name } = this.state;
@@ -190,18 +243,48 @@ class HabitForm extends Component<Props, State> {
     );
   };
 
-  renderMetricsStep = () => {
+  renderMetrics = () => {
+    const { metrics } = this.state;
+
+    const metricItems = Object.values(metrics).map((metric, i) => (
+      <View key={`${metric.id}`} style={styles.metricItem}>
+        <Input
+          label="Name"
+          onChange={text => this.handleMetricNameChange(metric.id, text)}
+          value={metric.name}
+        />
+        <Select
+          metricId={metric.id}
+          label="Type"
+          options={TYPE_OPTIONS}
+          onChange={this.handleMetricTypeChange}
+          value={get(metrics, [metric.id, 'type'])}
+        />
+      </View>
+    ));
+
     return (
-      <View>
-        <Text>step 2 for metric config</Text>
+      <View style={styles.metricWrap}>
+        {metricItems}
+        <TouchableWithoutFeedback onPress={this.handleNewMetric}>
+          <View style={styles.addMetricInput}>
+            <Icon name="plus" size={25} />
+            <Text>Add new metric</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
+  };
+
+  renderMetricsStep = () => {
+    return this.renderMetrics();
   };
 
   render() {
     return (
       <View style={styles.container}>
         <FormWizard
+          step={1}
           deleteButton={this.renderDelete()}
           saveButton={this.renderSaveButton()}
           steps={[this.renderInitialStep(), this.renderMetricsStep()]}
@@ -229,6 +312,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colorVariables.selected,
   },
+  addMetricInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  metricWrap: {
+    alignItems: 'center',
+    alignSelf: 'stretch',
+  },
+  metricItemWrap: {},
+  metricItem: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colorVariables.borderColor,
+    marginTop: 10,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
 });
 
 const mapStateToProps = (state, props) => {
@@ -247,7 +350,7 @@ const mapDispatchToProps = dispatch => ({
   handleNewHabit: habit => {
     dispatch(reduxHabits.newHabitThunk(habit));
   },
-  deleteHabit: habit => dispatch(reduxHabits.deleteHabitThunk(habit)),
+  handleDeleteHabit: habit => dispatch(reduxHabits.deleteHabitThunk(habit)),
 });
 
 export default connect(

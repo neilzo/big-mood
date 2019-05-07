@@ -4,11 +4,11 @@ const sleep = {
   system: true,
   icon: '😴',
   polarity: 1,
-  metrics: {
-    duration: undefined,
-    temperature: undefined,
-    sleepAt: undefined,
-  },
+  metrics: [
+    { duration: undefined },
+    { temperature: undefined },
+    { sleepAt: undefined },
+  ],
 };
 
 const exercise = {
@@ -17,7 +17,7 @@ const exercise = {
   system: true,
   icon: '💪',
   polarity: 1,
-  metrics: {},
+  metrics: [],
 };
 
 const diet = {
@@ -26,9 +26,7 @@ const diet = {
   system: true,
   icon: '🥗',
   polarity: 1,
-  metrics: {
-    calories: undefined,
-  },
+  metrics: [{ calories: undefined }],
 };
 
 const friends = {
@@ -37,7 +35,7 @@ const friends = {
   system: true,
   icon: '👥',
   polarity: 1,
-  metrics: {},
+  metrics: [],
 };
 
 const cannabis = {
@@ -46,7 +44,7 @@ const cannabis = {
   system: true,
   icon: '🌲',
   polarity: -1,
-  metrics: {},
+  metrics: [],
 };
 
 const drinking = {
@@ -55,9 +53,7 @@ const drinking = {
   system: true,
   icon: '🍷',
   polarity: -1,
-  metrics: {
-    amount: undefined,
-  },
+  metrics: [{ amount: undefined }],
 };
 
 export default {
