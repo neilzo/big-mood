@@ -4,7 +4,9 @@ import store from '../redux/store';
 import HabitProgressInterface from '../types/habitProgress';
 import * as reduxHabitProgress from '../redux/habitProgress';
 
-const getHabitProgressById = (id: string) => {
+const getHabitProgressById = (
+  id: string
+): HabitProgressInterface | undefined => {
   return realm.objectForPrimaryKey('HabitProgress', id);
 };
 
@@ -50,36 +52,41 @@ export const createHabitProgresses = async (newObjects = []) => {
 
       resolve(habitProgresses);
     });
-    // store.dispatch(reduxHabitProgressnewHabitProgress({ habitProgresses }));
   });
 };
 
-// const editHabitProgress = (opts: HabitProgressInterface) => {
-//   realm.write(() => {
-//     const now = new Date();
-//     const { id, name, icon, polarity } = opts;
-//     const habit: HabitProgressInterface = getHabitProgressById(id);
+const createHabitProgress = data => {};
 
-//     habit.name = name;
-//     habit.icon = icon;
-//     habit.polarity = polarity;
-//     habit.modifiedAt = now;
+const editHabitProgress = (opts: HabitProgressInterface) => {
+  realm.write(() => {
+    const now = new Date();
+    const { id, habit: habitId, day, entry, completed } = opts;
+    const habit: HabitProgressInterface | undefined = getHabitProgressById(id);
 
-//     store.dispatch(reduxHabitProgress.editHabitProgress({ habit }));
-//   });
-// };
+    if (!habit) return; // todo throw error on failed lookup
 
-// const deleteHabitProgress = (habit: HabitProgressInterface) => {
-//   realm.write(() => {
-//     const id = habit.id;
-//     realm.delete(habit);
-//     store.dispatch(reduxHabitProgress.deleteHabitProgress({ id }));
-//   });
-// };
+    habit.day = day;
+    habit.entry = entry;
+    habit.habit = habitId;
+    habit.completed = completed;
+    habit.modifiedAt = now;
+
+    store.dispatch(reduxHabitProgress.editHabitProgress({ habit }));
+  });
+};
+
+const deleteHabitProgress = (habit: HabitProgressInterface) => {
+  realm.write(() => {
+    const id = habit.id;
+    realm.delete(habit);
+    store.dispatch(reduxHabitProgress.deleteHabitProgress({ id }));
+  });
+};
 
 export default {
+  createHabitProgress,
   createHabitProgresses,
   getHabitProgress,
-  // editHabitProgress,
-  // deleteHabitProgress
+  editHabitProgress,
+  deleteHabitProgress,
 };

@@ -35,7 +35,7 @@ interface Metric {
 }
 interface Props {
   navigation: any;
-  habit?: HabitInterface;
+  habit: HabitInterface;
   handleNewHabit: ({
     name,
     icon,
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props: Props) => {
   const habitId = props.navigation.getParam('habitId');
   const habit = state.habits[habitId];
 
@@ -344,13 +344,14 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleEditHabit: habit => {
+  handleEditHabit: (habit: HabitInterface) => {
     dispatch(reduxHabits.updateHabit(habit));
   },
-  handleNewHabit: habit => {
+  handleNewHabit: (habit: HabitInterface) => {
     dispatch(reduxHabits.newHabitThunk(habit));
   },
-  handleDeleteHabit: habit => dispatch(reduxHabits.deleteHabitThunk(habit)),
+  handleDeleteHabit: (habit: HabitInterface) =>
+    dispatch(reduxHabits.deleteHabitThunk(habit)),
 });
 
 export default connect(

@@ -2,7 +2,6 @@ export default interface MetricProgress {
   id: string;
   name: string;
   description?: string;
-  enabled: boolean;
   value: string;
   metric: string;
   habit: string;
