@@ -2,7 +2,7 @@ import { createReducer, createAction } from 'redux-starter-kit';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 
-// import habitProgressService from '../services/habitProgress';
+import habitProgressService from '../services/habitProgress';
 import HabitProgressInterface from '../types/habitProgress';
 
 export const getHabitProgresses = createAction('GET_HABIT_PROGRESS_PROGRESSES');
@@ -10,32 +10,32 @@ export const editHabitProgress = createAction('EDIT_HABIT_PROGRESS');
 export const newHabitProgress = createAction('NEW_HABIT_PROGRESS');
 export const deleteHabitProgress = createAction('DELETE_HABIT_PROGRESS');
 
-// export const updateHabitProgress = (
-//   habitProgress: HabitProgressInterface
-// ) => () => habitProgressService.editHabitProgress(habitProgress);
+export const updateHabitProgress = (
+  habitProgress: HabitProgressInterface
+) => () => habitProgressService.editHabitProgress(habitProgress);
 
-// export const newHabitProgressThunk = (
-//   habitProgress: HabitProgressInterface
-// ) => () => habitProgressService.createHabitProgress(habitProgress);
+export const newHabitProgressThunk = (
+  habitProgress: HabitProgressInterface
+) => () => habitProgressService.createHabitProgress(habitProgress);
 
-// export const deleteHabitProgressThunk = (
-//   habitProgress: HabitProgressInterface
-// ) => () => habitProgressService.deleteHabitProgress(habitProgress);
+export const deleteHabitProgressThunk = (
+  habitProgress: HabitProgressInterface
+) => () => habitProgressService.deleteHabitProgress(habitProgress);
 
-// export const populateHabitProgressesThunk = ({
-//   habitProgresses,
-// }: {
-//   habitProgresses: [];
-//   // @ts-ignore
-// }) => (dispatch, getState) => {
-//   const state = getState();
-//   const habits = state.habits;
-//   const progressToObjects = habitProgresses.map(
-//     (progress: HabitProgressInterface) => ({ ...progress })
-//   );
+export const populateHabitProgressesThunk = ({
+  habitProgresses,
+}: {
+  habitProgresses: [];
+  // @ts-ignore
+}) => (dispatch, getState) => {
+  const state = getState();
+  const habits = state.habits;
+  const progressToObjects = habitProgresses.map(
+    (progress: HabitProgressInterface) => ({ ...progress })
+  );
 
-//   dispatch(getHabitProgresses({ habits, habitProgress: progressToObjects }));
-// };
+  dispatch(getHabitProgresses({ habits, habitProgress: progressToObjects }));
+};
 
 interface State {
   [id: string]: Array<HabitProgressInterface>;

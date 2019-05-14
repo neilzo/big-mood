@@ -6,6 +6,7 @@ import daysReducer from './day';
 import habitsReducer from './habit';
 import habitProgressReducer from './habitProgress';
 import currentDayReducer from './currentDay';
+import metricsReducer from './metric';
 
 const reducer = {
   moods: moodsReducer,
@@ -13,6 +14,7 @@ const reducer = {
   habits: habitsReducer,
   habitProgress: habitProgressReducer,
   currentDay: currentDayReducer,
+  metrics: metricsReducer,
 };
 
 const preloadedState = {
@@ -21,6 +23,7 @@ const preloadedState = {
   habits: {},
   habitProgress: {},
   currentDay: '',
+  metrics: {},
 };
 
 const store = configureStore({

@@ -19,17 +19,13 @@ export default new Realm({
     Entry,
     Mood,
   ],
-  schemaVersion: 8,
+  schemaVersion: 10,
   migration: (oldRealm, newRealm) => {
     const oldMetrics = oldRealm.objects('Metric');
     const newMetrics = newRealm.objects('Metric');
-    const oldMetricProgresss = oldRealm.objects('MetricProgress');
-    const newMetricProgresss = newRealm.objects('MetricProgress');
 
     for (let i = 0; i < oldMetrics.length; i++) {
-      newMetrics[i].metrics = [];
-      newMetricProgresss.value = '';
-      newMetricProgresss.type = '';
+      newMetrics[i].habit = '';
     }
   },
 });

@@ -1,7 +1,7 @@
 export default interface HabitInterface {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   completed?: boolean;
   enabled: boolean;
   system: boolean;
@@ -12,6 +12,6 @@ export default interface HabitInterface {
   modifiedAt: Date;
   modifiedBy?: string;
   deleted?: boolean;
-  deletedAt: boolean;
+  deletedAt?: boolean;
   metrics?: [];
 }

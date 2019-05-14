@@ -18,6 +18,7 @@ Metric.schema = {
     modifiedBy: 'string?',
     deleted: 'bool?',
     deletedAt: 'date?',
+    habit: 'string',
     metricProgress: 'MetricProgress[]',
   },
 };

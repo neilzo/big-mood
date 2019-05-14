@@ -5,9 +5,9 @@ const sleep = {
   icon: '😴',
   polarity: 1,
   metrics: [
-    { duration: undefined },
-    { temperature: undefined },
-    { sleepAt: undefined },
+    { name: 'duration', type: 'number', icon: '⏳' },
+    { name: 'temperature', type: 'number', icon: '🌡' },
+    { name: 'bedtime', type: 'time', icon: '🛌' },
   ],
 };
 
@@ -26,7 +26,7 @@ const diet = {
   system: true,
   icon: '🥗',
   polarity: 1,
-  metrics: [{ calories: undefined }],
+  metrics: [{ name: 'calories', type: 'number', icon: '🔢' }],
 };
 
 const friends = {
@@ -53,7 +53,7 @@ const drinking = {
   system: true,
   icon: '🍷',
   polarity: -1,
-  metrics: [{ amount: undefined }],
+  metrics: [{ name: 'drinks', type: 'number', icon: '🍻' }],
 };
 
 export default {

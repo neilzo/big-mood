@@ -1,9 +1,13 @@
 import uuid from 'uuid/v4';
 import realm from './models/index';
+
 import defaultHabits from './models/defaultHabits';
+
 import store from '../redux/store';
 import HabitInterface from '../types/habit';
+import MetricInterface from '../types/metric';
 import * as reduxHabits from '../redux/habit';
+import * as reduxMetrics from '../redux/metric';
 
 const getHabitById = (id: string) => {
   return realm.objectForPrimaryKey('Habit', id);
@@ -61,9 +65,11 @@ const installDefaultHabits = () => {
     const now = Date();
     const habits: Array<HabitInterface> = [];
 
-    defaultHabits.all.forEach(habit => {
+    defaultHabits.all.forEach((habit: HabitInterface) => {
+      const metricsArr: Array<MetricInterface> = [];
       const { name, icon, polarity, system, metrics } = habit;
-      const habitObj = realm.create('Habit', {
+
+      const habitObj: HabitInterface = realm.create('Habit', {
         id: uuid(),
         name,
         icon,
@@ -72,8 +78,27 @@ const installDefaultHabits = () => {
         modifiedAt: now,
         system,
         enabled: true,
-        metrics,
       });
+
+      metrics.forEach((metric: MetricInterface) => {
+        const metricObj = realm.create('Metric', {
+          id: uuid(),
+          name: metric.name,
+          type: metric.type,
+          enabled: true,
+          system: true,
+          icon: metric.icon,
+          habit: habitObj.id,
+          createdAt: now,
+          modifiedAt: now,
+        });
+
+        metricsArr.push(metricObj);
+
+        store.dispatch(reduxMetrics.getMetrics({ metrics: metricsArr }));
+      });
+
+      habitObj.metrics = metricsArr;
 
       habits.push(habitObj);
     });

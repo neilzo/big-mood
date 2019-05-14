@@ -28,6 +28,7 @@ interface State {
   moodName: string;
   icon: string;
   rating: number;
+  system: boolean;
   isEditing: boolean;
 }
 
@@ -38,14 +39,15 @@ const isDisabled = (state: State) => {
 class MoodForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const mood = this.props.navigation.getParam('mood') || {};
-    const { id, moodName, icon, rating } = mood;
+    const mood: MoodInterface = this.props.navigation.getParam('mood') || {};
+    const { id, moodName, icon, rating, system } = mood;
 
     this.state = {
       id,
       moodName,
       icon,
       rating,
+      system,
       isEditing: Boolean(id),
     };
   }
@@ -122,11 +124,9 @@ class MoodForm extends Component<Props, State> {
   };
 
   renderDelete = () => {
-    const { isEditing } = this.state;
-    const mood: MoodInterface = this.props.navigation.getParam('mood');
-    const isSystem: boolean = mood.system;
+    const { isEditing, system } = this.state;
 
-    if (!isEditing || isSystem) return null;
+    if (!isEditing || system) return null;
 
     return (
       <Button

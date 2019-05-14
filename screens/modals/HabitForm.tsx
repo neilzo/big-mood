@@ -14,8 +14,9 @@ import uuid from 'uuid/v4';
 import get from 'lodash/get';
 
 import HabitInterface from '../../types/habit';
-import { METRIC_TYPES } from '../../types/metric';
+import MetricInterface, { METRIC_TYPES } from '../../types/metric';
 import * as reduxHabits from '../../redux/habit';
+import * as reduxMetrics from '../../redux/metric';
 import colorVariables from '../../components/colorVariables';
 import FormWizard from '../../components/form/FormWizard/FormWizard';
 import Input from '../../components/form/Input/Input';
@@ -36,6 +37,7 @@ interface Metric {
 interface Props {
   navigation: any;
   habit: HabitInterface;
+  metrics: Array<MetricInterface>;
   handleNewHabit: ({
     name,
     icon,
@@ -89,6 +91,10 @@ class HabitForm extends Component<Props, State> {
       isEditing: Boolean(id),
       metrics: {},
     };
+  }
+
+  componentDidMount() {
+    this.props.getMetrics();
   }
 
   handleNewHabit = () => {
@@ -245,8 +251,9 @@ class HabitForm extends Component<Props, State> {
 
   renderMetrics = () => {
     const { metrics } = this.state;
+    const combined = Object.values(metrics).concat(this.props.metrics);
 
-    const metricItems = Object.values(metrics).map((metric, i) => (
+    const metricItems = combined.map(metric => (
       <View key={`${metric.id}`} style={styles.metricItem}>
         <Input
           label="Name"
@@ -258,7 +265,7 @@ class HabitForm extends Component<Props, State> {
           label="Type"
           options={TYPE_OPTIONS}
           onChange={this.handleMetricTypeChange}
-          value={get(metrics, [metric.id, 'type'])}
+          value={metric.type}
         />
       </View>
     ));
@@ -337,9 +344,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, props: Props) => {
   const habitId = props.navigation.getParam('habitId');
   const habit = state.habits[habitId];
+  const metrics = reduxMetrics.getMetricsByHabit(state, habitId);
 
   return {
     habit,
+    metrics,
   };
 };
 
@@ -352,6 +361,7 @@ const mapDispatchToProps = dispatch => ({
   },
   handleDeleteHabit: (habit: HabitInterface) =>
     dispatch(reduxHabits.deleteHabitThunk(habit)),
+  getMetrics: () => dispatch(reduxMetrics.getMetricsThunk()),
 });
 
 export default connect(
