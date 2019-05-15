@@ -25,14 +25,12 @@ export const deleteHabitProgressThunk = (
 export const populateHabitProgressesThunk = ({
   habitProgresses,
 }: {
-  habitProgresses: [];
+  habitProgresses: Realm.Results<Realm.Object> | Array<Realm.Object>;
   // @ts-ignore
 }) => (dispatch, getState) => {
   const state = getState();
   const habits = state.habits;
-  const progressToObjects = habitProgresses.map(
-    (progress: HabitProgressInterface) => ({ ...progress })
-  );
+  const progressToObjects = habitProgresses.map(progress => ({ ...progress }));
 
   dispatch(getHabitProgresses({ habits, habitProgress: progressToObjects }));
 };

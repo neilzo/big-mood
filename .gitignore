@@ -65,3 +65,8 @@ config.js
 # tests
 .jest
 coverage/
+
+# Realm
+default.realm
+default.realm.lock
+default.realm.management/

@@ -4,10 +4,8 @@ import habitProgressReducer, {
   editHabitProgress,
   getHabitProgresses,
 } from '../habitProgress';
-// import habitProgressService from '../../services/habitProgress';
 
-// habitProgressService.createHabitProgresses = jest.fn();
-// habitProgressService.getHabitProgress = jest.fn();
+jest.mock('../../services/habitProgress');
 
 describe('habitProgressReducer', () => {
   it('should handle an empty action', () => {

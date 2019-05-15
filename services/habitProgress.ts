@@ -2,11 +2,12 @@ import uuid from 'uuid/v4';
 import realm from './models/index';
 import store from '../redux/store';
 import HabitProgressInterface from '../types/habitProgress';
+import HabitProgressModel from './models/HabitProgress';
 import * as reduxHabitProgress from '../redux/habitProgress';
 
 const getHabitProgressById = (
   id: string
-): HabitProgressInterface | undefined => {
+): HabitProgressModel.schema | undefined => {
   return realm.objectForPrimaryKey('HabitProgress', id);
 };
 
@@ -24,7 +25,7 @@ export const createHabitProgresses = async (newObjects = []) => {
   return new Promise(resolve => {
     realm.write(() => {
       const now = new Date();
-      const habitProgresses: Array<HabitProgressInterface> = [];
+      const habitProgresses: Array<Realm.Object> = [];
 
       newObjects.forEach(progress => {
         const { completed, habit, day, entry } = progress;
@@ -39,7 +40,7 @@ export const createHabitProgresses = async (newObjects = []) => {
           modifiedAt: now,
         };
 
-        const habitProgress: HabitProgressInterface = realm.create(
+        const habitProgress: HabitProgressModel.schema = realm.create(
           'HabitProgress',
           params
         );
@@ -55,13 +56,13 @@ export const createHabitProgresses = async (newObjects = []) => {
   });
 };
 
-const createHabitProgress = data => {};
+const createHabitProgress = (data: HabitProgressInterface) => {};
 
 const editHabitProgress = (opts: HabitProgressInterface) => {
   realm.write(() => {
     const now = new Date();
     const { id, habit: habitId, day, entry, completed } = opts;
-    const habit: HabitProgressInterface | undefined = getHabitProgressById(id);
+    const habit = getHabitProgressById(id);
 
     if (!habit) return; // todo throw error on failed lookup
 
