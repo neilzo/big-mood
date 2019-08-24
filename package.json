@@ -10,7 +10,7 @@
     "@types/lodash": "^4.14.123",
     "@types/react-redux": "^7.0.8",
     "@types/uuid": "^3.4.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "0.59.1",
